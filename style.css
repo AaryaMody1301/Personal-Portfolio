@@ -1,20 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-/* Updated Color Scheme for Professional Look */
 :root {
-    --bg-primary: #f8f9fa; /* Light gray background */
+    --bg-primary: #f4f6fb; /* Soft blue-gray background */
     --bg-secondary: #ffffff; /* White for cards and sections */
-    --bg-tertiary: #e9ecef; /* Slightly darker gray for accents */
-    --text-primary: #1a1a1a; /* Much darker for visibility */
-    --text-secondary: #333333; /* Darker for better contrast */
-    --text-muted: #555555; /* More visible muted text */
-    --accent-primary: #0056b3; /* A deep, professional blue */
-    --accent-secondary: #007bff; /* A brighter, clickable blue */
-    --border-color: #dee2e6; /* Subtle borders */
-    --shadow-color: rgba(0, 0, 0, 0.08); /* Softer shadows */
-
+    --bg-tertiary: #e3eafc; /* Light blue for accents */
+    --text-primary: #1a2233; /* Deep navy for main text */
+    --text-secondary: #2d3a4a; /* Slightly lighter navy */
+    --text-muted: #5c6b82; /* Muted blue-gray */
+    --accent-primary: #2563eb; /* Vivid blue for highlights */
+    --accent-secondary: #38bdf8; /* Lighter blue for accents */
+    --border-color: #b6c3d1; /* Soft blue border */
+    --shadow-color: rgba(37, 99, 235, 0.08); /* Blue shadow */
     --gradient-primary: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
-
     --border-radius-sm: 8px;
     --border-radius-md: 12px;
     --border-radius-lg: 16px;
@@ -203,7 +200,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Tech Tags & Pills */
 .tech-tag, .skill-pill {
     background-color: var(--bg-tertiary);
-    color: var(--text-secondary);
+    color: var(--accent-primary);
     padding: 0.5rem 1rem;
     border-radius: var(--border-radius-sm);
     font-size: 0.9rem;
@@ -223,8 +220,17 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
     padding: 2rem;
     margin-top: 4rem;
-    background-color: var(--bg-secondary);
+    background-color: var(--bg-tertiary);
+    color: var(--text-secondary);
     border-top: 1px solid var(--border-color);
+}
+
+/* Remove all fade/opacity/animation for visibility */
+.fade-in, .slide-in {
+    opacity: 1 !important;
+    filter: none !important;
+    animation: none !important;
+    transition: none !important;
 }
 
 /* Add consistent hover effect for all interactive elements */
@@ -392,13 +398,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 body, .stApp, .block-container, h1, h2, h3, h4, h5, h6, p, span, div, a, li, ul, .section-title, .hero-title, .project-title, .skill-category-title, .experience-title, .contact-title, .hero-bio, .project-description, .skill-pill, .tech-tag, .contact-info, .contact-link, .contact-description, .footer-text, .footer-credits, .experience-company, .experience-duration, .experience-description, .achievements-title, .achievements-list, .achievement-item {
-    color: #000 !important;
-    text-shadow: 0 1px 0 #fff, 0 0 2px #fff;
+    color: var(--text-primary) !important;
+    background: transparent !important;
+    text-shadow: none !important;
+    font-weight: 500;
+    opacity: 1 !important;
 }
 
 /* Force white background for all cards and containers */
 .glass-card, .project-card, .skill-category, .block-container, .section-container {
-    background: #fff !important;
+    background: var(--bg-secondary) !important;
 }
 
 /* Make all links and buttons high-contrast */
