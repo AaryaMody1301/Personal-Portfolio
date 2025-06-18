@@ -5,13 +5,13 @@
     --bg-primary: #f8f9fa; /* Light gray background */
     --bg-secondary: #ffffff; /* White for cards and sections */
     --bg-tertiary: #e9ecef; /* Slightly darker gray for accents */
-    --text-primary: #212529; /* Dark, readable text */
-    --text-secondary: #495057; /* Softer text for descriptions */
-    --text-muted: #6c757d; /* Muted text for less important info */
+    --text-primary: #1a1a1a; /* Much darker for visibility */
+    --text-secondary: #333333; /* Darker for better contrast */
+    --text-muted: #555555; /* More visible muted text */
     --accent-primary: #0056b3; /* A deep, professional blue */
     --accent-secondary: #007bff; /* A brighter, clickable blue */
     --border-color: #dee2e6; /* Subtle borders */
-    --shadow-color: rgba(0, 0, 0, 0.05); /* Softer shadows */
+    --shadow-color: rgba(0, 0, 0, 0.08); /* Softer shadows */
 
     --gradient-primary: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
 
@@ -19,20 +19,6 @@
     --border-radius-md: 12px;
     --border-radius-lg: 16px;
     --transition-speed: 0.3s;
-}
-
-[data-theme="dark"] {
-    --bg-primary: #181a1b;
-    --bg-secondary: #23272b;
-    --bg-tertiary: #222326;
-    --text-primary: #f8f9fa;
-    --text-secondary: #ced4da;
-    --text-muted: #adb5bd;
-    --accent-primary: #66b2ff;
-    --accent-secondary: #339af0;
-    --border-color: #343a40;
-    --shadow-color: rgba(0,0,0,0.25);
-    --gradient-primary: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
 }
 
 /* Global Styles */

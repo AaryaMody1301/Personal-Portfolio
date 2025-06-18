@@ -65,25 +65,6 @@ def show_loading_spinner(duration=1):
     time.sleep(duration)
     placeholder.empty()
 
-# === THEME TOGGLE ===
-# Add a theme toggle switch using streamlit-toggle-switch and custom JS/CSS
-def set_theme():
-    if 'theme' not in st.session_state:
-        st.session_state['theme'] = 'light'
-    theme = st_toggle_switch(
-        label="Toggle Dark/Light Mode",
-        key="theme_toggle",
-        default_value=(st.session_state['theme'] == 'dark'),
-        label_after=True,
-        inactive_color="#DDD",
-        active_color="#222",
-        track_color="#007bff"
-    )
-    st.session_state['theme'] = 'dark' if theme else 'light'
-    st.markdown(f'<body data-theme="{st.session_state["theme"]}"></body>', unsafe_allow_html=True)
-
-set_theme()
-
 # Load and apply CSS
 css_content = load_css("style.css")
 st.markdown(f'<style>{css_content}</style>', unsafe_allow_html=True)
