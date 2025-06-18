@@ -1,20 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Playfair+Display:wght@700&display=swap');
 
 :root {
-    --bg-primary: #fffbe7; /* Soft warm background */
+    --bg-primary: #f6f4fa; /* Elegant light lavender */
     --bg-secondary: #fff; /* White for cards */
-    --bg-tertiary: #ffe082; /* Light gold for accents */
-    --text-primary: #222; /* Very dark for main text */
-    --text-secondary: #4e3b0c; /* Deep brown for contrast */
-    --text-muted: #a67c00; /* Muted gold */
-    --accent-primary: #e65100; /* Strong orange for highlights */
-    --accent-secondary: #ffd600; /* Bright yellow for accents */
-    --border-color: #ffe082; /* Soft gold border */
-    --shadow-color: rgba(230, 81, 0, 0.08); /* Orange shadow */
-    --gradient-primary: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
-    --border-radius-sm: 8px;
-    --border-radius-md: 12px;
-    --border-radius-lg: 16px;
+    --bg-tertiary: #ede7f6; /* Soft lavender for accents */
+    --text-primary: #2d225a; /* Deep royal indigo */
+    --text-secondary: #4b3c7a; /* Slightly lighter indigo */
+    --text-muted: #7c6ca7; /* Muted purple */
+    --accent-primary: #7c3aed; /* Royal purple */
+    --accent-secondary: #3b82f6; /* Royal blue */
+    --border-color: #e0d7f3; /* Soft purple border */
+    --shadow-color: rgba(124, 58, 237, 0.10); /* Purple shadow */
+    --gradient-primary: linear-gradient(90deg, #7c3aed 0%, #3b82f6 100%);
+    --gradient-secondary: linear-gradient(90deg, #a78bfa 0%, #60a5fa 100%);
+    --border-radius-sm: 12px;
+    --border-radius-md: 18px;
+    --border-radius-lg: 24px;
     --transition-speed: 0.3s;
 }
 
@@ -23,13 +24,10 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    line-height: 1.7;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+body, .stApp, .block-container {
+    font-family: 'Poppins', 'Inter', sans-serif !important;
+    background: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
 }
 
 body[data-theme="dark"] {
@@ -54,62 +52,62 @@ body[data-theme="dark"] {
 
 @media (max-width: 900px) {
     .block-container {
-        padding: 1rem 0.5rem;
+        padding: 1.2em 0.5em !important;
     }
     .project-card, .glass-card, .skill-category {
-        padding: 1.2rem;
-        margin: 0.5rem 0;
+        padding: 1.2em 0.7em !important;
+        margin: 0.7em 0 !important;
     }
     .section-title {
-        font-size: 1.3rem;
+        font-size: 1.3rem !important;
     }
 }
 
 @media (max-width: 600px) {
     .block-container {
-        padding: 0.5rem 0.2rem;
+        padding: 0.7em 0.2em !important;
     }
     .project-card, .glass-card, .skill-category {
-        padding: 0.7rem;
-        margin: 0.3rem 0;
+        padding: 0.7em 0.2em !important;
+        margin: 0.3em 0 !important;
     }
     .section-title {
-        font-size: 1.1rem;
+        font-size: 1.1rem !important;
     }
     .profile-image {
-        width: 90px;
-        height: 90px;
+        width: 90px !important;
+        height: 90px !important;
     }
     .hero-title {
-        font-size: 1.3rem;
+        font-size: 1.3rem !important;
     }
     .hero-subtitle {
-        font-size: 1rem;
+        font-size: 1rem !important;
     }
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.025em;
+h1, h2, h3, h4, h5, h6, .section-title, .hero-title, .project-title, .skill-category-title, .experience-title, .contact-title {
+    font-family: 'Playfair Display', 'Poppins', serif !important;
+    color: var(--accent-primary) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.01em;
 }
 
 /* Cards */
 .glass-card, .project-card, .skill-category {
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-lg);
-    padding: 2.5rem;
-    margin: 1rem 0;
-    box-shadow: 0 4px 12px var(--shadow-color);
-    transition: all var(--transition-speed) ease;
+    background: var(--bg-secondary) !important;
+    border: 1.5px solid var(--border-color) !important;
+    border-radius: var(--border-radius-lg) !important;
+    box-shadow: 0 8px 32px var(--shadow-color) !important;
+    padding: 2.2em 1.5em !important;
+    margin: 1.2em 0 !important;
+    transition: box-shadow var(--transition-speed), border-color var(--transition-speed);
 }
 
 .glass-card:hover, .project-card:hover, .skill-category:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 24px var(--shadow-color);
-    border-color: var(--accent-secondary);
+    box-shadow: 0 12px 36px var(--shadow-color) !important;
+    border-color: var(--accent-primary) !important;
 }
 
 .project-card {
@@ -173,13 +171,13 @@ h1, h2, h3, h4, h5, h6 {
 .stButton>button, .cta-button, .social-link {
     border-radius: var(--border-radius-md) !important;
     background-image: var(--gradient-primary) !important;
-    color: white !important;
+    color: #fff !important;
     border: none !important;
-    padding: 0.75rem 1.5rem !important;
+    padding: 0.8rem 1.7rem !important;
     font-weight: 600 !important;
-    font-size: 1rem !important;
+    font-size: 1.08rem !important;
     box-shadow: 0 2px 8px var(--shadow-color) !important;
-    transition: all var(--transition-speed) ease !important;
+    transition: background var(--transition-speed), box-shadow var(--transition-speed), filter var(--transition-speed) !important;
     outline: none !important;
     cursor: pointer;
     display: inline-flex;
@@ -199,30 +197,30 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Tech Tags & Pills */
 .tech-tag, .skill-pill {
-    background-color: var(--bg-tertiary);
-    color: var(--accent-primary);
-    padding: 0.5rem 1rem;
-    border-radius: var(--border-radius-sm);
-    font-size: 0.9rem;
-    font-weight: 500;
-    border: 1px solid var(--border-color);
-    transition: all var(--transition-speed) ease;
+    background: var(--bg-tertiary) !important;
+    color: var(--accent-primary) !important;
+    border: 1px solid var(--border-color) !important;
+    font-weight: 600 !important;
+    border-radius: var(--border-radius-sm) !important;
+    padding: 0.5em 1.1em !important;
+    font-size: 1.01rem !important;
+    margin-bottom: 0.3em !important;
+    margin-right: 0.3em !important;
+    transition: background var(--transition-speed), color var(--transition-speed);
 }
 
 .tech-tag:hover, .skill-pill:hover {
-    background-color: var(--accent-primary);
-    color: white;
-    border-color: var(--accent-primary);
+    background: var(--accent-primary) !important;
+    color: #fff !important;
 }
 
 /* Footer */
 .footer {
-    text-align: center;
-    padding: 2rem;
-    margin-top: 4rem;
-    background-color: var(--bg-tertiary);
-    color: var(--text-secondary);
-    border-top: 1px solid var(--border-color);
+    background: var(--bg-tertiary) !important;
+    color: var(--text-secondary) !important;
+    border-radius: var(--border-radius-lg) !important;
+    margin-top: 3em !important;
+    box-shadow: 0 2px 8px var(--shadow-color) !important;
 }
 
 /* Remove all fade/opacity/animation for visibility */
@@ -244,6 +242,8 @@ h1, h2, h3, h4, h5, h6 {
 /* Add spacing between icons and text */
 .section-title span, .skill-category-icon, .contact-icon {
     margin-right: 0.5em;
+    font-size: 1.3em;
+    vertical-align: middle;
 }
 
 .profile-image-container {
