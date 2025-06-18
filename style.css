@@ -373,3 +373,43 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 1rem;
     }
 }
+
+/* EXPERIENCE SECTION VISIBILITY FIX */
+.experience-card, .experience-title, .experience-company, .experience-duration, .experience-description, .achievements-title, .achievements-list, .achievement-item {
+    color: #111 !important;
+    background: #fff !important;
+    text-shadow: none !important;
+    font-weight: 700 !important;
+    opacity: 1 !important;
+}
+
+/* Remove any fade or opacity animations for experience section */
+.experience-card.fade-in, .experience-title.fade-in, .experience-company.fade-in, .experience-description.fade-in, .achievements-title.fade-in, .achievements-list.fade-in, .achievement-item.fade-in {
+    opacity: 1 !important;
+    filter: none !important;
+    animation: none !important;
+    transition: none !important;
+}
+
+body, .stApp, .block-container, h1, h2, h3, h4, h5, h6, p, span, div, a, li, ul, .section-title, .hero-title, .project-title, .skill-category-title, .experience-title, .contact-title, .hero-bio, .project-description, .skill-pill, .tech-tag, .contact-info, .contact-link, .contact-description, .footer-text, .footer-credits, .experience-company, .experience-duration, .experience-description, .achievements-title, .achievements-list, .achievement-item {
+    color: #000 !important;
+    text-shadow: 0 1px 0 #fff, 0 0 2px #fff;
+}
+
+/* Force white background for all cards and containers */
+.glass-card, .project-card, .skill-category, .block-container, .section-container {
+    background: #fff !important;
+}
+
+/* Make all links and buttons high-contrast */
+.cta-button, .social-link, .stButton>button {
+    color: #fff !important;
+    background-image: var(--gradient-primary) !important;
+    border: none !important;
+}
+
+.cta-button:hover, .social-link:hover, .stButton>button:hover {
+    color: #fff !important;
+    background-image: var(--gradient-primary) !important;
+    filter: brightness(1.1);
+}
