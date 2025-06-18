@@ -38,7 +38,7 @@ def create_header():
             with open("Aarya_Mody_Resume.pdf", "rb") as pdf_file:
                 pdf_data = pdf_file.read()
             st.download_button(
-                label="📄 <span style='color:var(--accent-primary);font-weight:700;'>Download Resume</span>",
+                label="📄 Download Resume",
                 data=pdf_data,
                 file_name=f"{NAME.replace(' ', '_')}_Resume.pdf",
                 mime="application/pdf",

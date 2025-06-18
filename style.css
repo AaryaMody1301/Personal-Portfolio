@@ -1,21 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Playfair+Display:wght@700&display=swap');
 
 :root {
-    --bg-primary: #f6f4fa; /* Elegant light lavender */
+    --bg-primary: #f3f0ff; /* Frosted glass lavender */
     --bg-secondary: #fff; /* White for cards */
-    --bg-tertiary: #ede7f6; /* Soft lavender for accents */
+    --bg-tertiary: #e0c3fc; /* Soft violet for accents */
     --text-primary: #2d225a; /* Deep royal indigo */
     --text-secondary: #4b3c7a; /* Slightly lighter indigo */
     --text-muted: #7c6ca7; /* Muted purple */
-    --accent-primary: #7c3aed; /* Royal purple */
+    --accent-primary: #6d28d9; /* Royal purple */
     --accent-secondary: #3b82f6; /* Royal blue */
-    --border-color: #e0d7f3; /* Soft purple border */
-    --shadow-color: rgba(124, 58, 237, 0.10); /* Purple shadow */
-    --gradient-primary: linear-gradient(90deg, #7c3aed 0%, #3b82f6 100%);
+    --border-color: #d1b3ff; /* Soft purple border */
+    --shadow-color: rgba(109, 40, 217, 0.13); /* Purple shadow */
+    --gradient-primary: linear-gradient(90deg, #6d28d9 0%, #3b82f6 100%);
     --gradient-secondary: linear-gradient(90deg, #a78bfa 0%, #60a5fa 100%);
-    --border-radius-sm: 12px;
-    --border-radius-md: 18px;
-    --border-radius-lg: 24px;
+    --border-radius-sm: 16px;
+    --border-radius-md: 22px;
+    --border-radius-lg: 32px;
     --transition-speed: 0.3s;
 }
 
@@ -96,17 +96,18 @@ h1, h2, h3, h4, h5, h6, .section-title, .hero-title, .project-title, .skill-cate
 
 /* Cards */
 .glass-card, .project-card, .skill-category {
-    background: var(--bg-secondary) !important;
+    background: rgba(255,255,255,0.95) !important;
     border: 1.5px solid var(--border-color) !important;
     border-radius: var(--border-radius-lg) !important;
     box-shadow: 0 8px 32px var(--shadow-color) !important;
     padding: 2.2em 1.5em !important;
     margin: 1.2em 0 !important;
     transition: box-shadow var(--transition-speed), border-color var(--transition-speed);
+    backdrop-filter: blur(6px) !important;
 }
 
 .glass-card:hover, .project-card:hover, .skill-category:hover {
-    box-shadow: 0 12px 36px var(--shadow-color) !important;
+    box-shadow: 0 16px 48px var(--shadow-color) !important;
     border-color: var(--accent-primary) !important;
 }
 
@@ -173,9 +174,9 @@ h1, h2, h3, h4, h5, h6, .section-title, .hero-title, .project-title, .skill-cate
     background-image: var(--gradient-primary) !important;
     color: #fff !important;
     border: none !important;
-    padding: 0.8rem 1.7rem !important;
-    font-weight: 600 !important;
-    font-size: 1.08rem !important;
+    padding: 0.9rem 2rem !important;
+    font-weight: 700 !important;
+    font-size: 1.12rem !important;
     box-shadow: 0 2px 8px var(--shadow-color) !important;
     transition: background var(--transition-speed), box-shadow var(--transition-speed), filter var(--transition-speed) !important;
     outline: none !important;
@@ -202,8 +203,8 @@ h1, h2, h3, h4, h5, h6, .section-title, .hero-title, .project-title, .skill-cate
     border: 1px solid var(--border-color) !important;
     font-weight: 600 !important;
     border-radius: var(--border-radius-sm) !important;
-    padding: 0.5em 1.1em !important;
-    font-size: 1.01rem !important;
+    padding: 0.6em 1.2em !important;
+    font-size: 1.05rem !important;
     margin-bottom: 0.3em !important;
     margin-right: 0.3em !important;
     transition: background var(--transition-speed), color var(--transition-speed);
