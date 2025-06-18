@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-    --bg-primary: #f4f6fb; /* Soft blue-gray background */
-    --bg-secondary: #ffffff; /* White for cards and sections */
-    --bg-tertiary: #e3eafc; /* Light blue for accents */
-    --text-primary: #1a2233; /* Deep navy for main text */
-    --text-secondary: #2d3a4a; /* Slightly lighter navy */
-    --text-muted: #5c6b82; /* Muted blue-gray */
-    --accent-primary: #2563eb; /* Vivid blue for highlights */
-    --accent-secondary: #38bdf8; /* Lighter blue for accents */
-    --border-color: #b6c3d1; /* Soft blue border */
-    --shadow-color: rgba(37, 99, 235, 0.08); /* Blue shadow */
+    --bg-primary: #fffbe7; /* Soft warm background */
+    --bg-secondary: #fff; /* White for cards */
+    --bg-tertiary: #ffe082; /* Light gold for accents */
+    --text-primary: #222; /* Very dark for main text */
+    --text-secondary: #4e3b0c; /* Deep brown for contrast */
+    --text-muted: #a67c00; /* Muted gold */
+    --accent-primary: #e65100; /* Strong orange for highlights */
+    --accent-secondary: #ffd600; /* Bright yellow for accents */
+    --border-color: #ffe082; /* Soft gold border */
+    --shadow-color: rgba(230, 81, 0, 0.08); /* Orange shadow */
     --gradient-primary: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
     --border-radius-sm: 8px;
     --border-radius-md: 12px;
