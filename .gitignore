@@ -11,10 +11,6 @@ __pycache__/
 .vscode/
 .streamlit/
 # Ignore large or sensitive files
-*.pdf
-*.png
-*.jpg
-*.jpeg
 # Uncomment below if you want to ignore resume and profile photo from git
 #Aarya_Mody_Resume.pdf
 #profile_photo_optimized.jpg
