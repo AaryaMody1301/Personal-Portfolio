@@ -113,7 +113,6 @@ with st.container():
             <a href="mailto:{EMAIL}" class="social-link" style="background:var(--bg-tertiary); color:var(--accent-primary); padding:0.6em 1.2em; border-radius:var(--border-radius-md); font-weight:700; text-decoration:none; box-shadow:0 2px 8px var(--shadow-color);">✉️ Email Me</a>
         </div>
         """, unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
 
 # === PROJECTS SECTION ===
 with st.container():
@@ -152,7 +151,6 @@ with st.container():
                         </div>
                     </div>
                     """, unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
 
 # === EXPERIENCE SECTION ===
 with st.container():
@@ -182,7 +180,6 @@ with st.container():
             </div>
         </div>
         """, unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
 
 # === SKILLS SECTION ===
 with st.container():
@@ -221,7 +218,6 @@ with st.container():
                         </div>
                     </div>
                     """, unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
 
 # === CONTACT SECTION ===
 with st.container():
@@ -252,7 +248,6 @@ with st.container():
             </div>
         </div>
         """, unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
 
 # === FOOTER ===
 st.markdown(f"""
