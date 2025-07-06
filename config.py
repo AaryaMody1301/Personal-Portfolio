@@ -10,7 +10,7 @@
 
 # PERSONAL INFORMATION
 NAME = "Aarya Mody"
-TITLE = "Python Developer & Data Analyst" 
+TITLE = "Python Developer | Data Scientist | AI Enthusiast" 
 EMAIL = "aaryamody5@gmail.com"  # Replace with your actual email
 PHONE = "+91 8000334499"  # Replace with your actual phone
 LOCATION = "Surat, India"  # Replace with your actual location
@@ -129,22 +129,17 @@ STATS = {
     "best_accuracy": "95%"  # Face Detection Attendance System accuracy
 }
 
-# PROFICIENCY LEVELS (0-100) - Based on your projects and experience
+
 PROFICIENCY = {
-    "Python": 92,
-    "Data Analysis": 88,
-    "Machine Learning": 85,
-    "Computer Vision": 90,
-    "SQL": 80,
-    "Tableau": 85
+    "Python": "Expert",
+    "Data Analysis": "Expert",
+    "Machine Learning": "Advanced",
+    "Computer Vision": "Advanced",
+    "SQL": "Expert",
+    "Tableau": "Advanced",
 }
 
 # COLOR SCHEME (You can customize these colors)
-PRIMARY_COLOR = "#667eea"
-SECONDARY_COLOR = "#764ba2"
-BACKGROUND_COLOR = "#FFFFFF"
-TEXT_COLOR = "#333333"
-
 # NOTES:
 # - Make sure all URLs are valid and accessible
 # - Keep descriptions concise but informative
