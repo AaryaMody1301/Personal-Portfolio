@@ -31,11 +31,15 @@ Featured public repositories currently include:
 ```text
 index.html                      semantic portfolio content + metadata + JSON-LD
 style.css                       responsive presentation and accessibility states
+404.html                        custom not-found page
+.nojekyll                       plain-static GitHub Pages marker
 profile_photo_optimized.jpg     local profile image
 Aarya_Mody_Resume.pdf           downloadable resume
 robots.txt                      crawler policy
 sitemap.xml                     canonical sitemap
+docs/GITHUB_PAGES_DEPLOYMENT.md preview, custom-domain, HTTPS, and rollback runbook
 tests/test_static_site.py       dependency-free content/SEO/accessibility contracts
+tests/test_pages_readiness.py   GitHub Pages deployment-boundary contracts
 .github/workflows/portfolio-ci.yml
                                static tests + HTTP server smoke
 ```
@@ -67,7 +71,7 @@ python -m unittest discover -s tests -p "test_*.py" -v
 python -c "import xml.etree.ElementTree as ET; ET.parse('sitemap.xml')"
 ```
 
-CI additionally starts a real HTTP server and verifies that the page, stylesheet, resume, profile image, `robots.txt`, and sitemap are all publicly servable.
+CI additionally starts a real HTTP server and verifies that the page, stylesheet, resume, profile image, crawler files, custom 404 page, and `.nojekyll` marker are all servable.
 
 The static contracts cover:
 
@@ -81,7 +85,8 @@ The static contracts cover:
 - `noopener noreferrer` on new-tab external links;
 - local asset/link existence;
 - absence of stale placeholder/Streamlit copy;
-- specific GitHub URLs for flagship projects.
+- specific GitHub URLs for flagship projects;
+- GitHub Pages preview readiness and safe custom-domain boundaries.
 
 ## Accessibility baseline
 
@@ -102,18 +107,19 @@ All structured-data claims should remain consistent with content users can actua
 
 ## Deployment
 
-The repository is deployable to any static host. A release/deployment should publish the repository root without a build step and preserve these public paths:
+The intended host is **GitHub Pages**, publishing the repository root directly from `master` with **Deploy from a branch**. No build step is required.
 
-```text
-/
-/style.css
-/profile_photo_optimized.jpg
-/Aarya_Mody_Resume.pdf
-/robots.txt
-/sitemap.xml
-```
+Deployment is deliberately gated:
 
-Before changing the production domain to a new deployment, verify HTTPS, canonical redirects, the downloadable resume, social previews, and all external project links.
+1. publish and accept the GitHub-hosted project preview;
+2. only then attach `aaryamody.app` and change DNS;
+3. wait for GitHub's TLS provisioning and enable HTTPS;
+4. complete the production acceptance checklist;
+5. retain the previous DNS configuration as the rollback path until the cutover is verified.
+
+See [`docs/GITHUB_PAGES_DEPLOYMENT.md`](docs/GITHUB_PAGES_DEPLOYMENT.md) for the exact Pages settings, preview URL, current GitHub DNS targets, HTTPS checks, and rollback instructions.
+
+The repository intentionally does **not** include a `CNAME` file during the preview phase. That prevents a branch-published preview from attaching the production domain before visual and functional acceptance.
 
 ## Updating portfolio content
 
