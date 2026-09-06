@@ -1,16 +1,24 @@
-# .gitignore for Streamlit Portfolio
+# Python
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
 *.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Streamlit
+.streamlit/
+
+# Local data / secrets
 *.db
 *.sqlite3
-*.env
-.env*
+.env
+.env.*
+*.log
+
+# Editors / OS
 .DS_Store
 .vscode/
-.streamlit/
-# Ignore large or sensitive files
-# Uncomment below if you want to ignore resume and profile photo from git
-#Aarya_Mody_Resume.pdf
-#profile_photo_optimized.jpg
+.idea/
