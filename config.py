@@ -1,149 +1,191 @@
-# Portfolio Configuration
-# Edit this file to customize your portfolio with your actual information
+"""Content and metadata for the portfolio application.
 
-# INSTRUCTIONS FOR CUSTOMIZATION:
-# 1. Replace all placeholder information with your actual details
-# 2. Update the skills, projects, and experience sections
-# 3. Add your real GitHub and LinkedIn URLs
-# 4. Replace the placeholder image URLs with your actual photos
-# 5. Update contact information
+Keep portfolio facts in this module so the Streamlit UI stays presentation-focused.
+"""
 
-# PERSONAL INFORMATION
 NAME = "Aarya Mody"
-TITLE = "Python Developer | Data Scientist | AI Enthusiast" 
-EMAIL = "aaryamody5@gmail.com"  # Replace with your actual email
-PHONE = "+91 8000334499"  # Replace with your actual phone
-LOCATION = "Surat, India"  # Replace with your actual location
-GITHUB_URL = "https://github.com/AaryaMody1301"  # Replace with your GitHub
-LINKEDIN_URL = "https://linkedin.com/in/aarya-mody"  # Replace with your LinkedIn
-PROFILE_PHOTO = "profile_photo_optimized.jpg"  # Your optimized profile photo
-BIO = """Results-oriented data analyst with proven expertise in Python, SQL, Tableau, and machine learning. Skilled at building predictive models, automating data pipelines, and developing AI/NLP-powered tools. Known for delivering insights that improve operations and support strategic decisions. Seeking opportunities in data analytics and business intelligence."""
+TITLE = "Data Engineer & Data Analyst"
+TAGLINE = (
+    "I build governed data pipelines, reliable analytical models, and decision-ready "
+    "reporting systems with Python, SQL, Azure Databricks, and Power BI."
+)
+LOCATION = "Surat, India"
+AVAILABILITY = "Open to data engineering and analytics opportunities"
+CURRENT_FOCUS = "Azure Databricks migration, data quality governance, and analytics modernization"
 
-# SKILLS (Based on your actual projects and experience)
-PROGRAMMING_LANGUAGES = ["Python", "SQL", "JavaScript", "HTML/CSS"]
-WEB_DEVELOPMENT = ["Streamlit", "Flask", "HTML/CSS", "Bootstrap", "Dash"]
-DATA_SCIENCE = ["Pandas", "NumPy", "Scikit-learn", "Matplotlib", "Seaborn", "Plotly", "Tableau", "ARIMA", "Time Series Analysis"]
-AI_ML = ["NLP", "Computer Vision", "OpenCV", "dlib", "Machine Learning", "Speech Recognition"]
-DATABASES = ["MySQL", "PostgreSQL", "SQLite", "Excel"]
-TOOLS_TECHNOLOGIES = ["Git", "Jupyter", "VS Code", "Power BI", "APIs", "Statistical Analysis"]
+EMAIL = "aaryamody5@gmail.com"
+PHONE = "+91 80003 34499"
+GITHUB_URL = "https://github.com/AaryaMody1301"
+LINKEDIN_URL = "https://linkedin.com/in/aarya-mody"
+SITE_URL = "https://aaryamody.app"
+PROFILE_PHOTO = "profile_photo_optimized.jpg"
+RESUME_FILE = "Aarya_Mody_Resume.pdf"
 
-# PROJECTS (Your actual projects from resume)
-PROJECT_1 = {
-    "title": "Sales Forecasting Using Time Series Analysis",
-    "description": "Forecasted retail sales using ARIMA in Python with MAPE <5%. Automated data preprocessing with Pandas/NumPy, reducing prep time by 50%. Visualized trends in Tableau, aiding stakeholder decision-making.",
-    "technologies": ["Python", "ARIMA", "Pandas", "NumPy", "Tableau", "Time Series Analysis"],
-    "github": "https://github.com/AaryaMody1301/Sales-Forcasting-Using-Time-Series-Analysis",
-    "demo": None,
-    "features": ["ARIMA Modeling", "Automated Preprocessing", "Tableau Visualizations", "MAPE <5% Accuracy"]
+BIO = (
+    "Data professional focused on turning operational data into trusted analytics. "
+    "My work spans ingestion and transformation, SQL performance, semantic validation, "
+    "forecasting, dashboard delivery, and automation. I care about reproducibility, "
+    "clear evidence, and systems that remain understandable after they reach production."
+)
+
+PROOF_METRICS = [
+    {"value": "4+ yrs", "label": "Analytics delivery"},
+    {"value": "20+ hrs/wk", "label": "Manual work automated"},
+    {"value": "<5%", "label": "Forecasting MAPE"},
+    {"value": "40%", "label": "SQL performance gain"},
+    {"value": "5", "label": "Governed data domains"},
+]
+
+SKILLS = {
+    "Data Engineering": [
+        "Azure Databricks",
+        "Delta Lake",
+        "Medallion Architecture",
+        "PySpark",
+        "ETL / ELT",
+        "Data Modeling",
+        "Direct Lake",
+    ],
+    "Analytics": [
+        "SQL",
+        "Python",
+        "Pandas",
+        "Forecasting",
+        "KPI Design",
+        "Statistical Analysis",
+        "Data Storytelling",
+    ],
+    "Business Intelligence": [
+        "Power BI",
+        "DAX",
+        "Power Query",
+        "Semantic Models",
+        "Dashboard Design",
+        "Tableau",
+    ],
+    "Databases": ["PostgreSQL", "MySQL", "SQLite"],
+    "Governance & Quality": [
+        "Schema Validation",
+        "Source-to-Target Mapping",
+        "Audit Trails",
+        "Data Quality Controls",
+        "QA Cycles",
+    ],
+    "Engineering Tools": [
+        "Git",
+        "GitHub Actions",
+        "Jupyter",
+        "VS Code",
+        "APIs",
+        "Streamlit",
+    ],
 }
 
-PROJECT_2 = {
-    "title": "Sentiment Analysis for Product Reviews", 
-    "description": "Developed an NLP pipeline in Python to analyse 50,000 product reviews with 92% accuracy. Implemented interactive dashboards with Matplotlib and Seaborn, providing real-time insights into customer sentiment trends.",
-    "technologies": ["Python", "NLP", "Matplotlib", "Seaborn", "Natural Language Processing"],
-    "github": "https://github.com/AaryaMody1301/Sentiment-Analysis-for-Product-Reviews",
-    "demo": None,
-    "features": ["NLP Pipeline", "92% Accuracy", "Interactive Dashboards", "Real-time Insights"]
+EXPERIENCE = [
+    {
+        "title": "Data Analyst | Analytics & Digital Intelligence",
+        "company": "Brentwood Industries, Inc.",
+        "location": "Vadodara, India",
+        "duration": "Feb 2026 – Present",
+        "highlights": [
+            "Support migration of production reporting into Azure Databricks Bronze, Silver, and Gold layers.",
+            "Validate Silver-to-Gold transformations, schemas, audit trails, and governance controls.",
+            "Map legacy reporting metrics into performance-tuned equivalents for Direct Lake analytics.",
+            "Own structured QA across Inventory, Quality, Planning, Purchases, and Production domains.",
+        ],
+        "stack": ["Azure Databricks", "PySpark", "SQL", "Delta Lake", "Power BI"],
+    },
+    {
+        "title": "Data Analyst (Data Pipelines & Analytics)",
+        "company": "IITS - Integrated IT Solutions",
+        "location": "Surat, India",
+        "duration": "Apr 2023 – Dec 2025",
+        "highlights": [
+            "Automated recurring reporting workflows with Python and SQL stored procedures.",
+            "Improved SQL reporting pipeline performance by approximately 40%.",
+            "Unified ERP and CRM sources into shared staging and reporting flows.",
+            "Delivered Power BI dashboards used for daily operational and management reporting.",
+        ],
+        "stack": ["Python", "SQL", "Power BI", "ETL", "ERP / CRM"],
+    },
+    {
+        "title": "Data Analyst Intern",
+        "company": "IITS - Integrated IT Solutions",
+        "location": "Surat, India",
+        "duration": "Apr 2022 – Mar 2023",
+        "highlights": [
+            "Built SQL queries and Python cleaning scripts for analytical datasets.",
+            "Documented data models, source-to-target mappings, and business transformations.",
+            "Supported dashboard, validation, and reporting work that progressed into production use.",
+        ],
+        "stack": ["Python", "SQL", "Excel", "Power BI"],
+    },
+]
+
+PROJECTS = [
+    {
+        "title": "StockPulse",
+        "category": "Data Platform / Research Engineering",
+        "description": (
+            "Evidence-first equity research platform with PostgreSQL/Prisma persistence, SEC EDGAR ingestion, "
+            "deterministic change intelligence, grounded optional AI, and a credential-free reviewer demo."
+        ),
+        "technologies": ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "SEC EDGAR"],
+        "github": "https://github.com/AaryaMody1301/StockPulse",
+        "proof": "Release-grade CI includes PostgreSQL migrations, tests, production smoke checks, and Chromium reviewer acceptance.",
+    },
+    {
+        "title": "SQL Practice Project",
+        "category": "Analytics Engineering",
+        "description": (
+            "PostgreSQL analytics-engineering case study with reusable analytical models, correctness contracts, "
+            "reviewed expected outputs, and evidence-driven query optimization."
+        ),
+        "technologies": ["PostgreSQL", "SQL", "SQLFluff", "GitHub Actions"],
+        "github": "https://github.com/AaryaMody1301/SQL_Practice_Project",
+        "proof": "Includes deterministic correctness fixtures and a 200k-row performance workload with measured benchmark evidence.",
+    },
+    {
+        "title": "Sales Forecasting Using Time Series Analysis",
+        "category": "Forecasting / ML Engineering",
+        "description": (
+            "Leakage-aware forecasting package with chronological backtesting, reproducible artifacts, "
+            "baseline comparisons, model adapters, and a manifest-backed dashboard."
+        ),
+        "technologies": ["Python", "ARIMA", "ETS", "XGBoost", "Streamlit"],
+        "github": "https://github.com/AaryaMody1301/Sales-Forcasting-Using-Time-Series-Analysis",
+        "proof": "Published v1 release with a reviewed real-data benchmark and checksum-verified artifacts.",
+    },
+    {
+        "title": "OriginKeep",
+        "category": "Trust / Provenance Engineering",
+        "description": (
+            "Local-first desktop and browser system that gives files a persistent provenance passport covering "
+            "origin, SHA-256 identity, change evidence, version lineage, trust signals, and recovery."
+        ),
+        "technologies": ["Tauri", "React", "TypeScript", "Rust", "SQLite"],
+        "github": "https://github.com/AaryaMody1301/OriginKeep",
+        "proof": "Cross-platform release-candidate builds cover Windows NSIS, macOS DMG, Linux AppImage, and DEB.",
+    },
+]
+
+EDUCATION = {
+    "degree": "Bachelor of Science - Information Technology",
+    "institution": "Parul University",
+    "duration": "2020 – 2023",
+    "gpa": "8.73/10",
 }
 
-PROJECT_3 = {
-    "title": "Face Detection Attendance System",
-    "description": "Built a facial recognition attendance system in Python using OpenCV and dlib, achieving 95% accuracy across 100+ users. Optimized image processing algorithms to reduce computation time by 40%. Integrated SQLite for efficient storage and retrieval of attendance records.",
-    "technologies": ["Python", "OpenCV", "dlib", "SQLite", "Computer Vision"],
-    "github": "https://github.com/AaryaMody1301/Face_Detection_Attendance_System",
-    "demo": None,
-    "features": ["95% Accuracy", "100+ Users", "40% Speed Optimization", "SQLite Integration"]
+CERTIFICATIONS = [
+    "Microsoft Power BI Data Analyst Associate (PL-300)",
+    "SQL for Data Analysis",
+    "Deloitte Australia Data Analytics Job Simulation",
+    "Learning Excel: Data Analysis",
+]
+
+LEADERSHIP = {
+    "title": "Google Developer Student Club Lead",
+    "description": "Organized a 100+ participant technology hackathon and led student developer initiatives.",
 }
 
-PROJECT_4 = {
-    "title": "FRIDAY Voice Assistant",
-    "description": "Developed a voice-activated AI assistant with Python, NLP, and APIs. Achieved 92% wake word accuracy and <2-second response time.",
-    "technologies": ["Python", "NLP", "APIs", "Speech Recognition", "AI"],
-    "github": "https://github.com/AaryaMody1301/friday-voice-assistant",
-    "demo": None,
-    "features": ["92% Wake Word Accuracy", "<2-second Response Time", "Voice Activation", "API Integration"]
-}
-
-# Add more projects as needed...
-
-# WORK EXPERIENCE (Your actual experience from resume)
-EXPERIENCE_1 = {
-    "title": "Data Research Trainee",
-    "company": "TRANSFORM Solutions",
-    "duration": "June 2025 – Present",
-    "description": "Conducting web research and data collection for client projects. Cleaning, structuring, and analyzing datasets using Excel and SQL. Assisting with insight reporting and visualization to support data-driven decisions.",
-    "achievements": [
-        "Conducting comprehensive web research and data collection for multiple client projects",
-        "Cleaning, structuring, and analyzing complex datasets using Excel and SQL",
-        "Assisting with insight reporting and visualization to support data-driven decisions",
-        "Contributing to improved client satisfaction through accurate data analysis"
-    ]
-}
-
-EXPERIENCE_2 = {
-    "title": "Warehouse Associate",
-    "company": "Amazon DSP",
-    "duration": "November 2024",
-    "description": "Optimized logistics processes at Amazon DSP in Schönefeld, Germany, contributing to operational efficiency and delivery performance.",
-    "achievements": [
-        "Optimized logistics processes, contributing to a 98% on-time delivery rate for over 100 daily orders",
-        "Collaborated with cross-functional teams to enhance operational efficiency",
-        "Maintained high accuracy standards in package handling and sorting",
-        "Adapted quickly to fast-paced warehouse environment and German work culture"
-    ]
-}
-
-# Add more experience entries as needed...
-
-# EDUCATION (Your actual education details)
-EDUCATION_1 = {
-    "degree": "Bachelor's in Information Technology",
-    "institution": "Parul University, Vadodara, India",
-    "year": "June 2020 – April 2023",
-    "gpa": "8.73/10.0",
-    "relevant_courses": ["Data Structures", "Database Management", "Machine Learning", "Computer Vision", "Software Engineering", "Web Development"],
-    "thesis": "Face Recognition Attendance System (95% accuracy)"
-}
-
-# LANGUAGES
-LANGUAGES = {
-    "Gujarati": "Native",
-    "Hindi": "Native", 
-    "English": "Fluent (C2)",
-    "German": "Basic (A2)"
-}
-
-# SOCIAL MEDIA LINKS
-SOCIAL_LINKS = {
-    "github": GITHUB_URL,
-    "linkedin": LINKEDIN_URL,
-    "email": f"mailto:{EMAIL}",
-    "phone": f"tel:{PHONE}"
-}
-
-# QUICK STATS (Based on your actual achievements)
-STATS = {
-    "projects_completed": "4+",
-    "years_experience": "1+", 
-    "technologies": "15+",
-    "best_accuracy": "95%"  # Face Detection Attendance System accuracy
-}
-
-
-PROFICIENCY = {
-    "Python": "Expert",
-    "Data Analysis": "Expert",
-    "Machine Learning": "Advanced",
-    "Computer Vision": "Advanced",
-    "SQL": "Expert",
-    "Tableau": "Advanced",
-}
-
-# COLOR SCHEME (You can customize these colors)
-# NOTES:
-# - Make sure all URLs are valid and accessible
-# - Keep descriptions concise but informative
-# - Use professional language throughout
-# - Test all links before finalizing
-# - Consider adding your actual profile photo
-# - Update the resume download section with your actual resume
+LANGUAGES = ["English (C2)", "German (A2)", "Hindi (Native)", "Gujarati (Native)"]
