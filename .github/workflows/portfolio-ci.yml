@@ -26,7 +26,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Validate static portfolio contracts
+      - name: Validate static portfolio and Pages contracts
         run: python -m unittest discover -s tests -p "test_*.py" -v
 
       - name: Validate sitemap XML
@@ -52,3 +52,5 @@ jobs:
           curl --fail --silent --show-error http://127.0.0.1:8000/sitemap.xml > /dev/null
           curl --fail --silent --show-error http://127.0.0.1:8000/profile_photo_optimized.jpg > /dev/null
           curl --fail --silent --show-error http://127.0.0.1:8000/Aarya_Mody_Resume.pdf > /dev/null
+          curl --fail --silent --show-error http://127.0.0.1:8000/404.html | grep -q "This page is not in the data map"
+          curl --fail --silent --show-error http://127.0.0.1:8000/.nojekyll > /dev/null
