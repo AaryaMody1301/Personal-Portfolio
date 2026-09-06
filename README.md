@@ -1,146 +1,129 @@
-# Personal Portfolio
+# Aarya Mody — Personal Portfolio
 
-A focused, reproducible portfolio for **Aarya Mody — Data Engineer & Data Analyst**.
+Production-source portfolio for **Aarya Mody**, focused on data engineering, analytics engineering, business intelligence, governance, and automation.
 
-**Production portfolio:** https://aaryamody.app  
-**GitHub:** https://github.com/AaryaMody1301  
-**LinkedIn:** https://linkedin.com/in/aarya-mody
+**Production domain:** [aaryamody.app](https://aaryamody.app/)
 
-This repository contains a lightweight Streamlit implementation of the portfolio. The production site remains the primary public experience; this repo provides an inspectable, runnable version of the same professional positioning and selected engineering work.
+## Why this repository exists
 
-## What this portfolio emphasizes
+The portfolio is deliberately a dependency-light static site. The public presentation, SEO metadata, project links, resume asset, and accessibility baseline are all versioned here so the repository can be the source of truth for the production website rather than maintaining a separate app implementation.
 
-- Data engineering: Azure Databricks, Delta Lake, PySpark, ETL/ELT, Medallion Architecture.
-- Analytics: SQL, Python, forecasting, KPI design, semantic validation, and data storytelling.
-- Business intelligence: Power BI, DAX, Power Query, semantic models, and dashboard delivery.
-- Governance: schema validation, source-to-target mapping, audit trails, and data-quality controls.
-- Engineering evidence: reproducible tests, CI, measured performance, explicit trust boundaries, and release discipline.
+## Portfolio positioning
 
-## Featured public projects
+The site presents current work around:
 
-### StockPulse
-Evidence-first equity research platform with PostgreSQL/Prisma persistence, SEC EDGAR ingestion, deterministic change intelligence, grounded optional AI, and a credential-free reviewer demo.
+- Azure Databricks, Delta Lake, and Medallion Architecture;
+- SQL and Python transformation/automation;
+- Power BI semantic models, DAX, and reporting systems;
+- schema/source-to-target validation and data governance;
+- reproducible analytics, forecasting, and reliability engineering.
 
-Repository: https://github.com/AaryaMody1301/StockPulse
+Featured public repositories currently include:
 
-### SQL Practice Project
-PostgreSQL analytics-engineering case study with correctness contracts, reusable analytical models, reviewed outputs, and evidence-driven performance benchmarking.
-
-Repository: https://github.com/AaryaMody1301/SQL_Practice_Project
-
-### Sales Forecasting Using Time Series Analysis
-Leakage-aware forecasting package with chronological evaluation, reproducible artifacts, explicit baselines, and a published v1 release.
-
-Repository: https://github.com/AaryaMody1301/Sales-Forcasting-Using-Time-Series-Analysis
-
-### OriginKeep
-Local-first file provenance system that records origin/context, SHA-256 identity, change evidence, version lineage, trust signals, and recoverable lifecycle actions.
-
-Repository: https://github.com/AaryaMody1301/OriginKeep
+- [StockPulse](https://github.com/AaryaMody1301/StockPulse)
+- [OriginKeep](https://github.com/AaryaMody1301/OriginKeep)
+- [SQL Practice Project](https://github.com/AaryaMody1301/SQL_Practice_Project)
+- [Sales Forecasting Using Time Series Analysis](https://github.com/AaryaMody1301/Sales-Forcasting-Using-Time-Series-Analysis)
+- [Face Detection Attendance System](https://github.com/AaryaMody1301/Face_Detection_Attendance_System)
 
 ## Architecture
 
 ```text
-config.py
-  |
-  | structured portfolio content
-  v
-app.py
-  |
-  | Streamlit sections
-  v
-style.css
-  |
-  | responsive presentation + reduced-motion support
-  v
-Browser
+index.html                      semantic portfolio content + metadata + JSON-LD
+style.css                       responsive presentation and accessibility states
+profile_photo_optimized.jpg     local profile image
+Aarya_Mody_Resume.pdf           downloadable resume
+robots.txt                      crawler policy
+sitemap.xml                     canonical sitemap
+tests/test_static_site.py       dependency-free content/SEO/accessibility contracts
+.github/workflows/portfolio-ci.yml
+                               static tests + HTTP server smoke
 ```
 
-The application deliberately keeps personal/project content in `config.py` instead of scattering it through UI code.
+There is no runtime framework, package manager, database, API key, analytics dependency, or JavaScript requirement for the core site.
 
-## Local development
+## Local preview
 
-### Requirements
-
-- Python 3.11+
-- pip
-
-### Run
+Python is only needed as a convenient local static server:
 
 ```bash
-git clone https://github.com/AaryaMody1301/Personal-Portfolio.git
-cd Personal-Portfolio
-
-python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-
-streamlit run app.py
+python -m http.server 8000
 ```
 
-Open `http://localhost:8501`.
+Then open:
+
+```text
+http://localhost:8000/
+```
+
+Any equivalent static server works.
 
 ## Verification
 
-The CI workflow installs the pinned runtime dependency, compiles the Python source, runs configuration tests, boots the real Streamlit application in headless mode, and verifies Streamlit's health endpoint.
-
-Local checks:
+Run the repository contracts locally:
 
 ```bash
-python -m compileall app.py config.py
-python -m unittest discover -s tests -v
-
-streamlit run app.py --server.headless true --server.port 8501
-curl --fail http://127.0.0.1:8501/_stcore/health
+python -m unittest discover -s tests -p "test_*.py" -v
+python -c "import xml.etree.ElementTree as ET; ET.parse('sitemap.xml')"
 ```
 
-## Accessibility and performance direction
+CI additionally starts a real HTTP server and verifies that the page, stylesheet, resume, profile image, `robots.txt`, and sitemap are all publicly servable.
 
-The current baseline avoids decorative JavaScript and percentage-based skill animations. Styling includes `prefers-reduced-motion` handling, readable contrast, responsive layout, and native Streamlit controls for links/downloads where possible.
+The static contracts cover:
 
-The production portfolio should continue targeting WCAG 2.2 Level AA behavior, keyboard usability, clear focus states, descriptive link text, responsive layouts, and strong Core Web Vitals.
+- one document H1 and an English language declaration;
+- canonical URL and description metadata;
+- Open Graph metadata;
+- parseable `Person` JSON-LD matching the visible identity;
+- skip navigation and labeled primary navigation;
+- valid internal anchor targets;
+- non-empty image alt text;
+- `noopener noreferrer` on new-tab external links;
+- local asset/link existence;
+- absence of stale placeholder/Streamlit copy;
+- specific GitHub URLs for flagship projects.
 
-## Repository structure
+## Accessibility baseline
 
-```text
-.
-├── .github/workflows/portfolio-ci.yml
-├── app.py
-├── config.py
-├── style.css
-├── requirements.txt
-├── tests/test_portfolio_config.py
-├── profile_photo_optimized.jpg
-├── Aarya_Mody_Resume.pdf
-├── LICENSE
-└── README.md
-```
+The site uses semantic landmarks, a skip link, visible keyboard focus, generously sized interactive controls, responsive layouts, and `prefers-reduced-motion` handling. These are repository-enforced design boundaries rather than claims of formal WCAG certification.
+
+## Search and sharing
+
+`index.html` includes:
+
+- canonical metadata;
+- meta description;
+- Open Graph metadata;
+- Twitter card metadata;
+- schema.org `Person` JSON-LD;
+- public sitemap and crawler policy.
+
+All structured-data claims should remain consistent with content users can actually see on the page.
 
 ## Deployment
 
-For this Streamlit implementation, Streamlit Community Cloud is the simplest deployment target:
+The repository is deployable to any static host. A release/deployment should publish the repository root without a build step and preserve these public paths:
 
-1. Connect this repository.
-2. Select `app.py` as the entry point.
-3. Use a supported Python runtime.
-4. Deploy.
+```text
+/
+/style.css
+/profile_photo_optimized.jpg
+/Aarya_Mody_Resume.pdf
+/robots.txt
+/sitemap.xml
+```
 
-The custom production site at `aaryamody.app` is treated separately from this Streamlit deployment path.
+Before changing the production domain to a new deployment, verify HTTPS, canonical redirects, the downloadable resume, social previews, and all external project links.
 
-## Content updates
+## Updating portfolio content
 
-Most portfolio updates should only require editing `config.py`:
-
-- professional title and focus;
-- experience;
-- featured projects;
-- skills;
-- education/certifications;
-- contact links.
-
-Avoid adding unverified performance or accuracy claims. Prefer measurements already documented in the linked project repositories or professional case studies.
+1. Edit `index.html`.
+2. Keep claims evidence-based and avoid invented skill percentages.
+3. Use specific repository URLs for public projects.
+4. Update metadata/JSON-LD when professional positioning changes.
+5. Run the static tests.
+6. Open a pull request and merge only after Portfolio CI is green.
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+MIT. See [`LICENSE`](LICENSE).

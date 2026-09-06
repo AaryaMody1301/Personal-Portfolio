@@ -15,7 +15,7 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
 
     steps:
       - name: Check out repository
@@ -25,37 +25,30 @@ jobs:
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: "3.12"
-          cache: pip
-          cache-dependency-path: requirements.txt
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install -r requirements.txt
+      - name: Validate static portfolio contracts
+        run: python -m unittest discover -s tests -p "test_*.py" -v
 
-      - name: Compile Python sources
-        run: python -m compileall -q app.py config.py tests
+      - name: Validate sitemap XML
+        run: python -c "import xml.etree.ElementTree as ET; ET.parse('sitemap.xml')"
 
-      - name: Run configuration tests
-        run: python -m unittest discover -s tests -v
-
-      - name: Boot Streamlit and verify health
+      - name: Serve site and verify public assets
         shell: bash
         run: |
-          streamlit run app.py \
-            --server.headless true \
-            --server.address 127.0.0.1 \
-            --server.port 8501 \
-            > /tmp/portfolio-streamlit.log 2>&1 &
-          APP_PID=$!
-          trap 'kill "$APP_PID" 2>/dev/null || true' EXIT
+          python -m http.server 8000 --bind 127.0.0.1 > /tmp/portfolio-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
 
-          for attempt in {1..30}; do
-            if curl --fail --silent --show-error http://127.0.0.1:8501/_stcore/health; then
-              exit 0
+          for attempt in {1..20}; do
+            if curl --fail --silent --show-error http://127.0.0.1:8000/index.html > /tmp/index.html; then
+              break
             fi
-            sleep 1
+            sleep 0.5
           done
 
-          cat /tmp/portfolio-streamlit.log
-          exit 1
+          grep -q "Data Engineer & Data Analyst" /tmp/index.html
+          curl --fail --silent --show-error http://127.0.0.1:8000/style.css > /dev/null
+          curl --fail --silent --show-error http://127.0.0.1:8000/robots.txt > /dev/null
+          curl --fail --silent --show-error http://127.0.0.1:8000/sitemap.xml > /dev/null
+          curl --fail --silent --show-error http://127.0.0.1:8000/profile_photo_optimized.jpg > /dev/null
+          curl --fail --silent --show-error http://127.0.0.1:8000/Aarya_Mody_Resume.pdf > /dev/null
