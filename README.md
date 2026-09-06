@@ -1,216 +1,146 @@
-# Professional Portfolio Website
+# Personal Portfolio
 
-A modern, responsive, and accessible portfolio website built with Streamlit, featuring advanced performance optimizations, comprehensive error handling, and enterprise-grade code quality.
+A focused, reproducible portfolio for **Aarya Mody — Data Engineer & Data Analyst**.
 
-## 🚀 Key Features
+**Production portfolio:** https://aaryamody.app  
+**GitHub:** https://github.com/AaryaMody1301  
+**LinkedIn:** https://linkedin.com/in/aarya-mody
 
-### **Core Functionality**
-- **Mobile-First Responsive Design** - Touch-friendly interactions, collapsible navigation
-- **SEO Optimization** - Meta tags, Open Graph, Twitter Cards, structured data
-- **Accessibility** - ARIA labels, keyboard navigation, screen reader support
-- **Performance Optimization** - Image compression, caching, lazy loading
-- **Error Handling** - Graceful fallbacks, user feedback, comprehensive logging
+This repository contains a lightweight Streamlit implementation of the portfolio. The production site remains the primary public experience; this repo provides an inspectable, runnable version of the same professional positioning and selected engineering work.
 
-### **Code Quality & Architecture**
-- **Type Hints** - Full type annotations for better IDE support and maintainability
-- **Comprehensive Documentation** - Detailed docstrings and inline comments
-- **Modular Architecture** - Separate utility functions and configuration management
-- **Error Resilience** - Robust error handling with fallbacks and user notifications
-- **Performance Monitoring** - Built-in metrics, timing, and cache monitoring
+## What this portfolio emphasizes
 
-### **Security & Best Practices**
-- **Input Sanitization** - HTML sanitization for all user-facing content
-- **Validation** - Email, URL, phone number, and file validation
-- **Safe File Handling** - Image format validation and secure file operations
-- **Logging** - Comprehensive logging for debugging and monitoring
+- Data engineering: Azure Databricks, Delta Lake, PySpark, ETL/ELT, Medallion Architecture.
+- Analytics: SQL, Python, forecasting, KPI design, semantic validation, and data storytelling.
+- Business intelligence: Power BI, DAX, Power Query, semantic models, and dashboard delivery.
+- Governance: schema validation, source-to-target mapping, audit trails, and data-quality controls.
+- Engineering evidence: reproducible tests, CI, measured performance, explicit trust boundaries, and release discipline.
 
-## 📁 Project Structure
+## Featured public projects
 
-```
-Portfolio/
-├── app.py                        # Main Streamlit application with enhanced features
-├── config.py                     # Configuration data (personal info, projects, etc.)
-├── utils.py                      # Utility functions for validation and optimization
-├── style.css                     # Custom CSS for styling and responsiveness
-├── requirements.txt              # Python dependencies (minimized for performance)
-├── README.md                     # Comprehensive documentation
-├── portfolio.log                 # Application logs (created on first run)
-├── profile_photo_optimized.jpg   # Optimized profile photo
-├── Aarya_Mody_Resume.pdf         # Resume file for download
-└── __pycache__/                  # Python cache directory
-```
+### StockPulse
+Evidence-first equity research platform with PostgreSQL/Prisma persistence, SEC EDGAR ingestion, deterministic change intelligence, grounded optional AI, and a credential-free reviewer demo.
 
-## 🚀 Quick Start
+Repository: https://github.com/AaryaMody1301/StockPulse
 
-### Prerequisites
+### SQL Practice Project
+PostgreSQL analytics-engineering case study with correctness contracts, reusable analytical models, reviewed outputs, and evidence-driven performance benchmarking.
 
-- Python 3.7 or higher
-- pip package manager
+Repository: https://github.com/AaryaMody1301/SQL_Practice_Project
 
-### Installation
+### Sales Forecasting Using Time Series Analysis
+Leakage-aware forecasting package with chronological evaluation, reproducible artifacts, explicit baselines, and a published v1 release.
 
-1. **Clone or download this repository**
-   ```bash
-   git clone <your-repo-url>
-   cd "Personal Portfolio"
-   ```
+Repository: https://github.com/AaryaMody1301/Sales-Forcasting-Using-Time-Series-Analysis
 
-2. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+### OriginKeep
+Local-first file provenance system that records origin/context, SHA-256 identity, change evidence, version lineage, trust signals, and recoverable lifecycle actions.
 
-3. **Add your profile photo**
-   - Place your profile photo in the project directory
-   - Name it `profile_photo_optimized.jpg` or update the `PROFILE_PHOTO` variable in `config.py`
+Repository: https://github.com/AaryaMody1301/OriginKeep
 
-4. **Update your information**
-   - Edit `config.py` with your personal information, skills, projects, and experience
-   - All website content is controlled through this file
+## Architecture
 
-5. **Run the application**
-   ```bash
-   streamlit run app.py
-   ```
-
-6. **View your portfolio**
-   - Open your browser and go to `http://localhost:8501`
-   - Your portfolio website will be live and ready to use!
-
-## 📁 Project Structure
-
-```
-Personal Portfolio/
-├── app.py                    # Main Streamlit application
-├── config.py                 # Configuration file with all your data
-├── requirements.txt          # Python dependencies
-├── profile_photo_optimized.jpg  # Your profile photo
-├── Aarya_Mody_Resume.pdf    # Your resume (optional)
-└── README.md                # This file
+```text
+config.py
+  |
+  | structured portfolio content
+  v
+app.py
+  |
+  | Streamlit sections
+  v
+style.css
+  |
+  | responsive presentation + reduced-motion support
+  v
+Browser
 ```
 
-## ⚙️ Configuration
+The application deliberately keeps personal/project content in `config.py` instead of scattering it through UI code.
 
-All website content is managed through `config.py`. Here's what you can customize:
+## Local development
 
-### Personal Information
-- Name, title, contact details
-- Bio and professional summary
-- Location and social media links
+### Requirements
 
-### Skills & Technologies
-- Programming languages
-- Frameworks and tools
-- Proficiency levels (0-100)
+- Python 3.11+
+- pip
 
-### Experience
-- Job titles, companies, and duration
-- Achievements and responsibilities
-- Multiple experience entries supported
+### Run
 
-### Education
-- Degrees and institutions
-- GPA and relevant coursework
-- Thesis or major projects
+```bash
+git clone https://github.com/AaryaMody1301/Personal-Portfolio.git
+cd Personal-Portfolio
 
-### Projects
-- Project titles and descriptions
-- Technology stacks used
-- GitHub and demo links
-- Key features and achievements
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
 
-### Languages
-- Language proficiency levels
-- Multiple languages supported
-
-## 🎨 Customization
-
-### Colors and Styling
-The website uses a professional color scheme that can be customized in the CSS section of `app.py`:
-- Primary: Deep blue gradients (#667eea to #764ba2)
-- Secondary: Light grays for backgrounds
-- Accent: Bright colors for CTAs and highlights
-
-### Layout Modifications
-You can modify the layout by editing the section functions in `app.py`:
-- `render_hero_section()` - Hero/header area
-- `render_about_section()` - About me section
-- `render_skills_section()` - Skills and proficiency
-- `render_experience_section()` - Work experience
-- `render_education_section()` - Education details
-- `render_projects_section()` - Featured projects
-- `render_contact_section()` - Contact information
-
-## 🌐 Deployment
-
-### Streamlit Cloud (Recommended)
-1. Push your code to GitHub
-2. Connect your repository to [Streamlit Cloud](https://streamlit.io/cloud)
-3. Deploy with one click
-4. Your portfolio will be live at `https://your-app-name.streamlit.app`
-
-### Other Deployment Options
-- **Heroku**: Use the included `requirements.txt`
-- **Railway**: Direct deployment from GitHub
-- **Render**: Static site hosting
-- **Vercel**: With Python runtime
-
-### Environment Variables
-For sensitive information, use environment variables:
-```python
-import os
-EMAIL = os.getenv('EMAIL', 'your-default-email@example.com')
+streamlit run app.py
 ```
 
-## 📱 Mobile Responsiveness
+Open `http://localhost:8501`.
 
-The website is fully responsive and includes:
-- Mobile-friendly navigation
-- Touch-optimized buttons
-- Responsive grid layouts
-- Readable text on all screen sizes
+## Verification
 
-## 🔧 Troubleshooting
+The CI workflow installs the pinned runtime dependency, compiles the Python source, runs configuration tests, boots the real Streamlit application in headless mode, and verifies Streamlit's health endpoint.
 
-### Common Issues
+Local checks:
 
-1. **Profile photo not loading**
-   - Ensure the photo file exists in the project directory
-   - Check the file name matches `PROFILE_PHOTO` in `config.py`
-   - Supported formats: JPG, JPEG, PNG
+```bash
+python -m compileall app.py config.py
+python -m unittest discover -s tests -v
 
-2. **Streamlit not starting**
-   - Verify Python version (3.7+)
-   - Install dependencies: `pip install -r requirements.txt`
-   - Check if port 8501 is available
+streamlit run app.py --server.headless true --server.port 8501
+curl --fail http://127.0.0.1:8501/_stcore/health
+```
 
-3. **Layout issues**
-   - Clear browser cache
-   - Check console for CSS errors
-   - Ensure all config.py variables are properly defined
+## Accessibility and performance direction
 
-### Getting Help
-- Check Streamlit documentation: https://docs.streamlit.io
-- Report issues in the project repository
-- Contact the developer through the portfolio website
+The current baseline avoids decorative JavaScript and percentage-based skill animations. Styling includes `prefers-reduced-motion` handling, readable contrast, responsive layout, and native Streamlit controls for links/downloads where possible.
 
-## 📄 License
+The production portfolio should continue targeting WCAG 2.2 Level AA behavior, keyboard usability, clear focus states, descriptive link text, responsive layouts, and strong Core Web Vitals.
 
-This project is open source and available under the [MIT License](LICENSE).
+## Repository structure
 
-## 🤝 Contributing
+```text
+.
+├── .github/workflows/portfolio-ci.yml
+├── app.py
+├── config.py
+├── style.css
+├── requirements.txt
+├── tests/test_portfolio_config.py
+├── profile_photo_optimized.jpg
+├── Aarya_Mody_Resume.pdf
+├── LICENSE
+└── README.md
+```
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+## Deployment
 
-## 🙏 Acknowledgments
+For this Streamlit implementation, Streamlit Community Cloud is the simplest deployment target:
 
-- Built with [Streamlit](https://streamlit.io)
-- Icons and fonts from Google Fonts
-- Inspired by modern portfolio designs
-- Special thanks to the open-source community
+1. Connect this repository.
+2. Select `app.py` as the entry point.
+3. Use a supported Python runtime.
+4. Deploy.
 
----
+The custom production site at `aaryamody.app` is treated separately from this Streamlit deployment path.
 
-**Made with ❤️ by Aarya Mody**
+## Content updates
 
-*This portfolio website is designed to be professional, maintainable, and easily customizable for any developer or data professional.*
+Most portfolio updates should only require editing `config.py`:
+
+- professional title and focus;
+- experience;
+- featured projects;
+- skills;
+- education/certifications;
+- contact links.
+
+Avoid adding unverified performance or accuracy claims. Prefer measurements already documented in the linked project repositories or professional case studies.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
