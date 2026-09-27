@@ -1,0 +1,45 @@
+{
+  "name": "aarya-mody-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Aarya Mody's static portfolio for data engineering and applied AI, with browser, accessibility, and deployment checks.",
+  "license": "MIT",
+  "author": "Aarya Mody",
+  "homepage": "https://aaryamody.app/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AaryaMody1301/Personal-Portfolio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AaryaMody1301/Personal-Portfolio/issues"
+  },
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "check": "node scripts/check-repository.mjs",
+    "assets:prepare": "node scripts/prepare-assets.mjs",
+    "assets:check": "node scripts/prepare-assets.mjs --check",
+    "preserve": "node scripts/prepare-assets.mjs",
+    "serve": "node scripts/static-server.cjs",
+    "pretest": "node scripts/prepare-assets.mjs --check",
+    "test": "playwright test",
+    "pretest:ci": "node scripts/prepare-assets.mjs --check",
+    "test:ci": "playwright test --grep-invert \"visual baseline\"",
+    "test:release": "node --test scripts/tests/*.test.mjs",
+    "pretest:update": "node scripts/prepare-assets.mjs --check",
+    "test:update": "playwright test --update-snapshots",
+    "preaudit": "node scripts/prepare-assets.mjs --check",
+    "audit": "node scripts/audit.mjs",
+    "audit:preview": "node scripts/prepare-assets.mjs --check && node scripts/audit-preview.mjs",
+    "package:hostinger": "pwsh -NoProfile -File scripts/package-hostinger.ps1",
+    "preview:capture": "node scripts/capture-preview.mjs",
+    "compatibility:capture": "node scripts/capture-compatibility.mjs",
+    "verify:live": "node scripts/verify-live.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.12.1",
+    "@playwright/test": "1.61.1",
+    "lighthouse": "13.5.0"
+  }
+}

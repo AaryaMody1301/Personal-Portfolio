@@ -1,0 +1,17 @@
+# Stable bytes across Windows, macOS, and Linux keep asset hashes reproducible.
+* text=auto eol=lf
+
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.woff2 binary
+
+# Copies generated from the corresponding unversioned sources.
+assets/css/style.*.css linguist-generated=true
+assets/js/main.*.js linguist-generated=true
+assets/js/analytics.*.js linguist-generated=true
+assets/images/*.*.webp linguist-generated=true
+assets/images/og-image.*.jpg linguist-generated=true
+assets/images/favicon.*.svg linguist-generated=true
