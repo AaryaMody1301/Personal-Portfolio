@@ -1,0 +1,29 @@
+name: Portfolio bug
+description: Report a layout, navigation, accessibility, or content issue.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Describe the observed behavior and what you expected.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps and page URL
+      description: Include whether you used the live site or a local preview.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Device, operating system, and browser version
+      placeholder: iPhone 15 Pro, iOS version, Safari version
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Screenshots or additional context
+      description: For layout issues, include orientation, zoom/text size, and whether the menu was open. Remove private information from screenshots.

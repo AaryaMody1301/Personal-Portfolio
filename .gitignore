@@ -1,24 +1,41 @@
-# Python
-__pycache__/
-*.py[cod]
-*.pyd
-.pytest_cache/
-.coverage
-htmlcov/
+# Dependencies and local environments
+node_modules/
 .venv/
 venv/
-
-# Streamlit
+__pycache__/
+*.py[cod]
+.pytest_cache/
 .streamlit/
 
-# Local data / secrets
-*.db
-*.sqlite3
-.env
-.env.*
+# Generated checks, packages, and historical local backups
+/reports/
+/test-results/
+/playwright-report/
+/output/
+/archive/
+coverage/
 *.log
+*.zip
 
-# Editors / OS
-.DS_Store
+# Local agent/editor state
+.agents/
+.codex/
 .vscode/
 .idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Credentials and local configuration (the public resume is intentionally tracked)
+.env
+.env.*
+!.env.example
+.npmrc
+*.pem
+*.key
+*.p12
+*.pfx
+*.db
+*.sqlite*
+.vercel/
+.netlify/
