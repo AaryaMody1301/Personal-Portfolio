@@ -1,0 +1,24 @@
+# Hostinger serves GLB and HDR as text/plain without explicit mappings.
+AddType model/gltf-binary .glb
+AddType application/octet-stream .hdr
+AddType font/ttf .ttf
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^www\.aaryamody\.app$ [NC]
+  RewriteRule ^ https://aaryamody.app%{REQUEST_URI} [R=301,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(jpg|webp|glb|hdr|ttf)$">
+    Header set Cache-Control "public, max-age=604800, no-transform"
+  </FilesMatch>
+  <FilesMatch "^(index\.html|manifest\.json|robots\.txt|sitemap\.xml)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
+
+# Compress text/font transfers; CDN Brotli may supersede this at the edge.
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript application/javascript application/json image/svg+xml font/ttf
+</IfModule>

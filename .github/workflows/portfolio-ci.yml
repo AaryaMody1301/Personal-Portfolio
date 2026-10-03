@@ -35,6 +35,8 @@ jobs:
           cache: npm
       - name: Install locked development dependencies
         run: npm ci
+      - name: Build locally bundled runtime assets
+        run: npm run build
       - name: Check repository and release invariants
         run: npm run check
       - name: Test deployment verification
@@ -56,9 +58,7 @@ jobs:
         with:
           name: portfolio-reports-${{ matrix.os }}
           path: |
-            reports/playwright/
-            reports/lighthouse.report.*
-            test-results/
+            reports/local/
           if-no-files-found: ignore
           retention-days: 14
       - name: Upload Hostinger package
