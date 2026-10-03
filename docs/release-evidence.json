@@ -1,0 +1,160 @@
+{
+  "date": "2026-10-03T08:20:26.037114+00:00",
+  "target": "https://aaryamody.app/",
+  "scope": "Portable summary of the October 3 audit. Full diagnostics remain in ignored local reports/ folders and CI artifacts. This is a snapshot, not a claim about future deployments.",
+  "release": {
+    "htmlSHA256": "f943cd85a8d0526009e7e725a2ef106dd10139191fe8b0d2656850b2e4181e81",
+    "manifestSHA256": "d8c234b4516dc99896b06e6c87f7c36bbc2d4a52896260fe3322deb94fd5a9a4",
+    "fingerprint": "ea07471665862669e410828b14192a5cff1ad525a8383c3b1a62e2fa576efc31"
+  },
+  "runtime": {
+    "assetsVerified": 18,
+    "packageEntries": 22,
+    "zipBytes": 2118343,
+    "zipSHA256": "cb8f113a024c6d821b36ae828e1d09008fb38b0b3ed49ece840ec65a8ea650f3",
+    "resumeSHA256": "15476b1a5a2b94611d5f867aa1d64826a2b0978279c4053585794b9908fcf9f8",
+    "bytesAndMIMEChecks": "passed",
+    "redirectsAndSocialImage": "passed"
+  },
+  "liveBrowser": {
+    "passed": 233,
+    "documentedSkips": 33,
+    "profiles": [
+      {
+        "profile": "desktop",
+        "total": 38,
+        "passed": 38,
+        "skipped": 0
+      },
+      {
+        "profile": "mobile",
+        "total": 38,
+        "passed": 32,
+        "skipped": 6
+      },
+      {
+        "profile": "iphone",
+        "total": 38,
+        "passed": 30,
+        "skipped": 8
+      },
+      {
+        "profile": "iphone-small",
+        "total": 38,
+        "passed": 30,
+        "skipped": 8
+      },
+      {
+        "profile": "ipad",
+        "total": 38,
+        "passed": 31,
+        "skipped": 7
+      },
+      {
+        "profile": "safari",
+        "total": 38,
+        "passed": 36,
+        "skipped": 2
+      },
+      {
+        "profile": "firefox",
+        "total": 38,
+        "passed": 36,
+        "skipped": 2
+      }
+    ],
+    "provenance": "First run completed four profiles, then stopped after ten pre-page DNS resolution errors. A fresh full run of iPad, Safari and Firefox completed. This is not one uninterrupted zero-failure run. Raw failure evidence is retained.",
+    "requestConfiguration": "Standard Playwright test contexts; default cold browser 403 remains separately open",
+    "coverage": [
+      "Reading initially requests zero World assets",
+      "All fourteen projects and original professional facts",
+      "Pointer/touch and keyboard disclosures",
+      "Search, filters, empty/reset and filtered direct links",
+      "Mode switching, camera/sample restoration, direct links and history",
+      "Native panels, focus, Escape and close geometry",
+      "Reduced motion, no JavaScript, delayed/missing assets and context loss",
+      "Automated accessibility scans and responsive layout"
+    ]
+  },
+  "liveLinks": {
+    "working": 130,
+    "broken": 0,
+    "blocked": 2,
+    "unverified": 0
+  },
+  "visualReview": {
+    "images": 36,
+    "engines": [
+      "Chrome",
+      "Firefox",
+      "WebKit"
+    ],
+    "widths": [
+      320,
+      390,
+      768,
+      1440
+    ],
+    "extraLayouts": [
+      "667x320 landscape",
+      "720x450 layout emulation"
+    ],
+    "closeCenterDeviationPx": 0
+  },
+  "performance": {
+    "localLighthouseMedians": {
+      "read-mobile": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "read-desktop": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "world-mobile": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "world-desktop": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      }
+    },
+    "liveLighthouse": {
+      "validSamples": 0,
+      "failedAttempts": 4,
+      "error": "HTTP 403 document response; live scores not certified"
+    },
+    "liveActive": {
+      "desktopFPS": 35.8,
+      "phoneEmulationFPS": 28.6,
+      "longTasks": 0,
+      "startupReadyMs": [
+        1308.3,
+        1265.8,
+        1301.5
+      ],
+      "scope": "Headless Chrome 154, Windows/i7-12700H/Iris Xe, standard en-US context; no physical phone measurement"
+    }
+  },
+  "tooling": {
+    "repositoryCheck": "passed",
+    "deploymentRegressionsPassed": 5,
+    "dependencyVulnerabilities": 0,
+    "packageCRCAndBytes": "passed"
+  },
+  "openIssues": [
+    "Some engine-default cold requests return HTTP 403; exact hosting/CDN rule requires logs and request IDs. Language alone is not proven causal.",
+    "LinkedIn and Uiverse block automated access; not certified working.",
+    "Physical devices, manual screen readers, actual toolbar zoom, physical background-tab behavior and Linux CI unverified at this audit."
+  ],
+  "hostingChangedByAgent": false
+}
