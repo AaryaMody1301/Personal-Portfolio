@@ -24,7 +24,7 @@ process.env.PORTFOLIO_REPORTS_DIR = reportsRoot;
 
 module.exports = defineConfig({
   testDir: "./tests",
-  testMatch: "world.spec.js",
+  testMatch: ["world.spec.js", "case-studies.spec.js"],
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   // WebKit shares GPU resources on Windows; isolate renderer/context-loss tests.

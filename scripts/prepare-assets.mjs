@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile, readdir, unlink } from "node:fs/promises";
 import { dirname, basename, extname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { readSitePages } from "./site-pages.mjs";
 export const root = fileURLToPath(new URL("../", import.meta.url));
 export const digest = (bytes) =>
   createHash("sha256").update(bytes).digest("hex");
@@ -34,7 +35,10 @@ const pattern = (source) => {
 const named = (source, hash) =>
   `${source.slice(0, -extname(source).length)}.${hash.slice(0, 12)}${extname(source)}`;
 export async function prepareAssets({ check = false } = {}) {
-  let html = await readFile(resolve(root, "index.html"), "utf8");
+  const pages = await readSitePages(root);
+  const documents = await Promise.all(pages.map(async (path) => ({
+    path, html: await readFile(resolve(root, path), "utf8"),
+  })));
   const manifest = [];
   for (const source of [...leaves, ...parents]) {
     let bytes = await readFile(resolve(root, source));
@@ -52,12 +56,15 @@ export async function prepareAssets({ check = false } = {}) {
       if (digest(await readFile(resolve(root, path))) !== hash)
         throw new Error(`Corrupt or stale asset: ${path}`);
     } else await writeFile(resolve(root, path), bytes);
-    const refs = [...html.matchAll(pattern(source))].map((m) => m[0]);
+    const refs = documents.flatMap(({ html }) =>
+      [...html.matchAll(pattern(source))].map((m) => m[0]),
+    );
     if (source !== "assets/fonts/syne.ttf" && !refs.length)
       throw new Error(`Missing HTML reference for ${source}`);
     if (check && refs.some((ref) => ref !== path))
       throw new Error(`Stale ${source}; run npm run assets:prepare.`);
-    html = html.replace(pattern(source), path);
+    for (const document of documents)
+      document.html = document.html.replace(pattern(source), path);
     manifest.push({ source, path, hash, bytes: bytes.length });
   }
   const json = JSON.stringify({ version: 1, assets: manifest }, null, 2) + "\n";
@@ -67,7 +74,8 @@ export async function prepareAssets({ check = false } = {}) {
     )
       throw new Error("Stale asset manifest.");
   } else {
-    await writeFile(resolve(root, "index.html"), html);
+    for (const { path, html } of documents)
+      await writeFile(resolve(root, path), html);
     await writeFile(resolve(root, "assets/manifest.json"), json);
     // Only remove obsolete generated siblings. Absolute parent paths are inside root.
     for (const { source, path } of manifest) {

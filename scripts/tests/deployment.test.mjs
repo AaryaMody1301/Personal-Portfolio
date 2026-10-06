@@ -38,6 +38,8 @@ test("deployment verification rejects mixed assets and HTML error pages served a
         bytes = Buffer.from("stale font");
       if (fault === "manifest" && path === "assets/manifest.json")
         bytes = Buffer.from("{}");
+      if (fault === "case" && path === "projects/sql-analytics.html")
+        bytes = Buffer.from("<!doctype html><h1>Previous case-study revision</h1>");
       if (/\/app\.[a-f0-9]{12}\.js$/.test(path)) {
         if (fault === "stale")
           bytes = Buffer.from("/* Cached previous script */");
@@ -62,8 +64,9 @@ test("deployment verification rejects mixed assets and HTML error pages served a
     await cp(resolve(root, "assets"), resolve(rollback, "assets"), {
       recursive: true,
     });
-    for (const path of ["robots.txt", "sitemap.xml"])
+    for (const path of ["robots.txt", "sitemap.xml", "site-pages.json"])
       await cp(resolve(root, path), resolve(rollback, path));
+    await cp(resolve(root, "projects"), resolve(rollback, "projects"), { recursive: true });
     await writeFile(
       resolve(rollback, "index.html"),
       (await readFile(resolve(root, "index.html"), "utf8")).replace(
@@ -84,7 +87,7 @@ test("deployment verification rejects mixed assets and HTML error pages served a
       verifyDeployment(url),
       /wrong content type text\/html/,
     );
-    for (const missingResource of ["model", "font", "manifest"]) {
+    for (const missingResource of ["model", "font", "manifest", "case"]) {
       fault = missingResource;
       await assert.rejects(verifyDeployment(url), /served bytes differ/);
     }

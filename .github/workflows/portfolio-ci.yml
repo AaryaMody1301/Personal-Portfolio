@@ -48,7 +48,7 @@ jobs:
       - name: Run Lighthouse against a dedicated local preview
         run: npm run audit:preview
       - name: Ensure verification did not modify release sources
-        run: git diff --exit-code -- index.html assets/ package-lock.json
+        run: git diff --exit-code -- index.html projects/ assets/ site-pages.json package-lock.json
       - name: Package and verify the Hostinger upload
         if: runner.os == 'Windows'
         run: npm run package:hostinger

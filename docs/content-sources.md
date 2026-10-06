@@ -1,6 +1,6 @@
 # Portfolio content sources
 
-Reviewed 2026-09-19. The updated resume overrides older portfolio copy.
+Professional profile reviewed 2026-09-19; featured case-study evidence reviewed 2026-10-06. The updated resume overrides older portfolio copy.
 
 ## Professional profile
 
@@ -21,11 +21,13 @@ SHA-256: `15476b1a5a2b94611d5f867aa1d64826a2b0978279c4053585794b9908fcf9f8`
 
 | Project / source | Supported story | Qualification retained |
 | --- | --- | --- |
-| [DriftDoctor README](https://raw.githubusercontent.com/AaryaMody1301/DriftDoctor/main/README.md) | dbt contract drift diagnosis, deterministic rules, bounded candidate selection or abstention, sandboxed repairs, executable validation, reviewable changes | Frozen synthetic evaluation is not general repair accuracy. No numeric score is promoted. |
+| [DriftDoctor README](https://github.com/AaryaMody1301/DriftDoctor/blob/0760ce3772678fdb7309b467f41f0371c1c10feb/README.md) | dbt contract drift diagnosis, deterministic skills, bounded candidate selection or abstention, sandboxed repairs, executable validation, reviewable changes | Final 12/12 score refers only to twelve frozen synthetic fixtures; the separate held-out ambiguity demonstration is not added to that score. |
+| [SQL benchmark evidence](https://github.com/AaryaMody1301/SQL_Practice_Project/blob/b30114381d3e2a85e2de22bfa925de2e29d4c9c6/performance/BENCHMARK_RESULTS.md) | PostgreSQL 18.6; deterministic synthetic workload; medians of three warm-cache runs; targeted partial covering indexes; rejected speculative index | 19.198 to 0.105 ms and 99.5% reduction apply to one query, not the whole system or production. Original Luke Barousse course provenance is retained. |
+| [Forecast release benchmark](https://github.com/AaryaMody1301/Sales-Forcasting-Using-Time-Series-Analysis/blob/8e8f89947dee09edb3d5d0ef3345ab23320ee714/docs/RELEASE_BENCHMARK.md) | Weekly median selling-price target; 32 observed weeks; 24-week initial train; two four-week outer folds; no target imputation; nested chronological tuning | Mean fold RMSE is the arithmetic mean of per-fold RMSE, not pooled RMSE. ARIMA is 6.73% lower than naive only in this release check; the ensemble is 37.46% worse. No universal accuracy claim or LSTM result. |
 | [CompatForge README](https://raw.githubusercontent.com/AaryaMody1301/CompatForge/main/README.md) | Identity/evidence ingestion, dbt transformations, provenance, schema contracts, configuration-specific resolver | Release preview; external acceptance remains before the first release-candidate tag. |
 | [OriginKeep README](https://raw.githubusercontent.com/AaryaMody1301/OriginKeep/main/README.md) | Browser companion, desktop application, SHA-256 identity, SQLite provenance, portable passports, archive/restore | 2.0 implementation is release-candidate ready; clean-machine distribution acceptance remains. |
 
-The diagrams are simplified conceptual representations of these documented workflows. They are not product screenshots, execution logs, or new benchmark claims.
+The repair diagram is a conceptual representation of the documented workflow. The forecast chart reproduces the exact displayed values from the linked release benchmark, with an equivalent accessible table. Repository benchmark evidence was read, not rerun, during the portfolio redesign. Source links in the case studies are pinned to the reviewed revisions.
 
 ## Additional public projects
 

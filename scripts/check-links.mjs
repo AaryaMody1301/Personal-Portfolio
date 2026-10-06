@@ -4,6 +4,7 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { root } from "./prepare-assets.mjs";
+import { readSitePages } from "./site-pages.mjs";
 import { baseURL, reportsRoot, auditMetadata } from "./audit-target.mjs";
 
 export function parseLink(value, base) {
@@ -69,6 +70,25 @@ export async function checkLinks() {
     }));
     for (const value of [...parsed.urls, ...parsed.metadata, ...parsed.world])
       add(value, "index.html");
+    const documentIDs = new Map([
+      [new URL(baseURL).pathname, parsed.ids],
+      [new URL("index.html", baseURL).pathname, parsed.ids],
+    ]);
+    for (const path of (await readSitePages(root)).slice(1)) {
+      const url = new URL(path, baseURL);
+      add(url.href, "site-pages.json");
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`${path} returned ${response.status}`);
+      await page.setContent(await response.text());
+      const document = await page.evaluate(() => ({
+        ids: [...document.querySelectorAll("[id]")].map((node) => node.id),
+        urls: [...document.querySelectorAll("[href],[src],meta[property='og:image'],meta[property='og:url'],meta[name='twitter:image']")]
+          .flatMap((node) => [node.getAttribute("href"), node.getAttribute("src"), node.getAttribute("content")])
+          .filter(Boolean),
+      }));
+      documentIDs.set(url.pathname, document.ids);
+      for (const value of document.urls) add(value, path, url);
+    }
     const manifestURL = new URL("assets/manifest.json", baseURL);
     const manifestResponse = await fetch(manifestURL);
     const manifest = await manifestResponse.json();
@@ -85,6 +105,7 @@ export async function checkLinks() {
     for (const path of [
       "robots.txt",
       "sitemap.xml",
+      "site-pages.json",
       "assets/js/app.js.LEGAL.txt",
       "assets/js/world.js.LEGAL.txt",
     ])
@@ -155,14 +176,14 @@ export async function checkLinks() {
         };
       const internal = url.origin === new URL(baseURL).origin;
       const kind = internal ? "portfolio" : "external";
-      if (internal && url.pathname === new URL(baseURL).pathname && url.hash) {
+      if (internal && documentIDs.has(url.pathname) && url.hash) {
         return {
           ...result,
           kind,
-          status: parsed.ids.includes(decodeLinkPart(url.hash.slice(1)))
+          status: documentIDs.get(url.pathname).includes(decodeLinkPart(url.hash.slice(1)))
             ? "working"
             : "broken",
-          reason: "Homepage fragment checked",
+          reason: "Document fragment checked",
         };
       }
       try {

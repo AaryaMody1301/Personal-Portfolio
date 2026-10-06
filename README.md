@@ -1,6 +1,6 @@
-# Aarya’s World — Data Analytics & Engineering
+# Aarya Mody — Data Analytics & Engineering
 
-A reading-first portfolio for data analytics and engineering. Built with semantic HTML and an optional floating world, loaded only through Explore world. See [the world guide](docs/aaryas-world.md) and [current verification](docs/aaryas-world-verification.md). A [portable audit summary](docs/release-evidence.json) records the published release, test scope and remaining hosting issue.
+A light reading portfolio for data analytics and engineering, with three evidence-backed case studies and an optional floating world loaded through Explore world. See [the redesign guide](docs/cobalt-redesign.md) for this branch's changes and verification scope. The [world guide](docs/aaryas-world.md), [previous verification](docs/aaryas-world-verification.md), and [published-release evidence](docs/release-evidence.json) describe the predecessor release, including its remaining hosting issue.
 
 [Website](https://aaryamody.app/) · [Resume](assets/docs/AaryaMody_Resume.pdf) · [Content sources](docs/content-sources.md) · [Deployment guide](docs/hostinger-deploy.md)
 
@@ -8,8 +8,8 @@ A reading-first portfolio for data analytics and engineering. Built with semanti
 
 ## What is here
 
-- Three detailed project stories: [DriftDoctor](https://github.com/AaryaMody1301/DriftDoctor), [CompatForge](https://github.com/AaryaMody1301/CompatForge), and [OriginKeep](https://github.com/AaryaMody1301/OriginKeep), with floating islands, illustrative sample demonstrations, and native expandable details.
-- Eleven additional public projects, professional experience, skills, credentials, and contact links.
+- Three static case studies: [DriftDoctor](projects/driftdoctor.html), [SQL Practice Project](projects/sql-analytics.html), and [Sales Forecasting](projects/sales-forecasting.html), with source evidence, measured results, decisions, and limits.
+- Eleven more public projects in a searchable collection, professional experience, skills, credentials, and contact links. World retains DriftDoctor, CompatForge, and OriginKeep islands and their illustrative demonstrations.
 - Responsive layouts, persistent navigation and responsive native dialog panels, keyboard focus handling, reduced-motion support, and usable content/navigation without JavaScript.
 - Locally hosted images and resume, content-versioned assets, metadata, structured profile data, and a sitemap.
 - Browser, accessibility, asset-integrity, and deployment checks, plus a Hostinger upload packager.
@@ -29,7 +29,7 @@ npm run serve
 
 Open **http://127.0.0.1:4173/** for reading, or **http://127.0.0.1:4173/?view=world** for World. The server is a local development utility. `npm run serve` prepares the asset filenames before starting it.
 
-After changing a stylesheet, script, or image while the preview is running, run `npm run build` and refresh. Commit the editable source, generated copy, and updated `index.html` together. Text files use LF line endings so the hashes stay identical across operating systems.
+After changing a stylesheet, script, or image while the preview is running, run `npm run build` and refresh. Commit the editable source, generated copy, and all updated registered HTML pages together. Text files use LF line endings so the hashes stay identical across operating systems.
 
 ## Check the site
 
@@ -85,7 +85,7 @@ npm run assets:prepare
 npm run package:hostinger
 ```
 
-Upload the contents of `output/portfolio-hostinger.zip` to Hostinger's `public_html`. The package contains `index.html`, `.htaccess`, `robots.txt`, `sitemap.xml`, and only required runtime assets. It excludes development tools, repository metadata, reports, and local backups. Every packaged file is checked against its source bytes.
+Upload the contents of `output/portfolio-hostinger.zip` to Hostinger's `public_html`. The package contains every page in `site-pages.json`, the registry, `.htaccess`, `robots.txt`, `sitemap.xml`, and only required runtime assets. It excludes development tools, repository metadata, reports, and local backups. Every packaged file is checked against its source bytes.
 
 Upload the complete assets before replacing the HTML, clear the host's HTML cache, then set `PORTFOLIO_BASE_URL=https://aaryamody.app/` and run `npm run verify:live`. The public site can differ from a checkout until a package is uploaded. See the [Hostinger runbook](docs/hostinger-deploy.md) for the exact sequence.
 
@@ -94,7 +94,10 @@ Upload the complete assets before replacing the HTML, clear the host's HTML cach
 ```text
 index.html                      Content, navigation, metadata, JSON-LD
 src/                            Editable world and navigation modules
-assets/css/world.css            Editable visual system
+assets/css/world.css            Editable World visual system
+assets/css/reading.css          Editable light portfolio and case studies
+projects/                      Static case-study pages
+site-pages.json                Runtime page registry
 assets/css/style.css            Generated stylesheet
 assets/js/                      Bundles, legal notices and generated copies
 assets/images/                  Portrait, scene posters, social image and copies

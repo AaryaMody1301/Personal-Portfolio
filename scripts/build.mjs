@@ -19,7 +19,11 @@ await build({
   legalComments: "linked",
 });
 const stylesheet = await transform(
-  await readFile("assets/css/world.css", "utf8"),
+  (await Promise.all(
+    ["assets/css/world.css", "assets/css/reading.css"].map((path) =>
+      readFile(path, "utf8"),
+    ),
+  )).join("\n"),
   { loader: "css", minify: true, legalComments: "inline" },
 );
 await writeFile("assets/css/style.css", stylesheet.code);

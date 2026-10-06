@@ -8,7 +8,8 @@ if (-not $portfolioEvidence.StartsWith((Join-Path $portfolioRoot 'reports') + [I
 node (Join-Path $PSScriptRoot 'prepare-assets.mjs') --check
 if ($LASTEXITCODE -ne 0) { throw 'Build current assets before packaging: npm run build' }
 $portfolioManifest = Get-Content -LiteralPath (Join-Path $portfolioRoot 'assets/manifest.json') -Raw | ConvertFrom-Json
-$portfolioFiles = @('index.html', '.htaccess', 'robots.txt', 'sitemap.xml', 'assets/manifest.json', 'assets/docs/AaryaMody_Resume.pdf', 'assets/js/app.js.LEGAL.txt', 'assets/js/world.js.LEGAL.txt') + @($portfolioManifest.assets.path)
+$portfolioPages = @(Get-Content -LiteralPath (Join-Path $portfolioRoot 'site-pages.json') -Raw | ConvertFrom-Json)
+$portfolioFiles = $portfolioPages + @('site-pages.json', '.htaccess', 'robots.txt', 'sitemap.xml', 'assets/manifest.json', 'assets/docs/AaryaMody_Resume.pdf', 'assets/js/app.js.LEGAL.txt', 'assets/js/world.js.LEGAL.txt') + @($portfolioManifest.assets.path)
 if (@($portfolioFiles | Select-Object -Unique).Count -ne $portfolioFiles.Count) { throw 'Duplicate package paths' }
 foreach ($portfolioPath in $portfolioFiles) {
     $portfolioResolved = [IO.Path]::GetFullPath((Join-Path $portfolioRoot $portfolioPath))

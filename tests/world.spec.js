@@ -88,7 +88,7 @@ test("reading view preserves all fourteen projects and professional facts", asyn
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/?view=read");
-  await expect(page).toHaveTitle(/Aarya’s World.*Data Analytics & Engineering/);
+  await expect(page).toHaveTitle(/Aarya Mody.*Data Analytics & Engineering/);
   await expect(page.locator("h1")).toHaveText(/Aarya\s*Mody\./);
   await expect(page.locator(".work-cell")).toHaveCount(14);
   for (const [i, title] of titles.entries())

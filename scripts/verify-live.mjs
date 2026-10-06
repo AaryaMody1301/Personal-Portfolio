@@ -2,6 +2,7 @@ import { readFile, mkdir, writeFile } from "node:fs/promises";
 import { resolve, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 import { prepareAssets, root, digest } from "./prepare-assets.mjs";
+import { readSitePages } from "./site-pages.mjs";
 import {
   baseURL,
   reportsRoot,
@@ -24,6 +25,7 @@ const mimeTypes = {
   svg: "image/svg+xml",
   xml: /(?:text|application)\/xml/,
   txt: "text/plain",
+  html: "text/html",
 };
 
 export async function verifyDeployment(
@@ -46,9 +48,15 @@ export async function verifyDeployment(
     throw new Error("The page is not served as HTML.");
   const html = await response.text();
   const localHtml = await readFile(resolve(referenceDir, "index.html"), "utf8");
+  const pages = await readSitePages(referenceDir);
+  const documents = await Promise.all(pages.map((path) =>
+    readFile(resolve(referenceDir, path), "utf8"),
+  ));
   const paths = [
     ...new Set([
-      ...references(localHtml),
+      ...documents.flatMap(references),
+      ...pages.slice(1),
+      "site-pages.json",
       ...manifest.map((item) => item.path),
       "assets/manifest.json",
       "assets/js/app.js.LEGAL.txt",
@@ -122,6 +130,7 @@ export async function verifyDeployment(
   const result = {
     ...(await auditMetadata("deployment", siteUrl)),
     assets: paths.length,
+    pages: pages.length,
     url: siteUrl,
     referenceDir,
     expectedRelease: {
