@@ -474,9 +474,6 @@ test("reading view pauses rendering and the map is keyboard accessible", async (
 test("paused World becomes idle and redraws an evidence change", async ({ page }, info) => {
   test.setTimeout(60_000);
   await requireWorld(page);
-  await page.locator("#motion-toggle").click();
-  await expect(page.locator("#world-stage")).toHaveAttribute("data-motion", "paused");
-  await page.locator(".island-labels [data-island=compatforge]").click();
   await page.locator("canvas").evaluate((canvas) => {
     const gl = canvas.getContext("webgl2");
     window.__pausedDrawCount = 0;
@@ -493,6 +490,11 @@ test("paused World becomes idle and redraws an evidence change", async ({ page }
     await page.waitForTimeout(300);
     return (await page.evaluate(() => window.__pausedDrawCount)) - before;
   };
+  if ((await page.locator("#world-stage").getAttribute("data-quality")) === "low")
+    await expect.poll(idle, { timeout: 20_000 }).toBe(0);
+  await page.locator("#motion-toggle").click();
+  await expect(page.locator("#world-stage")).toHaveAttribute("data-motion", "paused");
+  await page.locator(".island-labels [data-island=compatforge]").click();
   await expect.poll(idle, { timeout: 20_000 }).toBe(0);
   const before = await page.evaluate(() => window.__pausedDrawCount);
   await page.getByRole("button", { name: "Unknown", exact: true }).click();
