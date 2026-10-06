@@ -21,13 +21,15 @@ No production framework, backend, database, authentication, or external API is r
 Use **Node.js 24 LTS**, npm, and Git. `.nvmrc` selects the Node major version.
 
 ```sh
-git clone https://github.com/AaryaMody1301/Personal-Portfolio.git
+git clone --branch portfolio/cobalt-case-studies https://github.com/AaryaMody1301/Personal-Portfolio.git
 cd Personal-Portfolio
 npm ci
 npm run serve
 ```
 
 Open **http://127.0.0.1:4173/** for reading, or **http://127.0.0.1:4173/?view=world** for World. The server is a local development utility. `npm run serve` prepares the asset filenames before starting it.
+
+The clone command selects the redesign draft. PR #12 is based on `portfolio/aaryas-world` (PR #11); `master` still contains the earlier portfolio. After both changes are merged, use the production branch for future checkouts.
 
 After changing a stylesheet, script, or image while the preview is running, run `npm run build` and refresh. Commit the editable source, generated copy, and all updated registered HTML pages together. Text files use LF line endings so the hashes stay identical across operating systems.
 
