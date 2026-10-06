@@ -3,7 +3,6 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { HDRLoader } from "three/addons/loaders/HDRLoader.js";
 import { gsap } from "gsap";
-import { batchStaticMeshes } from "./batch-static.mjs";
 
 const destinations = {
   home: [0, 1, -1],
@@ -51,7 +50,18 @@ export async function createWorld({
     matchMedia("(max-width: 767px)").matches ||
     navigator.hardwareConcurrency <= 4;
   await yieldSetup();
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext("webgl2", {
+    alpha: true,
+    antialias: !low,
+    powerPreference: "low-power",
+  });
+  if (!context) throw new Error("WebGL2 is unavailable");
+  // Give input and navigation a turn between driver creation and renderer setup.
+  await yieldSetup();
   const renderer = new THREE.WebGLRenderer({
+    canvas,
+    context,
     alpha: true,
     antialias: !low,
     powerPreference: "low-power",
@@ -434,20 +444,6 @@ export async function createWorld({
       );
       rock.rotation.set(random() * 3, random() * 3, random() * 3);
     }
-    if (low) {
-      const exclude = new Set([
-        beaconRing, gear, orbit, file, ...pieces, repairLamp, ...evidenceLights,
-      ]);
-      let removed = 0;
-      for (const island of Object.values(islands))
-        removed += await batchStaticMeshes(island, {
-          exclude,
-          include: (node) => ownedMaterials.has(node.material),
-          yieldTask: yieldSetup,
-          disposeOriginals: true,
-        });
-      mount.dataset.batchedMeshes = String(removed);
-    }
     const gltf = new GLTFLoader(),
       loaded = new Set();
     async function scenery(id) {
@@ -590,6 +586,8 @@ export async function createWorld({
         camera.position.copy(target).add(new THREE.Vector3(0, 14, 27));
         controls.update();
       }
+      camera.updateMatrixWorld();
+      projectLabels();
     }
     function projectLabels() {
       if (!labelSizes && labels[0].offsetWidth)
@@ -668,10 +666,10 @@ export async function createWorld({
       last = now;
       if (!paused) elapsed += dt;
       controls.update();
-      // Pause motion also avoids drawing an unchanged scene. Orbit damping,
-      // resize, travel, newly loaded scenery and sample changes request a frame.
-      if (paused && !redraw) return;
-      if (!paused) {
+      // Constrained devices keep the scene still between interactions. Travel,
+      // orbit and samples still animate; desktop ambient motion stays available.
+      if ((paused || low) && !redraw && !particles?.visible) return;
+      if (!paused && !low) {
         for (const [i, group] of Object.values(islands).entries())
           group.position.y =
             Object.values(destinations)[i][1] +
@@ -680,8 +678,8 @@ export async function createWorld({
         gear.rotation.z = elapsed * 0.12;
         orbit.rotation.y = elapsed * 0.07;
         file.rotation.y = Math.sin(elapsed * 0.5) * 0.15;
-        if (particles?.visible) particles.rotation.y = elapsed * 0.2;
       }
+      if (!paused && particles?.visible) particles.rotation.y = elapsed * 0.2;
       projectLabels();
       try {
         renderer.render(scene, camera);
@@ -776,22 +774,8 @@ export async function createWorld({
     // trigger another synchronous shader batch during the first visible frame.
     await lighting;
     await yieldSetup();
-    // Retain all scene lights while yielding between distinct material programs.
-    // This avoids a single synchronous preparation task on slower processors.
-    const programs = new Set();
-    const shaderBatches = [];
-    scene.traverseVisible((node) => {
-      if (!node.material) return;
-      const materials = Array.isArray(node.material) ? node.material : [node.material];
-      if (materials.some((material) => !programs.has(material))) {
-        materials.forEach((material) => programs.add(material));
-        shaderBatches.push(node);
-      }
-    });
-    for (const node of shaderBatches) {
-      await renderer.compileAsync(node, camera, scene);
-      await yieldSetup();
-    }
+    await renderer.compileAsync(scene, camera);
+    await yieldSetup();
     // Upload each island's shared buffers and textures in a separate hidden frame.
     // The poster remains visible until every batch is ready.
     const renderBatches = scene.children
