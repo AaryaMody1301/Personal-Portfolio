@@ -3,6 +3,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { HDRLoader } from "three/addons/loaders/HDRLoader.js";
 import { gsap } from "gsap";
+import { batchStaticMeshes } from "./batch-static.mjs";
 
 const destinations = {
   home: [0, 1, -1],
@@ -35,7 +36,8 @@ export async function createWorld({
     idleHandle,
     resizeHandler,
     progress,
-    positioned = false;
+    positioned = false,
+    redraw = true;
   const modelCache = {},
     modelRoots = new Set(),
     ownedMaterials = new Set();
@@ -432,6 +434,20 @@ export async function createWorld({
       );
       rock.rotation.set(random() * 3, random() * 3, random() * 3);
     }
+    if (low) {
+      const exclude = new Set([
+        beaconRing, gear, orbit, file, ...pieces, repairLamp, ...evidenceLights,
+      ]);
+      let removed = 0;
+      for (const island of Object.values(islands))
+        removed += await batchStaticMeshes(island, {
+          exclude,
+          include: (node) => ownedMaterials.has(node.material),
+          yieldTask: yieldSetup,
+          disposeOriginals: true,
+        });
+      mount.dataset.batchedMeshes = String(removed);
+    }
     const gltf = new GLTFLoader(),
       loaded = new Set();
     async function scenery(id) {
@@ -460,6 +476,7 @@ export async function createWorld({
           plant.scale.setScalar(0.48);
           island.add(plant);
         }
+        redraw = true;
       } catch {
         if (!dead)
           status(
@@ -549,6 +566,7 @@ export async function createWorld({
     ];
     let labelSizes;
     function layout() {
+      redraw = true;
       labelSizes = null;
       const w = mount.clientWidth,
         h = mount.clientHeight,
@@ -650,6 +668,9 @@ export async function createWorld({
       last = now;
       if (!paused) elapsed += dt;
       controls.update();
+      // Pause motion also avoids drawing an unchanged scene. Orbit damping,
+      // resize, travel, newly loaded scenery and sample changes request a frame.
+      if (paused && !redraw) return;
       if (!paused) {
         for (const [i, group] of Object.values(islands).entries())
           group.position.y =
@@ -664,6 +685,7 @@ export async function createWorld({
       projectLabels();
       try {
         renderer.render(scene, camera);
+        redraw = false;
       } catch {
         fail();
       }
@@ -681,6 +703,7 @@ export async function createWorld({
     controls.addEventListener("end", () => {
       mount.dataset.orbit = "idle";
     });
+    controls.addEventListener("change", () => { redraw = true; });
     function travel(id, reset = false) {
       if (!islands[id] || dead) return;
       mount.dataset.destination = id;
@@ -733,7 +756,10 @@ export async function createWorld({
           {
             zoom: reset ? 1 : portrait ? 1.12 : 1.38,
             duration: paused ? 0 : 1.4,
-            onUpdate: () => camera.updateProjectionMatrix(),
+            onUpdate: () => {
+              camera.updateProjectionMatrix();
+              redraw = true;
+            },
           },
           0,
         );
@@ -750,8 +776,22 @@ export async function createWorld({
     // trigger another synchronous shader batch during the first visible frame.
     await lighting;
     await yieldSetup();
-    await renderer.compileAsync(scene, camera);
-    await yieldSetup();
+    // Retain all scene lights while yielding between distinct material programs.
+    // This avoids a single synchronous preparation task on slower processors.
+    const programs = new Set();
+    const shaderBatches = [];
+    scene.traverseVisible((node) => {
+      if (!node.material) return;
+      const materials = Array.isArray(node.material) ? node.material : [node.material];
+      if (materials.some((material) => !programs.has(material))) {
+        materials.forEach((material) => programs.add(material));
+        shaderBatches.push(node);
+      }
+    });
+    for (const node of shaderBatches) {
+      await renderer.compileAsync(node, camera, scene);
+      await yieldSetup();
+    }
     // Upload each island's shared buffers and textures in a separate hidden frame.
     // The poster remains visible until every batch is ready.
     const renderBatches = scene.children
@@ -790,6 +830,7 @@ export async function createWorld({
         };
       },
       setView(view) {
+        redraw = true;
         travelTween?.kill();
         camera.position.fromArray(view.position);
         controls.target.fromArray(view.target);
@@ -803,6 +844,7 @@ export async function createWorld({
         travel("home", true);
       },
       setActive(value) {
+        redraw = true;
         active = value && !document.hidden;
         if (active) {
           layout();
@@ -818,6 +860,7 @@ export async function createWorld({
       },
       setPaused(value) {
         paused = value;
+        redraw = true;
         mount.dataset.motion = value ? "paused" : "active";
       },
       panelEnter(node) {
@@ -835,6 +878,7 @@ export async function createWorld({
           );
       },
       demo(type, value, instant = false) {
+        redraw = true;
         const animate = !paused && !instant;
         mount.dataset[`${type}State`] = String(value);
         if (type === "repair") {
@@ -845,10 +889,12 @@ export async function createWorld({
               y: value ? 0.38 : 0.38 + (i - 1) * 0.23,
               duration: animate ? 0.7 : 0,
               delay: animate ? i * 0.12 : 0,
+              onUpdate: () => { redraw = true; },
             });
             gsap.to(p.rotation, {
               z: value ? 0 : (i - 1) * 0.19,
               duration: animate ? 0.7 : 0,
+              onUpdate: () => { redraw = true; },
             });
           }
           repairLamp.material = value ? validatedLamp : glow;
@@ -874,6 +920,7 @@ export async function createWorld({
             duration: animate ? 1.2 : 0,
             ease: "none",
             overwrite: true,
+            onUpdate: () => { redraw = true; },
           });
           particleTimer?.kill();
           if (particles) {

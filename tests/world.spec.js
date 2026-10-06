@@ -726,6 +726,9 @@ test("matches the reviewed world visual baseline", async ({ page }, info) => {
 test("hidden introduction never receives keyboard focus after island travel", async ({
   page,
 }) => {
+  // Sixteen native Tab operations plus scene startup can exceed 30 seconds on
+  // the Windows software renderer. Retain every focus assertion and allow 60.
+  test.setTimeout(60_000);
   await requireWorld(page);
   await page.locator("#motion-toggle").click();
   await page.locator(".island-labels [data-island=driftdoctor]").click();
