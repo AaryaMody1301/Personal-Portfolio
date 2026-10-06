@@ -43,6 +43,15 @@ jobs:
         run: npm run test:release
       - name: Install browser engines
         run: npx playwright install --with-deps chromium firefox webkit
+      - name: Capture design review previews
+        run: npx playwright test --grep "capture cobalt" --project desktop --project mobile
+      - name: Upload design review previews
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-design-${{ matrix.os }}
+          path: reports/local/**/cobalt-*.png
+          if-no-files-found: error
+          retention-days: 14
       - name: Test browsers, accessibility, and mobile behavior
         run: npm run test:ci
       - name: Run Lighthouse against a dedicated local preview

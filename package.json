@@ -26,7 +26,7 @@
     "pretest": "node scripts/prepare-assets.mjs --check",
     "test": "playwright test",
     "pretest:ci": "node scripts/prepare-assets.mjs --check",
-    "test:ci": "playwright test --grep-invert \"visual baseline\"",
+    "test:ci": "playwright test --grep-invert \"visual baseline|capture cobalt\"",
     "test:release": "node --test scripts/tests/*.test.mjs",
     "pretest:update": "node scripts/prepare-assets.mjs --check",
     "test:update": "playwright test --update-snapshots",
