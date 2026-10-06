@@ -195,7 +195,7 @@
 .case-study-page .nav-shell { width: min(1152px, calc(100% - 64px)); margin: auto; display: flex; justify-content: space-between; align-items: center; }
 .case-study-page .case-nav { display: flex; gap: 28px; align-items: center; font-size: 14px; }
 .case-study-page .case-nav a { min-height: 44px; display: inline-flex; align-items: center; text-decoration: none; }
-.case-study-page main { padding-top: 72px; }
+.case-study-page main { padding-top: 0; }
 .case-shell { width: min(1040px, calc(100% - 64px)); margin: auto; }
 .case-hero { padding: 64px 0 40px; }
 .case-hero h1 { max-width: 18ch; font-size: clamp(36px, 4.8vw, 60px); font-weight: 750; letter-spacing: -0.055em; line-height: 1.12; margin: 18px 0 24px; }
@@ -279,7 +279,7 @@
   .case-study-page .brand-mark { font-size: 28px; }
   .case-study-page .case-nav { gap: 14px; font-size: 12px; }
   .case-study-page .case-nav .case-contact { display: none; }
-  .case-study-page main { padding-top: 64px; }
+  .case-study-page main { padding-top: 0; }
   .case-hero { padding-top: 32px; }
   .case-hero h1 { font-size: 36px; }
   .case-lede { font-size: 16px; }

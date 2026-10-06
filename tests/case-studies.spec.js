@@ -22,7 +22,7 @@ test("three selected projects link to distinct case studies and preserve the arc
 });
 
 for (const [slug, name, result, limit] of cases) {
-  test(`${name} case study works without JavaScript and passes accessibility checks`, async ({ browser, baseURL }) => {
+  test(`${name} case study works without JavaScript and passes accessibility checks`, async ({ browser, baseURL, page: enabledPage }) => {
     const context = await browser.newContext({ javaScriptEnabled: false });
     const page = await context.newPage();
     try {
@@ -36,10 +36,13 @@ for (const [slug, name, result, limit] of cases) {
       await expect(page.locator("script[src]")).toHaveCount(0);
       await page.locator(".case-toc a[href='#tradeoffs']").click();
       await expect(page).toHaveURL(/#tradeoffs$/);
-      expect((await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze()).violations).toEqual([]);
       await page.locator(".case-next a").first().click();
       await expect(page.locator("#projects-title")).toBeVisible();
     } finally { await context.close(); }
+    // Axe injects its auditing runtime; test the no-script behavior above,
+    // then audit the identical static document in the configured browser profile.
+    await enabledPage.goto(`/projects/${slug}.html`);
+    expect((await new AxeBuilder({ page: enabledPage }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze()).violations).toEqual([]);
   });
 
   test(`${name} case study fits small screens and links to the next case`, async ({ page }) => {
