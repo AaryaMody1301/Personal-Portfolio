@@ -794,15 +794,25 @@ test("resize and orientation changes preserve the selected camera view", async (
   await page.locator("#close-panel").click();
   await page.waitForTimeout(200);
   const label = page.locator(".island-labels [data-island=driftdoctor]");
+  const drawingBufferDelta = () => page.evaluate(() => {
+    const mount = document.querySelector("#world-stage"),
+      canvas = mount.querySelector("canvas"),
+      ratio = Math.min(devicePixelRatio, mount.dataset.quality === "low" ? 1.25 : 1.5);
+    return {
+      width: canvas.width - Math.floor(mount.clientWidth * ratio),
+      height: canvas.height - Math.floor(mount.clientHeight * ratio),
+    };
+  });
+  await expect.poll(drawingBufferDelta).toEqual({ width: 0, height: 0 });
   const before = await label.boundingBox(),
     viewport = page.viewportSize();
   await page.setViewportSize({
     width: viewport.height,
     height: viewport.width,
   });
-  await page.waitForTimeout(150);
+  await expect.poll(drawingBufferDelta).toEqual({ width: 0, height: 0 });
   await page.setViewportSize(viewport);
-  await page.waitForTimeout(150);
+  await expect.poll(drawingBufferDelta).toEqual({ width: 0, height: 0 });
   const after = await label.boundingBox();
   expect(Math.abs(after.x - before.x)).toBeLessThan(2);
   expect(Math.abs(after.y - before.y)).toBeLessThan(2);

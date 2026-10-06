@@ -33,7 +33,7 @@ export async function createWorld({
     particles,
     particleTimer,
     idleHandle,
-    resizeHandler,
+    resizeObserver,
     progress,
     positioned = false,
     redraw = true;
@@ -777,8 +777,10 @@ export async function createWorld({
       status(message);
     }
     layout();
-    resizeHandler = layout;
-    window.addEventListener("resize", resizeHandler);
+    // Header breakpoints and viewport units may settle after the window resize
+    // event. Observe the actual mount so the camera and drawing buffer agree.
+    resizeObserver = new ResizeObserver(layout);
+    resizeObserver.observe(mount);
     // Configure the final environment before compiling, so its arrival cannot
     // trigger another synchronous shader batch during the first visible frame.
     await lighting;
@@ -800,7 +802,6 @@ export async function createWorld({
     // Hide geometry only. Hiding island groups also hides their lights, which
     // creates unprepared shader variants and synchronous GPU stalls.
     for (const node of renderBatches.flat()) node.visible = false;
-    const warmupSize = renderer.getSize(new THREE.Vector2());
     // Upload/prepare real scene buffers behind the poster without repeatedly
     // shading a full screen of invisible pixels on the software/mobile GPU.
     renderer.setSize(1, 1, false);
@@ -813,7 +814,8 @@ export async function createWorld({
       }
     } finally {
       for (const node of renderBatches.flat()) node.visible = true;
-      renderer.setSize(warmupSize.x, warmupSize.y, false);
+      // A rotation during initialization must restore the current viewport.
+      layout();
     }
     renderer.render(scene, camera);
     await yieldSetup();
@@ -968,7 +970,7 @@ export async function createWorld({
     particleTimer?.kill();
     if (window.cancelIdleCallback) cancelIdleCallback(idleHandle);
     else clearTimeout(idleHandle);
-    if (resizeHandler) window.removeEventListener("resize", resizeHandler);
+    resizeObserver?.disconnect();
     if (progress) gsap.killTweensOf(progress);
     renderer.domElement.removeEventListener("webglcontextlost", contextLost);
     controls.dispose();
