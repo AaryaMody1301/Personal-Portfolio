@@ -13,7 +13,7 @@ AddType font/ttf .ttf
   <FilesMatch "\.(jpg|webp|glb|hdr|ttf)$">
     Header set Cache-Control "public, max-age=604800, no-transform"
   </FilesMatch>
-  <FilesMatch "^(index\.html|manifest\.json|robots\.txt|sitemap\.xml)$">
+  <FilesMatch "(\.html$|^(manifest|site-pages)\.json$|^robots\.txt$|^sitemap\.xml$)">
     Header set Cache-Control "no-cache"
   </FilesMatch>
 </IfModule>

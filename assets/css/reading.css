@@ -156,6 +156,7 @@
 .reading-mode .work-cell[open] { grid-column: 1 / -1; }
 .reading-mode .cell-detail { background: #fff; }
 .reading-mode .project-discovery { grid-column: 1 / -1; background: #fff; padding: 18px; margin: 0 0 4px; }
+.project-discovery { grid-column: 1 / -1; }
 .reading-mode .project-discovery input { background: #f8fafc; border-color: #94a3b8; color: var(--paper); }
 .reading-mode .project-filters button[aria-pressed="true"] { color: #fff; }
 .reading-mode .evidence-controls button[aria-pressed="true"] { color: #fff; }

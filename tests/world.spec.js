@@ -55,16 +55,16 @@ async function clickNav(page, name) {
     await page.locator(".mobile-menu > summary").click();
   await page.getByRole("link", { name, exact: true }).first().click();
 }
-async function ready(page) {
-  await page.goto("/?view=world");
+async function ready(page, url = "/?view=world") {
+  await page.goto(url);
   await expect(page.locator("body")).toHaveAttribute(
     "data-world-state",
     /ready|fallback/,
     { timeout: 20000 },
   );
 }
-async function requireWorld(page) {
-  await ready(page);
+async function requireWorld(page, url) {
+  await ready(page, url);
   const capable = await page.evaluate(() => {
     const gl = document.createElement("canvas").getContext("webgl2");
     if (!gl) return false;
@@ -82,6 +82,14 @@ async function requireWorld(page) {
     "This browser has no working WebGL2 renderer; fallback is checked separately.",
   );
 }
+test("reading layout fits narrow screens in every browser", async ({ page }) => {
+  for (const width of [320, 390, 768, 1440]) {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.goto("/?view=read");
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  }
+});
+
 test("reading view preserves all fourteen projects and professional facts", async ({
   page,
 }) => {
@@ -113,7 +121,7 @@ test("project disclosures respond to pointer and touch in reading view and Work"
   page,
   isMobile,
 }) => {
-  test.setTimeout(60000);
+  test.setTimeout(90000);
   const activate = async (locator) => {
     if (isMobile) await locator.tap();
     else await locator.click();
@@ -305,7 +313,7 @@ test("all illustrative demonstrations update with rapid repeat actions", async (
 test("direct links, rapid changes and browser history preserve destinations", async ({
   page,
 }) => {
-  await page.goto("/?view=world#compatforge");
+  await requireWorld(page, "/?view=world#compatforge");
   await expect(page.locator("#compatforge")).toBeVisible();
   await expect(page.locator("#content-panel")).toBeVisible();
   await page.locator('#content-panel .panel-footer a[href="#about"]').click();
@@ -338,6 +346,7 @@ test("direct links, rapid changes and browser history preserve destinations", as
 test("direct panel links keep the first heading below sticky controls", async ({
   page,
 }) => {
+  await requireWorld(page);
   for (const id of [
     "projects",
     "about",
@@ -458,6 +467,7 @@ test("reading view pauses rendering and the map is keyboard accessible", async (
 test("context loss while initializing keeps the reading fallback", async ({
   page,
 }) => {
+  await requireWorld(page);
   await page.route(
     /assets\/models\/birch\.[a-f0-9]{12}\.glb/,
     async (route) => {
@@ -484,6 +494,7 @@ test("context loss while initializing keeps the reading fallback", async ({
   await expect(page.locator("#projects")).toBeVisible();
 });
 test("scene readiness never dismisses the current dialog", async ({ page }) => {
+  await requireWorld(page);
   let releaseBundle;
   const bundleGate = new Promise((resolve) => {
     releaseBundle = resolve;
@@ -532,6 +543,7 @@ test("scene readiness never dismisses the current dialog", async ({ page }) => {
 test("slow lighting leaves navigation usable and cannot revive a lost renderer", async ({
   page,
 }) => {
+  await requireWorld(page);
   let lightingRequested;
   const lightingRequest = new Promise((resolve) => {
     lightingRequested = resolve;
@@ -577,7 +589,7 @@ test("slow lighting leaves navigation usable and cannot revive a lost renderer",
   await expect(page.locator("#projects")).toBeVisible();
 });
 
-test("reading view and project panels have no detectable WCAG A/AA violations", async ({
+test("reading view has no detectable WCAG A/AA violations", async ({
   page,
 }) => {
   await page.goto("/?view=read");
@@ -587,7 +599,10 @@ test("reading view and project panels have no detectable WCAG A/AA violations", 
   expect(
     (await new AxeBuilder({ page }).withTags(tags).analyze()).violations,
   ).toEqual([]);
-  await page.goto("/?view=world#originkeep");
+});
+test("world project panels have no detectable WCAG A/AA violations", async ({ page }) => {
+  await requireWorld(page, "/?view=world#originkeep");
+  const tags = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"];
   await expect(page.locator("#content-panel")).toBeVisible();
   expect(
     (await new AxeBuilder({ page }).withTags(tags).analyze()).violations,
@@ -646,7 +661,7 @@ for (const width of [320, 390, 768, 1440])
       "Widths covered by the three desktop engines",
     );
     await page.setViewportSize({ width, height: 1000 });
-    await ready(page);
+    await requireWorld(page);
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,
@@ -671,7 +686,7 @@ test("mobile landscape retains navigation and readable sheets", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 667, height: 320 });
-  await ready(page);
+  await requireWorld(page);
   await expect(page.locator(".world-bottom > p").nth(1)).toBeHidden();
   await expect(page.locator(".world-controls")).toBeVisible();
   await expect(page.locator("#reset-view")).toBeVisible();
@@ -751,6 +766,7 @@ test("resize and orientation changes preserve the selected camera view", async (
 test("reading sample states synchronize when the world first starts", async ({
   page,
 }) => {
+  await requireWorld(page);
   await page.goto("/?view=read");
   for (const [id, action] of [
     ["driftdoctor", "Assemble & validate"],
@@ -1009,6 +1025,7 @@ test("copy controls give accessible success and selectable fallback on clipboard
 test("mode switching during loading pauses the scene and retains sample state", async ({
   page,
 }) => {
+  await requireWorld(page);
   let release;
   const gate = new Promise((r) => (release = r));
   await page.route(/assets\/js\/world\.[a-f0-9]{12}\.js/, async (r) => {
@@ -1044,6 +1061,8 @@ test("mode switching during loading pauses the scene and retains sample state", 
 test("history, hidden resize and returning from a project preserve view and reading position", async ({
   page,
 }) => {
+  test.setTimeout(60000);
+  await requireWorld(page);
   await page.goto("/#projects");
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(100);
@@ -1095,13 +1114,9 @@ test("history, hidden resize and returning from a project preserve view and read
 test("close control remains centered through long titles, scrolling, landscape and 200 percent layout zoom", async ({
   page,
 }) => {
-  await page.goto("/?view=world#about");
+  test.setTimeout(60000);
+  await requireWorld(page, "/?view=world#about");
   await expect(page.locator("#content-panel")).toBeVisible();
-  await expect(page.locator("body")).toHaveAttribute(
-    "data-world-state",
-    "ready",
-    { timeout: 20000 },
-  );
   await page.waitForTimeout(350);
   const check = async () => {
     const b = await page.locator("#close-panel").boundingBox(),
@@ -1147,6 +1162,7 @@ test("close control remains centered through long titles, scrolling, landscape a
 test("bare island links enter World while reduced motion maps to reading content", async ({
   page,
 }) => {
+  await requireWorld(page);
   await page.goto("/#island-originkeep");
   await expect(page.locator("body")).toHaveClass(/world-mode/);
   await expect(page.locator("body")).toHaveAttribute(

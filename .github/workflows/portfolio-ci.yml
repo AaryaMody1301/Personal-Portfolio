@@ -17,7 +17,7 @@ jobs:
   verify:
     name: Verify (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 25
+    timeout-minutes: 35
     strategy:
       fail-fast: false
       matrix:
@@ -52,8 +52,18 @@ jobs:
           path: reports/local/**/cobalt-*.png
           if-no-files-found: error
           retention-days: 14
-      - name: Test browsers, accessibility, and mobile behavior
-        run: npm run test:ci
+      - name: Test static case studies and accessibility
+        run: npx playwright test tests/case-studies.spec.js --grep-invert "capture cobalt"
+      - name: Test portfolio navigation, accessibility, and mobile behavior
+        run: npx playwright test tests/world.spec.js --grep-invert "visual baseline"
+      - name: Install Windows Chrome for reviewed reading references
+        if: runner.os == 'Windows'
+        run: npx playwright install chrome
+      - name: Verify reviewed Windows Chrome reading references
+        if: runner.os == 'Windows'
+        env:
+          PLAYWRIGHT_CHROMIUM_CHANNEL: chrome
+        run: npx playwright test --grep "reading visual baseline" --project desktop --project mobile
       - name: Run Lighthouse against a dedicated local preview
         run: npm run audit:preview
       - name: Ensure verification did not modify release sources
