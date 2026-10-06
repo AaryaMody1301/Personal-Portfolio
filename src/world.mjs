@@ -717,8 +717,21 @@ export async function createWorld({
       // Keep the selected island visible beside a desktop panel.
       if (!reset && !portrait) target.x += 3.4;
       const end = target.clone().add(new THREE.Vector3(0, 14, 27));
+      const zoom = reset ? 1 : portrait ? 1.12 : 1.38;
+      const message = reset
+        ? "Drag to look around · choose an island"
+        : `${names[id]} · close the panel to explore here`;
       // An orbit gesture may interrupt camera travel immediately.
       controls.enabled = true;
+      // The initial route is already at Home. Avoid a 1.4-second animation of
+      // identical coordinates, which otherwise requests needless GPU frames.
+      if (camera.position.distanceToSquared(end) < 1e-10 &&
+          controls.target.distanceToSquared(target) < 1e-10 &&
+          Math.abs(camera.zoom - zoom) < 1e-6) {
+        redraw = true;
+        status(message);
+        return;
+      }
       travelTween = gsap
         .timeline({
           onComplete: () => {
@@ -752,7 +765,7 @@ export async function createWorld({
         .to(
           camera,
           {
-            zoom: reset ? 1 : portrait ? 1.12 : 1.38,
+            zoom,
             duration: paused ? 0 : 1.4,
             onUpdate: () => {
               camera.updateProjectionMatrix();
@@ -761,11 +774,7 @@ export async function createWorld({
           },
           0,
         );
-      status(
-        reset
-          ? "Drag to look around · choose an island"
-          : `${names[id]} · close the panel to explore here`,
-      );
+      status(message);
     }
     layout();
     resizeHandler = layout;
@@ -791,6 +800,10 @@ export async function createWorld({
     // Hide geometry only. Hiding island groups also hides their lights, which
     // creates unprepared shader variants and synchronous GPU stalls.
     for (const node of renderBatches.flat()) node.visible = false;
+    const warmupSize = renderer.getSize(new THREE.Vector2());
+    // Upload/prepare real scene buffers behind the poster without repeatedly
+    // shading a full screen of invisible pixels on the software/mobile GPU.
+    renderer.setSize(1, 1, false);
     try {
       for (const batch of renderBatches) {
         for (const node of batch) node.visible = true;
@@ -800,7 +813,10 @@ export async function createWorld({
       }
     } finally {
       for (const node of renderBatches.flat()) node.visible = true;
+      renderer.setSize(warmupSize.x, warmupSize.y, false);
     }
+    renderer.render(scene, camera);
+    await yieldSetup();
     camera.updateMatrixWorld();
     projectLabels();
     render();
