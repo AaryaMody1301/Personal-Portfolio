@@ -1,0 +1,36 @@
+name: Cobalt visual review
+
+on:
+  push:
+    branches: [portfolio/cobalt-design-previews]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  capture:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npx playwright install chrome
+      - name: Capture Windows Chrome visual reference candidates
+        env:
+          PLAYWRIGHT_CHROMIUM_CHANNEL: chrome
+        run: npx playwright test --grep "visual baseline" --project desktop --project mobile --update-snapshots
+      - name: Upload visual reference candidates for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: cobalt-windows-chrome-baselines
+          path: tests/world.spec.js-snapshots/
+          if-no-files-found: error
+          retention-days: 14
