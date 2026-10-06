@@ -47,7 +47,12 @@ for (let run = 1; run <= 3; run++) {
       run,
       browser: browser.version(),
       viewport: { width: 1440, height: 1100 },
-      ...(await page.evaluate(() => window.startupProbe)),
+      ...(await page.evaluate(() => ({
+        ...window.startupProbe,
+        stages: performance.getEntriesByType("measure")
+          .filter((entry) => entry.name.startsWith("World "))
+          .map(({ name, startTime, duration }) => ({ name, startTime, duration })),
+      }))),
     });
   } catch (error) {
     results.push({ run, error: error.message });

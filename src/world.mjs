@@ -51,14 +51,17 @@ export async function createWorld({
     navigator.hardwareConcurrency <= 4;
   await yieldSetup();
   const canvas = document.createElement("canvas");
+  const contextStarted = performance.now();
   const context = canvas.getContext("webgl2", {
     alpha: true,
     antialias: !low,
     powerPreference: "low-power",
   });
+  performance.measure("World WebGL2 context", { start: contextStarted });
   if (!context) throw new Error("WebGL2 is unavailable");
   // Give input and navigation a turn between driver creation and renderer setup.
   await yieldSetup();
+  const rendererStarted = performance.now();
   const renderer = new THREE.WebGLRenderer({
     canvas,
     context,
@@ -70,6 +73,7 @@ export async function createWorld({
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.35;
+  performance.measure("World renderer setup", { start: rendererStarted });
   mount.append(renderer.domElement);
   renderer.domElement.style.touchAction = "none";
   mount.dataset.quality = low ? "low" : "high";
@@ -561,6 +565,7 @@ export async function createWorld({
       ...document.querySelectorAll(".island-labels [data-island]"),
     ];
     let labelSizes;
+    const drawingSize = new THREE.Vector2();
     function layout() {
       redraw = true;
       labelSizes = null;
@@ -576,7 +581,9 @@ export async function createWorld({
       camera.top = size / 2;
       camera.bottom = -size / 2;
       camera.updateProjectionMatrix();
-      renderer.setSize(w, h, false);
+      renderer.getSize(drawingSize);
+      if (drawingSize.x !== w || drawingSize.y !== h)
+        renderer.setSize(w, h, false);
       if (!positioned) {
         positioned = true;
         const target = portrait
@@ -785,7 +792,9 @@ export async function createWorld({
     // trigger another synchronous shader batch during the first visible frame.
     await lighting;
     await yieldSetup();
+    const compileStarted = performance.now();
     await renderer.compileAsync(scene, camera);
+    performance.measure("World shader preparation", { start: compileStarted });
     await yieldSetup();
     // Upload each island's shared buffers and textures in a separate hidden frame.
     // The poster remains visible until every batch is ready.
@@ -802,6 +811,7 @@ export async function createWorld({
     // Hide geometry only. Hiding island groups also hides their lights, which
     // creates unprepared shader variants and synchronous GPU stalls.
     for (const node of renderBatches.flat()) node.visible = false;
+    const uploadStarted = performance.now();
     // Upload/prepare real scene buffers behind the poster without repeatedly
     // shading a full screen of invisible pixels on the software/mobile GPU.
     renderer.setSize(1, 1, false);
@@ -817,7 +827,10 @@ export async function createWorld({
       // A rotation during initialization must restore the current viewport.
       layout();
     }
+    performance.measure("World buffer uploads", { start: uploadStarted });
+    const firstFrameStarted = performance.now();
     renderer.render(scene, camera);
+    performance.measure("World first full frame", { start: firstFrameStarted });
     await yieldSetup();
     camera.updateMatrixWorld();
     projectLabels();

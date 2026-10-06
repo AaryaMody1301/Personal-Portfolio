@@ -460,6 +460,11 @@ test("reading view pauses rendering and the map is keyboard accessible", async (
     "data-motion",
     "paused",
   );
+  await page.locator("#world-stage canvas").evaluate((canvas) => {
+    window.__canvasAllocations = 0;
+    new MutationObserver((changes) => { window.__canvasAllocations += changes.length; })
+      .observe(canvas, { attributes: true, attributeFilter: ["width", "height"] });
+  });
   await page.locator("#reading-toggle").click();
   await expect(page.locator("#world-stage")).toHaveAttribute(
     "data-rendering",
@@ -470,6 +475,7 @@ test("reading view pauses rendering and the map is keyboard accessible", async (
     "data-rendering",
     "active",
   );
+  expect(await page.evaluate(() => window.__canvasAllocations)).toBe(0);
 });
 test("paused World becomes idle and redraws an evidence change", async ({ page }, info) => {
   test.setTimeout(60_000);
