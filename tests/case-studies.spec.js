@@ -38,7 +38,11 @@ for (const [slug, name, result, limit] of cases) {
       await expect(page.locator("script[src]")).toHaveCount(0);
       await page.locator(".case-toc a[href='#tradeoffs']").click();
       await expect(page).toHaveURL(/#tradeoffs$/);
-      await page.locator(".case-next a").first().click();
+      // Native keyboard activation avoids Playwright's animation-stability
+      // polling after a smooth fragment scroll with page JavaScript disabled.
+      // Pointer navigation retains coverage in the JavaScript-enabled tests.
+      await page.locator(".case-next a").first().focus();
+      await page.keyboard.press("Enter");
       await expect(page.locator("#projects-title")).toBeVisible();
     });
   });
