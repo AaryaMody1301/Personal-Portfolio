@@ -22,11 +22,13 @@ test("three selected projects link to distinct case studies and preserve the arc
 });
 
 for (const [slug, name, result, limit] of cases) {
-  test(`${name} case study works without JavaScript`, async ({ browser, baseURL }) => {
-    const context = await browser.newContext({ javaScriptEnabled: false });
-    const page = await context.newPage();
-    try {
-      const response = await page.goto(`${baseURL}/projects/${slug}.html`);
+  test.describe(`${name} case study without JavaScript`, () => {
+    test.use({ javaScriptEnabled: false });
+    test.afterEach(async ({ page }, info) => {
+      if (info.status === "passed") await page.goto("about:blank");
+    });
+    test("content and navigation work", async ({ page }) => {
+      const response = await page.goto(`/projects/${slug}.html`);
       expect(response.status()).toBe(200);
       await expect(page).toHaveTitle(`${name} · Case study | Aarya Mody`);
       await expect(page.locator("h1")).toHaveCount(1);
@@ -38,7 +40,7 @@ for (const [slug, name, result, limit] of cases) {
       await expect(page).toHaveURL(/#tradeoffs$/);
       await page.locator(".case-next a").first().click();
       await expect(page.locator("#projects-title")).toBeVisible();
-    } finally { await context.close(); }
+    });
   });
 
   test(`${name} case study passes accessibility checks`, async ({ page }) => {

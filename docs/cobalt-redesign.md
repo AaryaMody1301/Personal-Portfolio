@@ -22,6 +22,8 @@ Local navigation unit tests passed. Available asset hashes and local page target
 
 Four reading/focus references were captured and visually reviewed on Windows with Google Chrome 154.0.8037.98. The two World references remain unchanged. CI compares the reading references in that browser separately from behavioral coverage, and captures the cobalt homepage and forecast case study for review.
 
-The first full CI run passed builds, repository checks, and deployment regression tests on both operating systems, but reached its time limit in browser checks. No-JavaScript case-study tests and accessibility scans now use separate contexts; renderer-only tests verify WebGL capability before exercising the optional World. Reading layout and accessibility retain independent coverage in every browser. A browser with WebGL2 must reach the ready state; unexpected fallback still fails.
+The first full CI run passed builds, repository checks, and deployment regression tests on both operating systems, but reached its time limit in browser checks. No-JavaScript case-study tests use Playwright-managed device contexts, separate from accessibility scans; renderer-only tests verify WebGL capability before exercising the optional World. Reading layout and accessibility retain independent coverage in every browser. A browser with WebGL2 must reach the ready state; unexpected fallback still fails.
 
 CI remains responsible for the full build, asset-integrity checks, deployment regression tests, seven browser/device profiles, WCAG scans, Lighthouse, and Windows upload-package verification. CI produces reports and a ZIP; it does not deploy the site. No new live-site verification has been claimed for this branch.
+
+Behavioral stages stop after four failures to preserve useful reports rather than exhaust the job limit on repeated symptoms. A successful run still executes every configured test.
