@@ -48,7 +48,9 @@ module.exports = defineConfig({
   use: {
     baseURL,
     screenshot: "only-on-failure",
-    trace: "retain-on-failure",
+    // Avoid continuous GPU readbacks during World tests. Failure screenshots
+    // and trace DOM snapshots, sources, console and network evidence remain.
+    trace: { mode: "retain-on-failure", screenshots: false, snapshots: true, sources: true },
   },
   webServer: live
     ? undefined

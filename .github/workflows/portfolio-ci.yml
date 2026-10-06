@@ -54,6 +54,8 @@ jobs:
           retention-days: 14
       - name: Test static case studies and accessibility
         run: npx playwright test tests/case-studies.spec.js --grep-invert "capture cobalt" --max-failures=4
+      - name: Verify World loading and keyboard regressions
+        run: npx playwright test tests/world.spec.js --grep "scene readiness never dismisses|all Work disclosures|destination labels stay separated" --project desktop --project mobile --max-failures=1
       - name: Test portfolio navigation, accessibility, and mobile behavior
         run: npx playwright test tests/world.spec.js --grep-invert "visual baseline" --max-failures=4
       - name: Install Windows Chrome for reviewed reading references

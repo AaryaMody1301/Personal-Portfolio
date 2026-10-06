@@ -44,6 +44,13 @@ test.beforeEach(async ({ page, baseURL }) => {
 // Leave failed pages intact so the reporter preserves the actual failure.
 test.afterEach(async ({ page }, testInfo) => {
   if (testInfo.status === "passed") {
+    // Release the renderer before browser-context teardown, independently of
+    // pagehide/BFCache behavior. Failure pages retain their renderer and trace.
+    await page.evaluate(() => {
+      document.querySelector("#world-stage canvas")?.dispatchEvent(
+        new Event("webglcontextlost", { cancelable: true }),
+      );
+    });
     await page.evaluate(() => { location.href = "about:blank"; });
     await page.waitForURL("about:blank");
   }
@@ -495,6 +502,9 @@ test("context loss while initializing keeps the reading fallback", async ({
 });
 test("scene readiness never dismisses the current dialog", async ({ page }) => {
   await requireWorld(page);
+  // Changing only the hash would retain the initialized module and bypass
+  // the route gate. Start from a new document before delaying the World.
+  await page.goto("/?view=read");
   let releaseBundle;
   const bundleGate = new Promise((resolve) => {
     releaseBundle = resolve;
@@ -802,7 +812,8 @@ test("reading sample states synchronize when the world first starts", async ({
 test("all Work disclosures and six panels remain keyboard accessible", async ({
   page,
 }) => {
-  test.setTimeout(90000);
+  // Eight full accessibility scans share this budget on software-rendered CI.
+  test.setTimeout(120000);
   await requireWorld(page);
   await page.locator("#motion-toggle").click();
   const tags = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"];
@@ -847,6 +858,8 @@ test("map destination dismissal restores focus to a visible control", async ({
 test("destination labels stay separated in the required layouts", async ({
   page,
 }, info) => {
+  // Five fresh scenes each retain the existing 20-second readiness deadline.
+  test.setTimeout(120000);
   test.skip(
     !["desktop", "safari", "firefox"].includes(info.project.name),
     "Required widths are covered by all three desktop engines.",
