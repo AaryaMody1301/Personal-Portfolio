@@ -65,19 +65,19 @@ jobs:
       - name: Test static case studies and accessibility
         run: npx playwright test tests/case-studies.spec.js --grep-invert "capture cobalt" --max-failures=4
       - name: Verify World loading and keyboard regressions
-        run: npx playwright test tests/world.spec.js --grep "scene readiness never dismisses|all Work disclosures|destination labels stay separated|hidden introduction never receives" --project desktop --project mobile --max-failures=1
+        run: npx playwright test tests/world.spec.js --grep "scene readiness never dismisses|all Work disclosures|destination labels stay separated|hidden introduction never receives|paused World becomes idle" --project desktop --project mobile --max-failures=1
       - name: Run Lighthouse against a dedicated local preview
         run: npm run audit:preview
       - name: Test portfolio navigation, accessibility, and mobile behavior
         run: npx playwright test tests/world.spec.js --grep-invert "visual baseline" --max-failures=4
-      - name: Install Windows Chrome for reviewed reading references
+      - name: Install Windows Chrome for reviewed visual references
         if: runner.os == 'Windows'
         run: npx playwright install chrome
-      - name: Verify reviewed Windows Chrome reading references
+      - name: Verify reviewed Windows Chrome visual references
         if: runner.os == 'Windows'
         env:
           PLAYWRIGHT_CHROMIUM_CHANNEL: chrome
-        run: npx playwright test --grep "reading visual baseline" --project desktop --project mobile
+        run: npx playwright test --grep "visual baseline" --project desktop --project mobile
       - name: Ensure verification did not modify release sources
         run: git diff --exit-code -- index.html projects/ assets/ site-pages.json package-lock.json
       - name: Package and verify the Hostinger upload

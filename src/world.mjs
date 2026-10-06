@@ -928,6 +928,7 @@ export async function createWorld({
             if (animate)
               particleTimer = gsap.delayedCall(1.3, () => {
                 particles.visible = false;
+                redraw = true;
               });
           }
         }

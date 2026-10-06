@@ -471,6 +471,36 @@ test("reading view pauses rendering and the map is keyboard accessible", async (
     "active",
   );
 });
+test("paused World becomes idle and redraws an evidence change", async ({ page }, info) => {
+  test.setTimeout(60_000);
+  await requireWorld(page);
+  await page.locator("#motion-toggle").click();
+  await expect(page.locator("#world-stage")).toHaveAttribute("data-motion", "paused");
+  await page.locator(".island-labels [data-island=compatforge]").click();
+  await page.locator("canvas").evaluate((canvas) => {
+    const gl = canvas.getContext("webgl2");
+    window.__pausedDrawCount = 0;
+    for (const name of ["drawElements", "drawArrays", "drawElementsInstanced", "drawArraysInstanced"]) {
+      const original = gl[name];
+      gl[name] = function (...args) {
+        window.__pausedDrawCount++;
+        return original.apply(this, args);
+      };
+    }
+  });
+  const idle = async () => {
+    const before = await page.evaluate(() => window.__pausedDrawCount);
+    await page.waitForTimeout(300);
+    return (await page.evaluate(() => window.__pausedDrawCount)) - before;
+  };
+  await expect.poll(idle, { timeout: 20_000 }).toBe(0);
+  const before = await page.evaluate(() => window.__pausedDrawCount);
+  await page.getByRole("button", { name: "Unknown", exact: true }).click();
+  await expect.poll(() => page.evaluate(() => window.__pausedDrawCount), { timeout: 8_000 }).toBeGreaterThan(before);
+  await expect.poll(idle, { timeout: 20_000 }).toBe(0);
+  if (["desktop", "mobile"].includes(info.project.name))
+    await page.screenshot({ path: info.outputPath("world-paused-evidence.png") });
+});
 test("context loss while initializing keeps the reading fallback", async ({
   page,
 }) => {

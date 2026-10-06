@@ -27,7 +27,8 @@ test("static batching preserves vertices in a transformed island", async () => {
   });
   assert.equal(await batchStaticMeshes(root), 1);
   const merged = root.children.find((node) => node.isMesh);
-  const actual = Array.from(merged.geometry.attributes.position.array);
+  assert.ok(merged.geometry.index, "shared vertices remain indexed");
+  const actual = Array.from(merged.geometry.toNonIndexed().attributes.position.array);
   assert.equal(actual.length, expected.length);
   actual.forEach((value, index) => assert.ok(Math.abs(value - expected[index]) < 1e-6));
   assert.equal(nested.children.length, 0);

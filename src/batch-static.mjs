@@ -19,7 +19,7 @@ export async function batchStaticMeshes(root, {
       if (exclude.has(ancestor)) return;
       if (ancestor === root) break;
     }
-    const signature = Object.entries(node.geometry.attributes)
+    const signature = `${Boolean(node.geometry.index)}|` + Object.entries(node.geometry.attributes)
       .sort(([a], [b]) => a.localeCompare(b))
       .map(([name, attribute]) =>
         `${name}:${attribute.itemSize}:${attribute.normalized}:${attribute.array.constructor.name}`)
@@ -34,9 +34,9 @@ export async function batchStaticMeshes(root, {
     for (const nodes of variants.values()) {
       if (nodes.length < 2) continue;
       const geometries = nodes.map((node) => {
-        const geometry = node.geometry.index
-          ? node.geometry.toNonIndexed()
-          : node.geometry.clone();
+        // Preserve indexed buffers: expanding shared vertices can make the
+        // software/mobile GPU do more work despite the lower draw-call count.
+        const geometry = node.geometry.clone();
         geometry.applyMatrix4(new THREE.Matrix4().multiplyMatrices(inverse, node.matrixWorld));
         return geometry;
       });

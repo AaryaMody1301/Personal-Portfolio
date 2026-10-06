@@ -1,6 +1,6 @@
 # Cobalt portfolio redesign
 
-The default portfolio uses a light reading layout: white/slate surfaces, `#111827` body text, `#475569` secondary text, and `#1d4ed8` actions. The optional World keeps its existing dark palette and renderer. This work is based on `portfolio/aaryas-world` (PR #11), with the redesign isolated on `portfolio/cobalt-case-studies`.
+The default portfolio uses a light reading layout: white/slate surfaces, `#111827` body text, `#475569` secondary text, and `#1d4ed8` actions. The optional World keeps its dark palette and interactions. This work is based on `portfolio/aaryas-world` (PR #11), with the redesign isolated on `portfolio/cobalt-case-studies`.
 
 The homepage leads with Aarya's role and current employment, three featured projects, then professional experience and evidence-linked skills. Eleven further projects remain in a searchable collection. All fourteen native project disclosures, project URLs, resume bytes, contacts, professional qualifications, and third-party notices are retained.
 
@@ -18,12 +18,16 @@ The social card has an editable SVG source in `assets/images/og-source.svg`, ras
 
 ## Verification scope
 
-Local navigation unit tests passed. Available asset hashes and local page targets were checked; JavaScript syntax, dependency pins, and repository hygiene were also examined. The workspace could not install all pinned dependencies or retrieve the two large pre-existing lighting blobs. Local CSS was compiled with cached esbuild 0.28.0, which reproduced the previous pinned stylesheet byte for byte before compiling the combined sources. CI must verify the final output using the repository's pinned esbuild 0.28.2.
+CI rebuilds using the locked dependencies, checks all fourteen content-versioned assets and registered pages, exercises deployment rejection cases, and rejects any difference between the committed runtime and rebuilt output. Runtime artifacts retain the reproducible build separately from the upload package.
 
-Four reading/focus references were captured and visually reviewed on Windows with Google Chrome 154.0.8037.98. The two World references remain unchanged. CI compares the reading references in that browser separately from behavioral coverage, and captures the cobalt homepage and forecast case study for review.
+Four reading/focus references were captured and visually reviewed on Windows with Google Chrome 154.0.8037.98. The two World references remain unchanged. CI compares all six references in that browser separately from behavioral coverage, and captures the cobalt homepage and forecast case study for review.
 
-The first full CI run passed builds, repository checks, and deployment regression tests on both operating systems, but reached its time limit in browser checks. No-JavaScript case-study tests use Playwright-managed device contexts, separate from accessibility scans; renderer-only tests verify WebGL capability before exercising the optional World. Reading layout and accessibility retain independent coverage in every browser. A browser with WebGL2 must reach the ready state; unexpected fallback still fails.
+Seventy case-study checks cover all seven browser/device profiles, including no-JavaScript navigation, native disclosures, small-screen overflow, source links, result-table parity, and WCAG scans. The World suite covers destination travel, samples, keyboard focus, history, delayed scripts, orientation, context loss, and reading fallback. Renderer-only tests verify WebGL capability before exercising World; a browser with WebGL2 must reach the ready state, and unexpected fallback still fails. Reading layout and accessibility retain independent coverage in every browser.
 
-CI remains responsible for the full build, asset-integrity checks, deployment regression tests, seven browser/device profiles, WCAG scans, Lighthouse, and Windows upload-package verification. CI produces reports and a ZIP; it does not deploy the site. No new live-site verification has been claimed for this branch.
+Mobile World batches opaque static geometry by island and material. Animated parts, sample-controlled materials, transparent surfaces, and imported models retain independent objects. Shader preparation yields between material batches. Paused World draws only after orbit, travel, resize, new scenery, or sample changes; tests verify that evidence changes still redraw and then become idle. Geometry tests check transformed vertices, animation exclusions, and disposal of removed buffers.
+
+Lighthouse retains three samples for mobile and desktop in both reading and World. The existing median gates remain 90 Performance and 95 Accessibility, Best Practices, and SEO. The Windows packaging stage verifies every upload entry and the original resume bytes. Consult the current PR checks and downloadable reports for results at a particular revision. Project benchmark evidence was reviewed at pinned commits, not rerun.
+
+CI produces reports and a ZIP without deploying the site. Local previews and emulated devices do not verify the live host or physical devices. PR #12 remains stacked on PR #11; follow the deployment runbook after reviewing the final revision.
 
 Behavioral stages stop after four failures to preserve useful reports rather than exhaust the job limit on repeated symptoms. A successful run still executes every configured test.
