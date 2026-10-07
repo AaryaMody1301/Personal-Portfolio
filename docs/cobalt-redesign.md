@@ -28,6 +28,8 @@ Mobile and other constrained devices keep World still between interactions while
 
 Returning to World at the same size retains the drawing buffer; a browser integration check verifies that mode changes do not reassign the canvas dimensions. Actual container size changes still resize it. Named browser performance measurements record context creation, renderer setup, shader preparation, buffer uploads, and the first full frame; the startup profiler includes these stages.
 
+Container observation starts after hidden buffer preparation. Its initial notification therefore cannot expand the one-pixel target. An integration check pauses preparation after a real draw, rotates the viewport, waits for two paint frames, verifies that the drawing buffer stays at one pixel, then releases preparation and checks the final viewport and map navigation.
+
 Lighthouse retains three samples for mobile and desktop in both reading and World. It runs before the full browser suite to provide feedback while the remaining checks finish. A final acceptance step fails the job if the audit fails, so the existing median gates remain 90 Performance and 95 Accessibility, Best Practices, and SEO. Packaging remains blocked by a failed audit. The Windows packaging stage verifies every upload entry and the original resume bytes. Consult the current PR checks and downloadable reports for results at a particular revision. Project benchmark evidence was reviewed at pinned commits, not rerun.
 
 CI produces reports and a ZIP without deploying the site. Local previews and emulated devices do not verify the live host or physical devices. PR #12 remains stacked on PR #11; follow the deployment runbook after reviewing the final revision.

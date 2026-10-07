@@ -791,6 +791,63 @@ test("hidden introduction never receives keyboard focus after island travel", as
   await expect(page.locator(".world-copy")).not.toHaveAttribute("inert", "");
 });
 
+test("rotation during hidden buffer preparation retains the one-pixel target", async ({ page }) => {
+  test.setTimeout(60_000);
+  await page.addInitScript(() => {
+    const timeout = window.setTimeout.bind(window),
+      getContext = HTMLCanvasElement.prototype.getContext;
+    let held = false, release;
+    window.__releaseWarmup = () => release?.();
+    Object.defineProperty(window, "scheduler", {
+      configurable: true,
+      value: { yield: () => new Promise((resolve) => {
+        if (window.__warmupStarted && !held) {
+          held = true;
+          window.__warmupHeld = true;
+          release = resolve;
+        } else timeout(resolve, 0);
+      }) },
+    });
+    HTMLCanvasElement.prototype.getContext = function (...args) {
+      const gl = getContext.apply(this, args), canvas = this;
+      if (args[0] === "webgl2" && gl && !gl.__warmupHook) {
+        gl.__warmupHook = true;
+        for (const name of ["drawElements", "drawArrays", "drawElementsInstanced", "drawArraysInstanced"]) {
+          const draw = gl[name];
+          gl[name] = function (...values) {
+            if (canvas.parentElement?.id === "world-stage" && canvas.width === 1 && canvas.height === 1)
+              window.__warmupStarted = true;
+            return draw.apply(this, values);
+          };
+        }
+      }
+      return gl;
+    };
+  });
+  await page.goto("/?view=world");
+  const capable = await page.evaluate(() => {
+    const gl = document.createElement("canvas").getContext("webgl2");
+    gl?.getExtension("WEBGL_lose_context")?.loseContext();
+    return !!gl;
+  });
+  test.skip(!capable, "No working WebGL2 renderer; fallback is checked separately.");
+  await page.waitForFunction(() => window.__warmupHeld, undefined, { timeout: 20_000 });
+  const viewport = page.viewportSize();
+  await page.setViewportSize({ width: viewport.height, height: viewport.width });
+  // Give responsive layout and observer delivery two actual paint frames.
+  await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  expect(await page.locator("#world-stage canvas").evaluate((canvas) => [canvas.width, canvas.height])).toEqual([1, 1]);
+  await page.evaluate(() => window.__releaseWarmup());
+  await expect(page.locator("body")).toHaveAttribute("data-world-state", "ready", { timeout: 20_000 });
+  await expect.poll(() => page.evaluate(() => {
+    const mount = document.querySelector("#world-stage"), canvas = mount.querySelector("canvas"),
+      ratio = Math.min(devicePixelRatio, mount.dataset.quality === "low" ? 1.25 : 1.5);
+    return canvas.width === Math.floor(mount.clientWidth * ratio) && canvas.height === Math.floor(mount.clientHeight * ratio);
+  })).toBe(true);
+  await page.locator("#map-toggle").click();
+  await expect(page.locator("#world-map")).toBeVisible();
+});
+
 test("resize and orientation changes preserve the selected camera view", async ({
   page,
 }) => {

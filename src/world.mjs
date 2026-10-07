@@ -784,10 +784,6 @@ export async function createWorld({
       status(message);
     }
     layout();
-    // Header breakpoints and viewport units may settle after the window resize
-    // event. Observe the actual mount so the camera and drawing buffer agree.
-    resizeObserver = new ResizeObserver(layout);
-    resizeObserver.observe(mount);
     // Configure the final environment before compiling, so its arrival cannot
     // trigger another synchronous shader batch during the first visible frame.
     await lighting;
@@ -828,6 +824,11 @@ export async function createWorld({
       layout();
     }
     performance.measure("World buffer uploads", { start: uploadStarted });
+    // Observe only after restoring the current viewport. An initial observer
+    // notification during warm-up would expand its one-pixel drawing buffer.
+    // Later notifications track settled header breakpoints and viewport units.
+    resizeObserver = new ResizeObserver(layout);
+    resizeObserver.observe(mount);
     const firstFrameStarted = performance.now();
     renderer.render(scene, camera);
     performance.measure("World first full frame", { start: firstFrameStarted });
