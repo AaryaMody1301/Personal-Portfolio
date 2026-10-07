@@ -5,6 +5,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import desktopConfig from "lighthouse/core/config/desktop-config.js";
 import { baseURL, reportsRoot, auditMetadata } from "./audit-target.mjs";
+import { worldAuditError } from "./lighthouse-result.mjs";
 const metadata = await auditMetadata("lighthouse", baseURL, {
   checkLocal: true,
 });
@@ -22,7 +23,8 @@ await new Promise((resolve, reject) =>
 );
 const browser = await chromium.launch({
   channel: process.env.PLAYWRIGHT_CHROMIUM_CHANNEL || "chrome",
-  args: ["--remote-debugging-port=" + port],
+  // Windows' system motion preference can otherwise select the reading view.
+  args: ["--remote-debugging-port=" + port, "--force-prefers-no-reduced-motion"],
 });
 try {
   const runs = [];
@@ -61,8 +63,9 @@ try {
           resolve(reportsRoot, `lighthouse/${view}-${device}-${run}.json`),
           result.report[1],
         );
-        if (result.lhr.runtimeError) {
-          const record = { view, device, run, error: result.lhr.runtimeError };
+        const auditError = result.lhr.runtimeError || worldAuditError(view, result.lhr);
+        if (auditError) {
+          const record = { view, device, run, error: auditError };
           runs.push(record);
           console.log(JSON.stringify(record));
           continue;
