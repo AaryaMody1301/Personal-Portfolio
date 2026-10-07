@@ -72,6 +72,14 @@ jobs:
         id: lighthouse
         continue-on-error: true
         run: npm run audit:preview
+      - name: Retain Lighthouse feedback before the full browser suite
+        if: ${{ !cancelled() && steps.lighthouse.outcome != 'skipped' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-lighthouse-${{ matrix.os }}
+          path: reports/local/**/lighthouse/
+          if-no-files-found: ignore
+          retention-days: 14
       - name: Test portfolio navigation, accessibility, and mobile behavior
         run: npx playwright test tests/world.spec.js --grep-invert "visual baseline" --max-failures=4
       - name: Install Windows Chrome for reviewed visual references
