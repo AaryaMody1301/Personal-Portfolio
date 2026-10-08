@@ -12,22 +12,22 @@
   <meta property="og:description" content="A reproducible forecast of weekly median vehicle selling price, tested chronologically against a simple last-value baseline." />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://aaryamody.app/projects/sales-forecasting.html" />
-  <meta property="og:image" content="https://aaryamody.app/assets/images/og-image.3d4c6ec6da5e.jpg" />
-  <meta property="og:image:alt" content="Aarya Mody · Data analytics and engineering" />
+  <meta property="og:image" content="https://aaryamody.app/assets/images/og-image.21088983f5bb.jpg" />
+  <meta property="og:image:alt" content="Aarya Mody · Data Analyst · SQL, Python and Databricks" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Vehicle-price forecasting · Case study | Aarya Mody" />
   <meta name="twitter:description" content="A reproducible forecast of weekly median vehicle selling price, tested chronologically against a simple last-value baseline." />
-  <meta name="twitter:image" content="https://aaryamody.app/assets/images/og-image.3d4c6ec6da5e.jpg" />
-  <meta name="twitter:image:alt" content="Aarya Mody · Data analytics and engineering" />
+  <meta name="twitter:image" content="https://aaryamody.app/assets/images/og-image.21088983f5bb.jpg" />
+  <meta name="twitter:image:alt" content="Aarya Mody · Data Analyst · SQL, Python and Databricks" />
   <link rel="icon" href="../assets/images/favicon.f14e9d9541be.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="../assets/css/style.1911525f28b1.css" />
+  <link rel="stylesheet" href="../assets/css/style.fc157ee40050.css" />
   <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "Let the baseline earn its place.",
   "description": "A reproducible forecast of weekly median vehicle selling price, tested chronologically against a simple last-value baseline.",
   "datePublished": "2026-10-06",
-  "dateModified": "2026-10-06",
+  "dateModified": "2026-10-08",
   "author": {
     "@type": "Person",
     "name": "Aarya Mody",
@@ -41,7 +41,7 @@
   <header class="site-header"><nav class="nav-shell" aria-label="Main navigation"><a class="brand" href="../index.html" aria-label="Aarya Mody, Home"><span class="brand-mark" aria-hidden="true">am</span><span class="brand-word">AARYA MODY</span></a><div class="case-nav"><a href="../index.html#projects">All work</a><a class="case-contact" href="../index.html#contact">Contact</a><a class="nav-resume" href="../assets/docs/AaryaMody_Resume.pdf" download>Resume ↓</a></div></nav></header>
   <main id="main-content" tabindex="-1">
     <div class="case-shell">
-      <header class="case-hero"><p class="eyebrow">Case study 03 / Vehicle-price forecasting</p><h1>Let the baseline earn its place.</h1><p class="case-lede">A reproducible forecast of weekly median vehicle selling price, tested chronologically against a simple last-value baseline.</p><aside class="case-brief" aria-label="Case study at a glance"><div><p class="brief-label">Outcome</p><p>ARIMA: 6.73% lower mean fold RMSE than the naive baseline.</p></div><div><p class="brief-label">Decision</p><p>Keep the baseline; report the worse ensemble result.</p></div><div><p class="brief-label">Limit</p><p>Weekly median vehicle price; two chronological outer folds.</p></div></aside><dl class="case-meta"><div><dt>Focus</dt><dd>Time-series analytics</dd></div><div><dt>Stack</dt><dd>Python · pandas · statsmodels · Streamlit</dd></div><div><dt>My role</dt><dd>Personal project · implementation &amp; evaluation</dd></div></dl></header>
+      <header class="case-hero"><p class="eyebrow">Case study 03 / Vehicle-price forecasting</p><h1>Let the baseline earn its place.</h1><p class="case-lede">A reproducible forecast of weekly median vehicle selling price, tested chronologically against a simple last-value baseline.</p><aside class="case-brief" aria-label="Case study at a glance"><div><p class="brief-label">Outcome</p><p>ARIMA: 6.73% lower mean fold RMSE than the naive baseline.</p></div><div><p class="brief-label">Decision</p><p>Keep the baseline; report the worse ensemble result.</p></div><div><p class="brief-label">Limit</p><p>32 observed weeks of median vehicle price; two chronological outer folds.</p></div></aside><dl class="case-meta"><div><dt>Focus</dt><dd>Time-series analytics</dd></div><div><dt>Stack</dt><dd>Python · pandas · statsmodels · Streamlit</dd></div><div><dt>My role</dt><dd>Personal project · implementation &amp; evaluation</dd></div></dl></header>
       <div class="case-layout">
         <nav class="case-toc" aria-label="On this page"><a href="#problem">The problem</a><a href="#approach">The approach</a><a href="#results">The evidence</a><a href="#tradeoffs">Decisions &amp; limits</a><a href="#sources">Inspect the work</a></nav>
         <article class="case-body" aria-label="Sales Forecasting case study"><section id="problem"><h2>The problem</h2><p>A forecast can look persuasive when future information leaks into training or a complex model is never compared with a simple baseline. I built an evaluation pipeline that makes those choices explicit and preserves the evidence needed to reproduce the result.</p><p>The release benchmark forecasts weekly median vehicle selling price. The original repository is named Sales Forecasting; its release benchmark targets vehicle price, rather than revenue or units sold.</p></section>

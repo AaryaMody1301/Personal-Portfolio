@@ -39,9 +39,9 @@
     },
     {
       "source": "assets/images/og-image.jpg",
-      "path": "assets/images/og-image.3d4c6ec6da5e.jpg",
-      "hash": "3d4c6ec6da5e8df28d65f67520b25ef97879938b3a16551917f220a7671ef605",
-      "bytes": 51435
+      "path": "assets/images/og-image.21088983f5bb.jpg",
+      "hash": "21088983f5bb708bcb6a5c0118f2d8461258d535a4a880359026da5039480e1c",
+      "bytes": 51245
     },
     {
       "source": "assets/images/favicon.svg",
@@ -69,9 +69,9 @@
     },
     {
       "source": "assets/css/style.css",
-      "path": "assets/css/style.1911525f28b1.css",
-      "hash": "1911525f28b114f639b6fa639ae46781c9387f04e315374a16ea26830baed681",
-      "bytes": 48226
+      "path": "assets/css/style.fc157ee40050.css",
+      "hash": "fc157ee400503b913f34e0ee8145c261308990f7fbdc5782bfeaf5421920b3e6",
+      "bytes": 48541
     },
     {
       "source": "assets/js/app.js",

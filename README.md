@@ -1,4 +1,4 @@
-# Aarya Mody — Data Analytics & Engineering
+# Aarya Mody — Data Analyst · SQL, Python & Databricks
 
 A light reading portfolio for data analytics and engineering, with three evidence-backed case studies and an optional floating world loaded through Explore world. See [the redesign guide](docs/cobalt-redesign.md) for this branch's changes and verification scope. The [world guide](docs/aaryas-world.md), [previous verification](docs/aaryas-world-verification.md), and [published-release evidence](docs/release-evidence.json) describe the predecessor release, including its remaining hosting issue.
 
@@ -8,7 +8,7 @@ A light reading portfolio for data analytics and engineering, with three evidenc
 
 ## What is here
 
-- Three static case studies: [DriftDoctor](projects/driftdoctor.html), [SQL Practice Project](projects/sql-analytics.html), and [Sales Forecasting](projects/sales-forecasting.html), with source evidence, measured results, decisions, and limits.
+- Three static case studies: [SQL analysis & query tuning](projects/sql-analytics.html), [DriftDoctor](projects/driftdoctor.html), and [Vehicle-price forecasting](projects/sales-forecasting.html), with source evidence, measured results, decisions, and limits.
 - Eleven more public projects in a searchable collection, professional experience, skills, credentials, and contact links. World retains DriftDoctor, CompatForge, and OriginKeep islands and their illustrative demonstrations.
 - Responsive layouts, persistent navigation and responsive native dialog panels, keyboard focus handling, reduced-motion support, and usable content/navigation without JavaScript.
 - Locally hosted images and resume, content-versioned assets, metadata, structured profile data, and a sitemap.
@@ -29,7 +29,7 @@ npm run serve
 
 Open **http://127.0.0.1:4173/** for reading, or **http://127.0.0.1:4173/?view=world** for World. The server is a local development utility. `npm run serve` prepares the asset filenames before starting it.
 
-The clone command selects the redesign draft. PR #12 is based on `portfolio/aaryas-world` (PR #11); `master` still contains the earlier portfolio. After both changes are merged, use the production branch for future checkouts.
+The clone command selects the redesign draft. PR #12 targets `master` and already includes the predecessor changes from closed PR #11. After PR #12 is merged, use the production branch for future checkouts. Publishing still requires the complete Hostinger upload described below.
 
 After changing a stylesheet, script, or image while the preview is running, run `npm run build` and refresh. Commit the editable source, generated copy, and all updated registered HTML pages together. Text files use LF line endings so the hashes stay identical across operating systems.
 
@@ -66,11 +66,11 @@ npm test
 
 The suite uses one worker to isolate shared GPU resources in renderer/context-loss checks. The test profiles cover Chrome desktop/Android emulation, WebKit desktop/iPhone/iPad emulation, and Firefox. The six reviewed image baselines use **Linux + the Chromium headless shell pinned by Playwright**. CI compares them in that same browser, with the original pixel tolerances; Windows and all seven browser/device profiles keep behavioral and accessibility coverage. They do not certify physical iOS or Android hardware. See the [current verification](docs/aaryas-world-verification.md) for current results and limits; [the earlier compatibility audit](docs/history/compatibility-verification.md) records the previous design.
 
-To use Playwright's bundled Chromium instead, install `chromium firefox webkit` and set `PLAYWRIGHT_CHROMIUM_CHANNEL=chromium` in your shell. CI uses these engines for behavioral checks and Windows Google Chrome for reviewed reading-image comparisons. Browser installation on Linux may require permission to install system packages; see [Playwright's CI guide](https://playwright.dev/docs/ci-intro).
+To use Playwright's bundled Chromium instead, install `chromium firefox webkit` and set `PLAYWRIGHT_CHROMIUM_CHANNEL=chromium` in your shell. CI uses these engines for behavioral checks and Linux Chromium headless shell for the six reviewed image comparisons. Browser installation on Linux may require permission to install system packages; see [Playwright's CI guide](https://playwright.dev/docs/ci-intro).
 
 All browser, link, capture, Lighthouse and interaction-profile tools accept `PORTFOLIO_BASE_URL`, which defaults to `http://127.0.0.1:4173/`. Reports are separated under `reports/local/` and `reports/live/`. A remote target does not start the preview server. Deployment verification compares against the current checkout by default. For a rollback comparison, extract the saved rollback ZIP into a temporary reference directory and set `PORTFOLIO_REFERENCE_DIR` to that directory; remove the export after byte verification.
 
-Use `npm run preview:capture -- --refresh-social` to regenerate only the reading social card. To intentionally regenerate posters and the social image, use `npm run preview:capture -- --refresh-assets` against localhost, then `npm run build`. Normal captures never modify source images.
+The committed social card is rasterized from `assets/images/og-source.svg`. After editing it, regenerate the JPG with `node --input-type=module -e "import sharp from 'sharp'; await sharp('assets/images/og-source.svg').jpeg({quality:88}).toFile('assets/images/og-image.jpg')"` and run `npm run build`. Use `npm run preview:capture -- --refresh-social` for a homepage screenshot instead, or `-- --refresh-assets` to intentionally regenerate the World posters as well. Normal captures never modify source images.
 
 Desktop uses `assets/environment/venice-sunset-pmrem.hdr`, filtered ahead of time from the original CC0 `venice-sunset.hdr`. Normal builds use the checked-in result and require no browser for lighting preparation. After changing the source or Three.js version, run `npm run assets:environment`, rebuild, and review the visual/performance checks. The optional bake uses the installed Chrome or `PLAYWRIGHT_CHROMIUM_CHANNEL` and fulfills its requests locally without a server or downloads.
 

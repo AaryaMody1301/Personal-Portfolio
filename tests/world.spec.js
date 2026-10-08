@@ -62,6 +62,24 @@ async function clickNav(page, name) {
     await page.locator(".mobile-menu > summary").click();
   await page.getByRole("link", { name, exact: true }).first().click();
 }
+async function switchView(page) {
+  // Locator.click may scroll a sticky header's original layout box into view.
+  // Real pointer clicks preserve the reading position before switching modes.
+  const click = async (control) => {
+    await expect(control).toBeVisible();
+    const box = await control.boundingBox();
+    await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+  };
+  const toggle = page.locator("#reading-toggle");
+  if (await toggle.isVisible()) {
+    await click(toggle);
+  } else {
+    const menu = page.locator(".mobile-menu");
+    if ((await menu.getAttribute("open")) === null)
+      await click(menu.locator("summary"));
+    await click(menu.locator("a[data-world]"));
+  }
+}
 async function ready(page, url = "/?view=world") {
   await page.goto(url);
   await expect(page.locator("body")).toHaveAttribute(
@@ -465,12 +483,12 @@ test("reading view pauses rendering and the map is keyboard accessible", async (
     new MutationObserver((changes) => { window.__canvasAllocations += changes.length; })
       .observe(canvas, { attributes: true, attributeFilter: ["width", "height"] });
   });
-  await page.locator("#reading-toggle").click();
+  await switchView(page);
   await expect(page.locator("#world-stage")).toHaveAttribute(
     "data-rendering",
     "paused",
   );
-  await page.locator("#reading-toggle").click();
+  await switchView(page);
   await expect(page.locator("#world-stage")).toHaveAttribute(
     "data-rendering",
     "active",
@@ -623,7 +641,7 @@ test("slow lighting leaves navigation usable and cannot revive a lost renderer",
   await expect(page.locator("#content-panel")).toBeVisible();
   await expect(page.locator("#panel-content #about")).toBeVisible();
   await page.locator("#close-panel").click();
-  await page.locator("#reading-toggle").click();
+  await switchView(page);
   await expect(page.locator("body")).toHaveClass(/reading-mode/);
   await page
     .locator("canvas")
@@ -903,7 +921,7 @@ test("reading sample states synchronize when the world first starts", async ({
       .getByRole("button", { name: action, exact: true })
       .click();
   }
-  await page.locator("#reading-toggle").click();
+  await switchView(page);
   await expect(page.locator("body")).toHaveAttribute(
     "data-world-state",
     "ready",
@@ -1177,12 +1195,12 @@ test("mode switching during loading pauses the scene and retains sample state", 
     await r.continue();
   });
   await page.goto("/");
-  await page.locator("#reading-toggle").click();
+  await switchView(page);
   await expect(page.locator("body")).toHaveAttribute(
     "data-world-state",
     "loading",
   );
-  await page.locator("#reading-toggle").click();
+  await switchView(page);
   release();
   await expect(page.locator("body")).toHaveAttribute(
     "data-world-state",
@@ -1195,9 +1213,9 @@ test("mode switching during loading pauses the scene and retains sample state", 
     "paused",
   );
   for (let i = 0; i < 3; i++) {
-    await page.locator("#reading-toggle").click();
+    await switchView(page);
     await expect(page.locator("#world-stage")).toBeVisible();
-    await page.locator("#reading-toggle").click();
+    await switchView(page);
     await expect(page.locator("#world-stage")).toBeHidden();
   }
 });
@@ -1211,7 +1229,7 @@ test("history, hidden resize and returning from a project preserve view and read
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(100);
   const position = await page.evaluate(() => scrollY);
-  await page.locator("#reading-toggle").click();
+  await switchView(page);
   await expect(page.locator("body")).toHaveAttribute(
     "data-world-state",
     "ready",
@@ -1224,7 +1242,7 @@ test("history, hidden resize and returning from a project preserve view and read
   const label = page.locator(".island-labels [data-island=driftdoctor]"),
     before = await label.boundingBox(),
     viewport = page.viewportSize();
-  await page.locator("#reading-toggle").click();
+  await switchView(page);
   await expect(page.locator("#work-driftdoctor")).toHaveAttribute("open", "");
   await expect(page.locator("#world-stage")).toBeHidden();
   await page.setViewportSize({
@@ -1232,7 +1250,7 @@ test("history, hidden resize and returning from a project preserve view and read
     height: viewport.width,
   });
   await page.setViewportSize(viewport);
-  await page.locator("#reading-toggle").click();
+  await switchView(page);
   await page.waitForTimeout(150);
   const after = await label.boundingBox();
   expect(Math.abs(after.x - before.x)).toBeLessThan(2);
@@ -1244,12 +1262,8 @@ test("history, hidden resize and returning from a project preserve view and read
   await page.goto("/#projects");
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(150);
-  const actualPosition = await page.evaluate(() => scrollY),
-    button = await page.locator("#reading-toggle").boundingBox();
-  await page.mouse.click(
-    button.x + button.width / 2,
-    button.y + button.height / 2,
-  );
+  const actualPosition = await page.evaluate(() => scrollY);
+  await switchView(page);
   await page.goBack();
   await expect(page.locator("body")).toHaveClass(/reading-mode/);
   await expect.poll(() => page.evaluate(() => scrollY)).toBe(actualPosition);

@@ -14,7 +14,9 @@ These pages need no client-side JavaScript. Their source links are pinned to the
 
 `assets/css/reading.css` is the editable reading/case-study stylesheet; `scripts/build.mjs` combines it with the existing World styles into the generated stylesheet. `site-pages.json` is the shared page registry used by hashing, link checks, deployment verification, and upload packaging. New pages must be registered there and added to `sitemap.xml`.
 
-The social card has an editable SVG source in `assets/images/og-source.svg`, rasterized to the existing 1200 × 630 JPG. The favicon uses the same cobalt accent. Neither asset adds a network dependency.
+On narrow screens, the hero keeps a direct SQL case-study link with its one-query synthetic benchmark qualification visible. SQL, Python and Databricks appear in the introduction. Resume and Contact remain primary actions; Explore world lives in the mobile menu, and the World view retains its visible return control. The forecasting card puts the 32-week, two-fold scope beside the result.
+
+The social card has an editable SVG source in `assets/images/og-source.svg`, rasterized to the existing 1200 × 630 JPG. Its Data Analyst / SQL, Python and Databricks wording matches the page metadata. The favicon uses the same cobalt accent. Neither asset adds a network dependency.
 
 ## Verification scope
 

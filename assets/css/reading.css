@@ -274,20 +274,26 @@
   .case-study-page .nav-shell { width: calc(100% - 40px); }
   .reading-mode .world-copy { display: block; }
   .reading-mode .nav-actions { gap: 8px; }
-  .reading-mode .nav-quick-resume { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 10px; border-radius: 6px; background: var(--copper); color: #fff; font-size: 12px; font-weight: 600; text-decoration: none; }
-  .reading-mode #reading-toggle { font-size: 11px; padding-inline: 0; border: 0; color: var(--muted); }
-  .reading-mode .mobile-menu > summary { font-size: 12px; padding-inline: 7px; }
-  .reading-mode .hero-proof { display: none; }
+  .reading-mode .nav-quick-resume { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 12px; border-radius: 6px; background: var(--copper); color: #fff; font-size: 14px; font-weight: 600; text-decoration: none; }
+  .reading-mode #reading-toggle { display: none; }
+  .reading-mode .mobile-menu > summary { font-size: 14px; padding-inline: 10px; }
+  .reading-mode .hero-proof { display: block; padding: 0; margin-top: 12px; background: none; border: 0; }
+  .reading-mode .hero-proof .proof-label,
+  .reading-mode .hero-proof h2,
+  .reading-mode .hero-proof .proof-row > span,
+  .reading-mode .hero-proof .proof-row ~ .proof-row { display: none; }
+  .reading-mode .hero-proof .proof-row { display: block; padding: 8px 0 0; }
+  .reading-mode .hero-proof .proof-row a { min-height: 44px; display: flex; align-items: center; }
+  .reading-mode .hero-proof .proof-row p { margin: 0; }
   .reading-mode .world-hero { padding: 32px 0 26px; }
   .reading-mode .world-copy h1 { font-size: clamp(40px, 11vw, 52px); }
   .reading-mode .world-copy .eyebrow { font-size: 12px; margin-bottom: 12px; letter-spacing: .04em; }
   .reading-mode .hero-discipline { font-size: 17px; margin-top: 12px !important; }
-  .reading-mode .hero-lede { font-size: 15px; line-height: 1.65; }
+  .reading-mode .hero-lede { font-size: 16px; line-height: 1.65; }
   .reading-mode .hero-actions { gap: 10px 18px; margin-top: 18px; }
   .reading-mode .hero-actions .hero-enter { display: none; }
   .reading-mode .hero-actions .hero-secondary[download] { padding: 10px 14px; border-radius: 7px; background: var(--copper); color: #fff; text-decoration: none; }
   .reading-mode .hero-capabilities { display: none; }
-  .reading-mode .hero-capabilities { margin-top: 12px; font-size: 12px; }
   .reading-mode .hero-availability { margin-top: 10px; font-size: 12px; }
   .reading-mode .section { padding: 48px 0; }
   .reading-mode .section-work { padding-top: 28px; }
