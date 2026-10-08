@@ -610,7 +610,7 @@ test("slow lighting leaves navigation usable and cannot revive a lost renderer",
   page,
 }) => {
   // Exercise HDR initialization on software CI adapters too. Only the adapter
-  // label is controlled; shader compilation, GPU draws and context loss are real.
+  // label is controlled; the renderer, HDR bytes and context loss are real.
   await page.addInitScript(() => {
     Object.defineProperty(navigator, "hardwareConcurrency", { get: () => 8 });
     const original = WebGL2RenderingContext.prototype.getParameter;
@@ -618,15 +618,25 @@ test("slow lighting leaves navigation usable and cannot revive a lost renderer",
       return key === 0x9246 ? "Test hardware-quality adapter" : original.call(this, key);
     };
   });
-  await requireWorld(page);
-  let lightingRequested;
-  const lightingRequest = new Promise((resolve) => {
-    lightingRequested = resolve;
+  // Probe capability in reading view. A preliminary high-quality World would
+  // spend the test's budget drawing on a software adapter before the actual case.
+  await page.goto("/?view=read");
+  const capable = await page.evaluate(() => {
+    const gl = document.createElement("canvas").getContext("webgl2");
+    if (!gl) return false;
+    gl.getExtension("WEBGL_lose_context")?.loseContext();
+    return true;
   });
-  await page.route(/assets\/environment\/.*\.hdr/, async (route) => {
+  test.skip(!capable, "This browser has no working WebGL2 renderer; fallback is checked separately.");
+  const lightingURL = /assets\/environment\/.*\.hdr/;
+  let lightingRequested, releaseLighting;
+  const lightingRequest = new Promise((resolve) => { lightingRequested = resolve; });
+  const lightingGate = new Promise((resolve) => { releaseLighting = resolve; });
+  await page.route(lightingURL, async (route) => {
+    const response = await route.fetch();
     lightingRequested();
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    await route.continue();
+    await lightingGate;
+    await route.fulfill({ response });
   });
   await page.goto("/?view=world");
   // Mobile emulation uses a wide layout viewport until the page's viewport
@@ -637,6 +647,7 @@ test("slow lighting leaves navigation usable and cannot revive a lost renderer",
     "Environment lighting runs only when desktop quality is available.",
   );
   await lightingRequest;
+  await expect(page.locator("body")).toHaveAttribute("data-world-state", "loading");
   await clickNav(page, "About");
   await expect(page.locator("#content-panel")).toBeVisible();
   await expect(page.locator("#panel-content #about")).toBeVisible();
@@ -652,12 +663,23 @@ test("slow lighting leaves navigation usable and cannot revive a lost renderer",
     "data-world-state",
     "fallback",
   );
-  await page.waitForTimeout(1200);
+  // Deliver the real HDR only after disposal. Its late completion must not
+  // restore the renderer or dismiss the reading fallback.
+  const lightingResponse = page.waitForResponse(lightingURL);
+  releaseLighting();
+  const response = await lightingResponse;
+  expect(response.ok()).toBe(true);
+  await response.finished();
+  await page.evaluate(() => new Promise((resolve) =>
+    requestAnimationFrame(() => requestAnimationFrame(resolve)),
+  ));
   await expect(page.locator("body")).toHaveAttribute(
     "data-world-state",
     "fallback",
   );
   await expect(page.locator("canvas")).toHaveCount(0);
+  await expect(page.locator("#world-stage")).toHaveAttribute("data-rendering", "disposed");
+  await expect(page.locator("#world-stage")).not.toHaveAttribute("data-lighting", "environment");
   await expect(page.locator("#projects")).toBeVisible();
 });
 
