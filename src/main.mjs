@@ -19,11 +19,16 @@ const aliases = {
   systems: "experience",
   cases: "experience",
   credentials: "skills",
-  "more-projects": "projects",
 };
 const cells = [...document.querySelectorAll(".work-cell")];
+const archiveCells = cells.filter((cell) => !cell.classList.contains("selected-work"));
 const icons = { map: MapIcon, reset: RotateCcw, close: X, download: Download };
-for (const cell of cells) cell.open = false;
+for (const cell of cells) {
+  cell.open = false;
+  // Native grouping closes the previous disclosure synchronously, before the
+  // browser queues toggle events. Without JS, all project content stays open.
+  cell.name = "work-projects";
+}
 for (const el of document.querySelectorAll("[data-icon]"))
   el.replaceChildren(
     createElement(icons[el.dataset.icon], {
@@ -133,11 +138,15 @@ function showPanel(hash) {
   if (key === "about")
     for (const id of ["about", "experience", "skills"])
       move(document.getElementById(id));
+  else if (key === "projects" || key === "more-projects") {
+    move(document.getElementById("projects"));
+    move(document.getElementById("more-projects"));
+  }
   else move(target);
   activePanel = key;
   $("#panel-title").textContent = ids.includes(key)
     ? islandNames[key]
-    : key === "projects"
+    : key === "projects" || key === "more-projects"
       ? "Work / 14 projects"
       : `Aarya’s World / ${key}`;
   body.classList.add("panel-open");
@@ -469,23 +478,14 @@ $("#motion-toggle").addEventListener("click", (event) => {
   event.currentTarget.textContent = paused ? "Resume motion" : "Pause motion";
   world?.setPaused(paused);
 });
-document.addEventListener(
-  "toggle",
-  (event) => {
-    const el = event.target;
-    if (el.matches?.(".work-cell") && el.open)
-      for (const other of cells) if (other !== el) other.open = false;
-  },
-  true,
-);
 let category = "all";
 const searchable = new Map(
-  cells.map((cell) => [cell, cell.textContent.toLocaleLowerCase()]),
+  archiveCells.map((cell) => [cell, cell.textContent.toLocaleLowerCase()]),
 );
 function filterProjects() {
   const query = $("#project-search").value.trim().toLocaleLowerCase();
   let count = 0;
-  for (const cell of cells) {
+  for (const cell of archiveCells) {
     cell.hidden = !(
       (category === "all" || cell.dataset.category === category) &&
       searchable.get(cell).includes(query)
@@ -494,7 +494,7 @@ function filterProjects() {
   }
   for (const b of document.querySelectorAll("[data-filter]"))
     b.setAttribute("aria-pressed", String(b.dataset.filter === category));
-  $("#project-count").textContent = `${count} of 14 projects`;
+  $("#project-count").textContent = `${count} of 11 archive projects`;
   $("#project-empty").hidden = count !== 0;
 }
 function clearFilters() {

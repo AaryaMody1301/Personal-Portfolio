@@ -2,9 +2,9 @@ const { test, expect } = require("@playwright/test");
 const AxeBuilder = require("@axe-core/playwright").default;
 const { createHash } = require("node:crypto");
 const titles = [
+  "SQL analysis & query tuning",
   "DriftDoctor",
-  "SQL Practice Project",
-  "Sales Forecasting",
+  "Vehicle-price forecasting",
   "Video Game Sales Dashboard",
   "CompatForge",
   "OriginKeep",
@@ -103,7 +103,7 @@ test("reading view preserves all fourteen projects and professional facts", asyn
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/?view=read");
-  await expect(page).toHaveTitle(/Aarya Mody.*Data Analytics & Engineering/);
+  await expect(page).toHaveTitle(/Aarya Mody.*Data Analyst/);
   await expect(page.locator("h1")).toHaveText(/Aarya\s*Mody\./);
   await expect(page.locator(".work-cell")).toHaveCount(14);
   for (const [i, title] of titles.entries())
@@ -115,7 +115,7 @@ test("reading view preserves all fourteen projects and professional facts", asyn
     "Exam-preparation course",
   );
   await expect(page.locator("#skills")).toContainText("self-assessed");
-  await expect(page.locator("#projects article a[target=_blank]")).toHaveCount(
+  await expect(page.locator(".work-cell article a[target=_blank]")).toHaveCount(
     14,
   );
   await expect(page.locator("body")).not.toContainText(
@@ -591,6 +591,15 @@ test("scene readiness never dismisses the current dialog", async ({ page }) => {
 test("slow lighting leaves navigation usable and cannot revive a lost renderer", async ({
   page,
 }) => {
+  // Exercise HDR initialization on software CI adapters too. Only the adapter
+  // label is controlled; shader compilation, GPU draws and context loss are real.
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, "hardwareConcurrency", { get: () => 8 });
+    const original = WebGL2RenderingContext.prototype.getParameter;
+    WebGL2RenderingContext.prototype.getParameter = function (key) {
+      return key === 0x9246 ? "Test hardware-quality adapter" : original.call(this, key);
+    };
+  });
   await requireWorld(page);
   let lightingRequested;
   const lightingRequest = new Promise((resolve) => {
@@ -604,12 +613,9 @@ test("slow lighting leaves navigation usable and cannot revive a lost renderer",
   await page.goto("/?view=world");
   // Mobile emulation uses a wide layout viewport until the page's viewport
   // metadata is applied, so quality must be checked after navigation.
+  await expect(page.locator("#world-stage")).toHaveAttribute("data-quality", /low|high/);
   test.skip(
-    await page.evaluate(
-      () =>
-        matchMedia("(max-width: 767px)").matches ||
-        navigator.hardwareConcurrency <= 4,
-    ),
+    (await page.locator("#world-stage").getAttribute("data-quality")) === "low",
     "Environment lighting runs only when desktop quality is available.",
   );
   await lightingRequest;
@@ -748,9 +754,9 @@ test("mobile landscape retains navigation and readable sheets", async ({
 });
 test("matches the reviewed world visual baseline", async ({ page }, info) => {
   test.skip(
-    process.platform !== "win32" ||
+    process.platform !== "linux" || process.env.PLAYWRIGHT_CHROMIUM_CHANNEL !== "chromium-headless-shell" ||
       !["desktop", "mobile"].includes(info.project.name),
-    "Reviewed Windows Chrome baselines",
+    "Reviewed Linux baselines in pinned Playwright Chromium headless shell",
   );
   await requireWorld(page);
   await page.locator("#motion-toggle").click();
@@ -841,7 +847,7 @@ test("rotation during hidden buffer preparation retains the one-pixel target", a
   await expect(page.locator("body")).toHaveAttribute("data-world-state", "ready", { timeout: 20_000 });
   await expect.poll(() => page.evaluate(() => {
     const mount = document.querySelector("#world-stage"), canvas = mount.querySelector("canvas"),
-      ratio = Math.min(devicePixelRatio, mount.dataset.quality === "low" ? 1.25 : 1.5);
+      ratio = Math.min(devicePixelRatio, mount.dataset.quality === "low" ? 1 : 1.5);
     return canvas.width === Math.floor(mount.clientWidth * ratio) && canvas.height === Math.floor(mount.clientHeight * ratio);
   })).toBe(true);
   await page.locator("#map-toggle").click();
@@ -860,7 +866,7 @@ test("resize and orientation changes preserve the selected camera view", async (
   const drawingBufferDelta = () => page.evaluate(() => {
     const mount = document.querySelector("#world-stage"),
       canvas = mount.querySelector("canvas"),
-      ratio = Math.min(devicePixelRatio, mount.dataset.quality === "low" ? 1.25 : 1.5);
+      ratio = Math.min(devicePixelRatio, mount.dataset.quality === "low" ? 1 : 1.5);
     return {
       width: canvas.width - Math.floor(mount.clientWidth * ratio),
       height: canvas.height - Math.floor(mount.clientHeight * ratio),
@@ -915,6 +921,22 @@ test("reading sample states synchronize when the world first starts", async ({
     "data-archive-state",
     "true",
   );
+});
+
+test("rapid project selection keeps the newest disclosure open", async ({ page }) => {
+  await page.goto("/?view=read");
+  const result = await page.evaluate(async () => {
+    const [first, second] = document.querySelectorAll(".work-cell");
+    // Toggle events are queued: two openings can arrive before either handler.
+    const settled = new Promise((resolve) =>
+      second.addEventListener("toggle", resolve, { once: true }),
+    );
+    first.open = true;
+    second.open = true;
+    await settled;
+    return { first: first.open, second: second.open };
+  });
+  expect(result).toEqual({ first: false, second: true });
 });
 
 test("all Work disclosures and six panels remain keyboard accessible", async ({
@@ -1069,17 +1091,17 @@ test("search, categories, empty results and filtered direct links reveal the rig
 }) => {
   await page.goto("/");
   const search = page.locator("#project-search"),
-    shown = page.locator(".work-cell:visible");
+    shown = page.locator("#more-projects .work-cell:visible");
   for (const [category, count] of [
-    ["engineering", 3],
-    ["analytics", 4],
+    ["engineering", 1],
+    ["analytics", 3],
     ["applications", 7],
-    ["all", 14],
+    ["all", 11],
   ]) {
     await page.locator(`[data-filter=${category}]`).click();
     await expect(shown).toHaveCount(count);
     await expect(page.locator("#project-count")).toHaveText(
-      `${count} of 14 projects`,
+      `${count} of 11 archive projects`,
     );
   }
   await search.fill("Tauri");
@@ -1087,13 +1109,14 @@ test("search, categories, empty results and filtered direct links reveal the rig
   await page.locator("[data-filter=analytics]").click();
   await expect(page.locator("#project-empty")).toBeVisible();
   await page.getByRole("button", { name: "Clear filters" }).click();
-  await expect(shown).toHaveCount(14);
+  await expect(shown).toHaveCount(11);
   await search.fill("does-not-exist");
   await expect(shown).toHaveCount(0);
+  await expect(page.locator(".selected-work:visible")).toHaveCount(3);
   await expect(page.locator("#project-empty")).toBeVisible();
-  await page.evaluate(() => (location.hash = "work-sales-forecasting"));
-  await expect(page.locator("#work-sales-forecasting")).toBeVisible();
-  await expect(page.locator("#work-sales-forecasting")).toHaveAttribute(
+  await page.evaluate(() => (location.hash = "work-originkeep"));
+  await expect(page.locator("#work-originkeep")).toBeVisible();
+  await expect(page.locator("#work-originkeep")).toHaveAttribute(
     "open",
     "",
   );
@@ -1306,16 +1329,16 @@ test("bare island links enter World while reduced motion maps to reading content
 
 test("matches the reviewed reading visual baseline", async ({ page }, info) => {
   test.skip(
-    process.platform !== "win32" ||
+    process.platform !== "linux" || process.env.PLAYWRIGHT_CHROMIUM_CHANNEL !== "chromium-headless-shell" ||
       !["desktop", "mobile"].includes(info.project.name),
-    "Reviewed Windows Chrome baselines",
+    "Reviewed Linux baselines in pinned Playwright Chromium headless shell",
   );
   await page.goto("/");
   await page.evaluate(() => document.fonts.ready);
   await expect(page).toHaveScreenshot("reading-portfolio.png", {
     fullPage: false,
   });
-  const summary = page.locator("#work-driftdoctor > summary");
+  const summary = page.locator("#work-sql-practice-project > summary");
   await summary.focus();
   await expect(summary).toHaveScreenshot("project-focus.png");
 });

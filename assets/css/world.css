@@ -237,12 +237,9 @@ svg {
   object-fit: cover;
 }
 .world-stage canvas {
-  opacity: 0;
-  transition: opacity 1.2s;
-}
-.world-ready .world-stage canvas {
   opacity: 1;
 }
+.world-poster { z-index: 1; pointer-events: none; }
 .world-ready .world-poster {
   opacity: 0;
   transition: opacity 1.4s;

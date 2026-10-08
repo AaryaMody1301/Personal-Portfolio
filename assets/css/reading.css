@@ -61,7 +61,7 @@
 }
 .reading-mode .world-copy h1 {
   font-size: clamp(48px, 5.4vw, 72px);
-  letter-spacing: -0.065em;
+  letter-spacing: -0.04em;
   line-height: 1.08;
   font-weight: 750;
 }
@@ -92,6 +92,8 @@
 }
 .reading-mode .eyebrow .reading-only { display: inline; }
 .hero-current { display: block; margin-top: 8px; }
+.hero-availability { color: var(--muted); font-size: 12px; line-height: 1.6; margin-top: 16px; }
+.reading-mode .nav-quick-resume { display: none; }
 .reading-mode .hero-actions { gap: 14px 22px; margin-top: 24px; }
 .reading-mode .button,
 .case-study-page .button {
@@ -147,13 +149,28 @@
 .reading-mode .work-cell > summary,
 .reading-mode .project-deck { font-family: inherit; }
 .reading-mode .stack-tags li { border-color: var(--line); }
-.reading-mode .cell-num { color: var(--copper); font: 11px/1.4 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: 0.08em; }
+.reading-mode .cell-num { color: var(--copper); font: 12px/1.4 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: 0.06em; }
 .reading-mode .card-title { font-family: inherit; font-size: 22px; line-height: 1.25; letter-spacing: -0.03em; font-weight: 650; }
 .reading-mode .card-purpose { font-size: 14px; line-height: 1.65; }
-.reading-mode .card-tech { font-size: 11px; }
+.reading-mode .card-tech { font-size: 12px; }
 .reading-mode .card-qualification { font-size: 12px; border-color: var(--line); color: var(--muted); }
 .reading-mode .cell-arrow { color: var(--copper); top: 21px; right: 20px; }
 .reading-mode .work-cell[open] { grid-column: 1 / -1; }
+.selected-project { min-width: 0; }
+.selected-project:has(> .work-cell[open]) { grid-column: 1 / -1; }
+.reading-mode .selected-project { background: #fff; border: 1px solid #bfcef5; border-radius: 12px; overflow: hidden; }
+.reading-mode .selected-project:hover { border-color: #1d4ed8; }
+.reading-mode .selected-project > .work-cell { border: 0; border-radius: 0; }
+.selected-project > .case-study-link { display: flex; padding: 14px 24px; margin: 0; border-top: 1px solid var(--line); gap: 8px; }
+.project-preview { display: block; width: 100%; max-width: 350px; height: auto; margin-bottom: 12px; background: #eff6ff; border-radius: 7px; }
+.project-preview text { fill: #334155; font: 12px ui-monospace, SFMono-Regular, Consolas, monospace; }
+.project-preview > text:first-of-type { font-size: 10px; letter-spacing: .03em; }
+.project-preview rect { fill: #1d4ed8; }
+.project-preview .preview-muted { fill: #64748b; }
+.project-preview .preview-inverse { fill: #fff; }
+.project-preview .preview-box rect { fill: #fff; stroke: #93a6d6; }
+.project-preview path { fill: none; stroke: #1d4ed8; stroke-width: 2; }
+.world-mode .project-preview { display: none; }
 .reading-mode .cell-detail { background: #fff; }
 .reading-mode .project-discovery { grid-column: 1 / -1; background: #fff; padding: 18px; margin: 0 0 4px; }
 .project-discovery { grid-column: 1 / -1; }
@@ -174,6 +191,8 @@
 .archive-divider h3 { font: 600 22px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: -0.03em; }
 .archive-divider p { font-size: 13px; color: var(--muted); }
 .reading-mode .experience-item { border-left-color: #bfcef5; }
+.experience-details { margin-top: 16px; border-top: 1px solid var(--line); }
+.experience-details > summary { padding: 14px 0; min-height: 44px; cursor: pointer; font-size: 14px; font-weight: 600; color: var(--copper); }
 .reading-mode .current-label { color: #166534; background: #f0fdf4; border-color: #bbddc5; }
 .reading-mode .company { color: var(--copper); }
 .reading-mode .about-intro { gap: 76px; }
@@ -201,8 +220,10 @@
 .case-hero { padding: 64px 0 40px; }
 .case-hero h1 { max-width: 18ch; font-size: clamp(36px, 4.8vw, 60px); font-weight: 750; letter-spacing: -0.055em; line-height: 1.12; margin: 18px 0 24px; }
 .case-lede { font-size: 19px; line-height: 1.65; color: var(--muted); max-width: 65ch; }
+.case-brief { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; padding: 24px; margin-top: 28px; border: 1px solid #bfcef5; border-radius: 10px; background: #eff6ff; font-size: 14px; line-height: 1.65; }
+.case-brief .brief-label { color: var(--copper); font-size: 12px; font-weight: 650; margin-bottom: 8px; text-transform: uppercase; letter-spacing: .06em; }
 .case-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; border-block: 1px solid var(--line); padding: 22px 0; margin-top: 32px; }
-.case-meta dt { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+.case-meta dt { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
 .case-meta dd { margin: 0; font-size: 14px; font-weight: 600; }
 .case-layout { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 64px; padding-bottom: 60px; }
 .case-toc { align-self: start; position: sticky; top: 108px; display: grid; gap: 6px; font-size: 13px; }
@@ -242,7 +263,7 @@
   .reading-mode .hero-proof { padding: 20px; }
   .reading-mode .hero-discipline { font-size: 18px; }
   .reading-mode .work-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .reading-mode .selected-work:nth-of-type(3) { grid-column: 1 / -1; }
+  .reading-mode .selected-project:nth-child(3) { grid-column: 1 / -1; }
   .reading-mode .about-intro { gap: 36px; }
   .case-layout { gap: 36px; grid-template-columns: 130px minmax(0, 1fr); }
 }
@@ -252,24 +273,34 @@
   .case-shell,
   .case-study-page .nav-shell { width: calc(100% - 40px); }
   .reading-mode .world-copy { display: block; }
+  .reading-mode .nav-actions { gap: 8px; }
+  .reading-mode .nav-quick-resume { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 10px; border-radius: 6px; background: var(--copper); color: #fff; font-size: 12px; font-weight: 600; text-decoration: none; }
+  .reading-mode #reading-toggle { font-size: 11px; padding-inline: 0; border: 0; color: var(--muted); }
+  .reading-mode .mobile-menu > summary { font-size: 12px; padding-inline: 7px; }
   .reading-mode .hero-proof { display: none; }
   .reading-mode .world-hero { padding: 32px 0 26px; }
   .reading-mode .world-copy h1 { font-size: clamp(40px, 11vw, 52px); }
-  .reading-mode .world-copy .eyebrow { font-size: 10px; margin-bottom: 12px; }
+  .reading-mode .world-copy .eyebrow { font-size: 12px; margin-bottom: 12px; letter-spacing: .04em; }
   .reading-mode .hero-discipline { font-size: 17px; margin-top: 12px !important; }
   .reading-mode .hero-lede { font-size: 15px; line-height: 1.65; }
   .reading-mode .hero-actions { gap: 10px 18px; margin-top: 18px; }
-  .reading-mode .hero-capabilities { margin-top: 12px; font-size: 11px; }
+  .reading-mode .hero-actions .hero-enter { display: none; }
+  .reading-mode .hero-actions .hero-secondary[download] { padding: 10px 14px; border-radius: 7px; background: var(--copper); color: #fff; text-decoration: none; }
+  .reading-mode .hero-capabilities { display: none; }
+  .reading-mode .hero-capabilities { margin-top: 12px; font-size: 12px; }
+  .reading-mode .hero-availability { margin-top: 10px; font-size: 12px; }
   .reading-mode .section { padding: 48px 0; }
   .reading-mode .section-work { padding-top: 28px; }
   .reading-mode .section-work .section-heading > p:last-child { font-size: 14px; line-height: 1.6; }
   .reading-mode .section-heading { margin-bottom: 20px; }
   .reading-mode .section-heading h2 { font-size: 28px; }
+  .reading-mode .section-work .section-heading > p:last-child { margin-top: 10px; }
   .reading-mode .project-discovery { padding: 14px; margin-bottom: 18px; gap: 8px; }
   .reading-mode .project-filters { gap: 6px; }
   .reading-mode .project-filters button { padding: 8px 9px; font-size: 12px; }
   .reading-mode .work-grid { grid-template-columns: 1fr; gap: 14px; }
   .reading-mode .work-cell > summary { padding: 22px; }
+  .reading-mode .project-preview { order: 1; margin: 4px 0 0; }
   .reading-mode .cell-detail { padding: 22px; }
   .reading-mode .about-intro { gap: 32px; }
   .reading-mode .profile { max-width: 260px; justify-self: start; }
@@ -285,6 +316,7 @@
   .case-hero h1 { font-size: 36px; }
   .case-lede { font-size: 16px; }
   .case-meta { grid-template-columns: 1fr; gap: 16px; }
+  .case-brief { grid-template-columns: 1fr; gap: 18px; padding: 20px; }
   .case-meta dt { margin-bottom: 3px; }
   .case-layout { display: block; }
   .case-toc { position: static; display: flex; flex-wrap: wrap; gap: 4px 20px; border-bottom: 1px solid var(--line); padding-bottom: 16px; }

@@ -3,21 +3,25 @@ const AxeBuilder = require("@axe-core/playwright").default;
 
 const cases = [
   ["driftdoctor", "DriftDoctor", "12 / 12", "synthetic"],
-  ["sql-analytics", "SQL Practice Project", "19.198 → 0.105 ms", "one controlled synthetic workload"],
-  ["sales-forecasting", "Sales Forecasting", "6.73% lower", "two outer folds"],
+  ["sql-analytics", "SQL analysis & query tuning", "19.198 → 0.105 ms", "one controlled synthetic workload"],
+  ["sales-forecasting", "Vehicle-price forecasting", "6.73% lower", "two outer folds"],
 ];
 
 test("three selected projects link to distinct case studies and preserve the archive", async ({ page }) => {
   await page.goto("/?view=read#projects");
   await expect(page.locator(".selected-work")).toHaveCount(3);
   await expect(page.locator(".work-cell")).toHaveCount(14);
+  await expect(page.locator("#more-projects .work-cell")).toHaveCount(11);
+  const order = await page.locator("#experience, #skills, #about, #more-projects").evaluateAll((nodes) => nodes.map((node) => node.id));
+  expect(order).toEqual(["experience", "skills", "about", "more-projects"]);
   await expect(page.locator(".archive-divider")).toContainText("11 more explorations");
   for (const [slug, name] of cases) {
-    const link = page.locator(`.selected-work .case-study-link[href='projects/${slug}.html']`);
+    const link = page.locator(`.selected-project .case-study-link[href='projects/${slug}.html']`);
     await expect(link).toHaveCount(1);
+    await expect(link).toBeVisible();
     const response = await page.request.get(`/projects/${slug}.html`);
     expect(response.status()).toBe(200);
-    expect(await response.text()).toContain(name);
+    expect(await response.text()).toContain(name.replace("&", "&amp;"));
   }
 });
 

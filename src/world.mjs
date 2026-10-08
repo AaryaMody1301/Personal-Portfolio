@@ -32,7 +32,6 @@ export async function createWorld({
     travelTween,
     particles,
     particleTimer,
-    idleHandle,
     resizeObserver,
     progress,
     positioned = false,
@@ -46,7 +45,7 @@ export async function createWorld({
     else await new Promise((resolve) => setTimeout(resolve, 0));
     if (dead) throw new Error("Renderer lost during initialization");
   };
-  const low =
+  let low =
     matchMedia("(max-width: 767px)").matches ||
     navigator.hardwareConcurrency <= 4;
   await yieldSetup();
@@ -54,11 +53,16 @@ export async function createWorld({
   const contextStarted = performance.now();
   const context = canvas.getContext("webgl2", {
     alpha: true,
-    antialias: !low,
+    antialias: false,
     powerPreference: "low-power",
   });
   performance.measure("World WebGL2 context", { start: contextStarted });
   if (!context) throw new Error("WebGL2 is unavailable");
+  const adapter = context.getExtension("WEBGL_debug_renderer_info");
+  // Software rendering also needs the constrained path, even on a wide screen.
+  if (adapter && /swiftshader|llvmpipe|software rasterizer/i.test(
+    context.getParameter(adapter.UNMASKED_RENDERER_WEBGL),
+  )) low = true;
   // Give input and navigation a turn between driver creation and renderer setup.
   await yieldSetup();
   const rendererStarted = performance.now();
@@ -66,12 +70,12 @@ export async function createWorld({
     canvas,
     context,
     alpha: true,
-    antialias: !low,
+    antialias: false,
     powerPreference: "low-power",
   });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, low ? 1.25 : 1.5));
+  renderer.setPixelRatio(Math.min(devicePixelRatio, low ? 1 : 1.5));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMapping = low ? THREE.NoToneMapping : THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.35;
   performance.measure("World renderer setup", { start: rendererStarted });
   mount.append(renderer.domElement);
@@ -97,6 +101,26 @@ export async function createWorld({
     }
   };
   renderer.domElement.addEventListener("webglcontextlost", contextLost);
+  async function waitForGPU() {
+    // Yield while the driver finishes real draw commands. Without a fence,
+    // deferred GPU work can block the compositor when the poster is dismissed.
+    const fence = context.fenceSync(context.SYNC_GPU_COMMANDS_COMPLETE, 0);
+    if (!fence) throw new Error("GPU preparation failed");
+    context.flush();
+    const deadline = performance.now() + 10000;
+    try {
+      while (true) {
+        if (dead) throw new Error("Renderer lost during initialization");
+        const state = context.clientWaitSync(fence, 0, 0);
+        if (state === context.ALREADY_SIGNALED || state === context.CONDITION_SATISFIED) return;
+        if (state === context.WAIT_FAILED || performance.now() > deadline)
+          throw new Error("GPU preparation did not complete");
+        await new Promise((resolve) => setTimeout(resolve, 8));
+      }
+    } finally {
+      context.deleteSync(fence);
+    }
+  }
   try {
     await yieldSetup();
     const ambient = new THREE.HemisphereLight("#b4d4ee", "#d38d72", 2.2);
@@ -141,10 +165,10 @@ export async function createWorld({
     };
     const box = (p, w, h, d, m, x = 0, y = 0, z = 0) =>
       mesh(new THREE.BoxGeometry(w, h, d), m, p, x, y, z);
-    const cylinder = (p, r, h, m, x = 0, y = 0, z = 0, segments = 24) =>
+    const cylinder = (p, r, h, m, x = 0, y = 0, z = 0, segments = low ? 12 : 24) =>
       mesh(new THREE.CylinderGeometry(r, r, h, segments), m, p, x, y, z);
     const ring = (p, r, t, m, x = 0, y = 0, z = 0) =>
-      mesh(new THREE.TorusGeometry(r, t, 8, 48), m, p, x, y, z);
+      mesh(new THREE.TorusGeometry(r, t, low ? 6 : 8, low ? 24 : 48), m, p, x, y, z);
     const islands = {};
     let seed = 27;
     const random = () => {
@@ -258,9 +282,11 @@ export async function createWorld({
     const beaconRing = ring(home, 1.3, 0.025, gold, 0, 2.8, 0);
     beaconRing.rotation.x = 1.15;
     beaconRing.rotation.y = 0.4;
-    const beaconLight = new THREE.PointLight("#ffc485", 8, 6);
-    beaconLight.position.set(0, 3.4, 0);
-    home.add(beaconLight);
+    if (!low) {
+      const beaconLight = new THREE.PointLight("#ffc485", 8, 6);
+      beaconLight.position.set(0, 3.4, 0);
+      home.add(beaconLight);
+    }
     await yieldSetup();
     // REPAIR WORKS — a separated assembly returns to a checked alignment.
     const repair = islands.driftdoctor;
@@ -524,19 +550,14 @@ export async function createWorld({
     }
     await scenery("home");
     if (dead) throw new Error("Renderer lost during initialization");
-    // Remaining scenery is requested only on visiting its island or after idle.
-    const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 1000));
-    idleHandle = idle(
-      async () => {
-        for (const id of ["driftdoctor", "compatforge", "originkeep"]) {
-          if (dead) return;
-          await scenery(id);
-          if (globalThis.scheduler?.yield) await scheduler.yield();
-          else await new Promise((resolve) => setTimeout(resolve, 0));
-        }
-      },
-      { timeout: 5000 },
-    );
+    // Prepare desktop foliage before shader/buffer warm-up, so its first
+    // appearance cannot introduce a new synchronous GPU batch after readiness.
+    if (!low) {
+      for (const id of ["driftdoctor", "compatforge", "originkeep"]) {
+        await scenery(id);
+        await yieldSetup();
+      }
+    }
     // Mobile uses the matching baked palette and directional lights; avoid HDR
     // preprocessing and a second shader compilation on constrained devices.
     let lighting = Promise.resolve();
@@ -794,7 +815,7 @@ export async function createWorld({
     await yieldSetup();
     // Upload each island's shared buffers and textures in a separate hidden frame.
     // The poster remains visible until every batch is ready.
-    const renderBatches = scene.children
+    const islandBatches = scene.children
       .map((child) => {
         const batch = [];
         child.traverseVisible((node) => {
@@ -804,6 +825,16 @@ export async function createWorld({
         return batch;
       })
       .filter((batch) => batch.length);
+    // A mobile island contains many individual meshes. Bound each upload task
+    // instead of doing an entire island's GPU work in one event-loop turn.
+    const renderBatches = low
+      ? islandBatches.flatMap((batch) => {
+          const chunks = [];
+          for (let i = 0; i < batch.length; i += 12)
+            chunks.push(batch.slice(i, i + 12));
+          return chunks;
+        })
+      : islandBatches;
     // Hide geometry only. Hiding island groups also hides their lights, which
     // creates unprepared shader variants and synchronous GPU stalls.
     for (const node of renderBatches.flat()) node.visible = false;
@@ -815,6 +846,7 @@ export async function createWorld({
       for (const batch of renderBatches) {
         for (const node of batch) node.visible = true;
         renderer.render(scene, camera);
+        await waitForGPU();
         for (const node of batch) node.visible = false;
         await yieldSetup();
       }
@@ -831,6 +863,7 @@ export async function createWorld({
     resizeObserver.observe(mount);
     const firstFrameStarted = performance.now();
     renderer.render(scene, camera);
+    await waitForGPU();
     performance.measure("World first full frame", { start: firstFrameStarted });
     await yieldSetup();
     camera.updateMatrixWorld();
@@ -860,6 +893,7 @@ export async function createWorld({
         travel("home", true);
       },
       setActive(value) {
+        const activationStarted = performance.now();
         redraw = true;
         active = value && !document.hidden;
         if (active) {
@@ -873,6 +907,7 @@ export async function createWorld({
         }
         if (active) travelTween?.resume();
         mount.dataset.rendering = active ? "active" : "paused";
+        if (active) performance.measure("World activation", { start: activationStarted });
       },
       setPaused(value) {
         paused = value;
@@ -982,8 +1017,6 @@ export async function createWorld({
     cancelAnimationFrame(frame);
     travelTween?.kill();
     particleTimer?.kill();
-    if (window.cancelIdleCallback) cancelIdleCallback(idleHandle);
-    else clearTimeout(idleHandle);
     resizeObserver?.disconnect();
     if (progress) gsap.killTweensOf(progress);
     renderer.domElement.removeEventListener("webglcontextlost", contextLost);

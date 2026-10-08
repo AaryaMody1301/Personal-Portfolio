@@ -39,9 +39,9 @@
     },
     {
       "source": "assets/images/og-image.jpg",
-      "path": "assets/images/og-image.1017dae16118.jpg",
-      "hash": "1017dae1611864aeff63a70e3b1c56b53f94a349b6039bfa7dffe2e34c62fcb7",
-      "bytes": 42800
+      "path": "assets/images/og-image.3d4c6ec6da5e.jpg",
+      "hash": "3d4c6ec6da5e8df28d65f67520b25ef97879938b3a16551917f220a7671ef605",
+      "bytes": 51435
     },
     {
       "source": "assets/images/favicon.svg",
@@ -69,21 +69,21 @@
     },
     {
       "source": "assets/css/style.css",
-      "path": "assets/css/style.30ccf0d45a4c.css",
-      "hash": "30ccf0d45a4c8c6472287ed9845aeb50671ea0382b1bdfe9b629e1fbaf5c2ff7",
-      "bytes": 45617
+      "path": "assets/css/style.1911525f28b1.css",
+      "hash": "1911525f28b114f639b6fa639ae46781c9387f04e315374a16ea26830baed681",
+      "bytes": 48226
     },
     {
       "source": "assets/js/app.js",
-      "path": "assets/js/app.e8f234385a82.js",
-      "hash": "e8f234385a821fb4a7a62c44acbb62625aba7c380f20ccd4fd65e7beeab579dc",
-      "bytes": 14073
+      "path": "assets/js/app.de5213a4837e.js",
+      "hash": "de5213a4837e3d5114fbe57fefd1efe4bd456e2c9f74c52d5a4d6b1b65437893",
+      "bytes": 14146
     },
     {
       "source": "assets/js/world.js",
-      "path": "assets/js/world.8c4f4bce3621.js",
-      "hash": "8c4f4bce3621f0d7af6b5b308ebe85e6e6f5c58ae66d5f072ff604cad95349b8",
-      "bytes": 740196
+      "path": "assets/js/world.91e1e2be5880.js",
+      "hash": "91e1e2be58809c538e66b49ae6f6837887a389e4ae295dde10d5febfbb6008ef",
+      "bytes": 740828
     }
   ]
 }

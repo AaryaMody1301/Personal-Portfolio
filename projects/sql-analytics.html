@@ -3,24 +3,24 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>SQL Practice Project · Case study | Aarya Mody</title>
+  <title>SQL analysis &amp; query tuning · Case study | Aarya Mody</title>
   <meta name="description" content="Analytics engineering on historical job-posting data, with reusable models, correctness contracts, and a controlled PostgreSQL performance benchmark." />
   <meta name="theme-color" content="#f8fafc" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://aaryamody.app/projects/sql-analytics.html" />
-  <meta property="og:title" content="SQL Practice Project · Case study | Aarya Mody" />
+  <meta property="og:title" content="SQL analysis &amp; query tuning · Case study | Aarya Mody" />
   <meta property="og:description" content="Analytics engineering on historical job-posting data, with reusable models, correctness contracts, and a controlled PostgreSQL performance benchmark." />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://aaryamody.app/projects/sql-analytics.html" />
-  <meta property="og:image" content="https://aaryamody.app/assets/images/og-image.1017dae16118.jpg" />
+  <meta property="og:image" content="https://aaryamody.app/assets/images/og-image.3d4c6ec6da5e.jpg" />
   <meta property="og:image:alt" content="Aarya Mody · Data analytics and engineering" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="SQL Practice Project · Case study | Aarya Mody" />
+  <meta name="twitter:title" content="SQL analysis &amp; query tuning · Case study | Aarya Mody" />
   <meta name="twitter:description" content="Analytics engineering on historical job-posting data, with reusable models, correctness contracts, and a controlled PostgreSQL performance benchmark." />
-  <meta name="twitter:image" content="https://aaryamody.app/assets/images/og-image.1017dae16118.jpg" />
+  <meta name="twitter:image" content="https://aaryamody.app/assets/images/og-image.3d4c6ec6da5e.jpg" />
   <meta name="twitter:image:alt" content="Aarya Mody · Data analytics and engineering" />
   <link rel="icon" href="../assets/images/favicon.f14e9d9541be.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="../assets/css/style.30ccf0d45a4c.css" />
+  <link rel="stylesheet" href="../assets/css/style.1911525f28b1.css" />
   <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Article",
@@ -41,7 +41,7 @@
   <header class="site-header"><nav class="nav-shell" aria-label="Main navigation"><a class="brand" href="../index.html" aria-label="Aarya Mody, Home"><span class="brand-mark" aria-hidden="true">am</span><span class="brand-word">AARYA MODY</span></a><div class="case-nav"><a href="../index.html#projects">All work</a><a class="case-contact" href="../index.html#contact">Contact</a><a class="nav-resume" href="../assets/docs/AaryaMody_Resume.pdf" download>Resume ↓</a></div></nav></header>
   <main id="main-content" tabindex="-1">
     <div class="case-shell">
-      <header class="case-hero"><p class="eyebrow">Case study 02 / SQL Practice Project</p><h1>Tune the query. Measure the tradeoff.</h1><p class="case-lede">Analytics engineering on historical job-posting data, with reusable models, correctness contracts, and a controlled PostgreSQL performance benchmark.</p><dl class="case-meta"><div><dt>Focus</dt><dd>Analytics engineering</dd></div><div><dt>Stack</dt><dd>PostgreSQL · SQL · Python · GitHub Actions</dd></div><div><dt>My role</dt><dd>Personal project · implementation &amp; evaluation</dd></div></dl></header>
+      <header class="case-hero"><p class="eyebrow">Case study 01 / SQL analysis &amp; query tuning</p><h1>Tune the query. Measure the tradeoff.</h1><p class="case-lede">Analytics engineering on historical job-posting data, with reusable models, correctness contracts, and a controlled PostgreSQL performance benchmark.</p><aside class="case-brief" aria-label="Case study at a glance"><div><p class="brief-label">Outcome</p><p>19.198 → 0.105 ms for one targeted query.</p></div><div><p class="brief-label">Decision</p><p>Verify correctness and reject the index that did not help.</p></div><div><p class="brief-label">Limit</p><p>One controlled synthetic PostgreSQL workload.</p></div></aside><dl class="case-meta"><div><dt>Focus</dt><dd>Analytics engineering</dd></div><div><dt>Stack</dt><dd>PostgreSQL · SQL · Python · GitHub Actions</dd></div><div><dt>My role</dt><dd>Personal project · implementation &amp; evaluation</dd></div></dl></header>
       <div class="case-layout">
         <nav class="case-toc" aria-label="On this page"><a href="#problem">The problem</a><a href="#approach">The approach</a><a href="#results">The evidence</a><a href="#tradeoffs">Decisions &amp; limits</a><a href="#sources">Inspect the work</a></nav>
         <article class="case-body" aria-label="SQL Practice Project case study"><section id="problem"><h2>The problem</h2><p>Job-market analysis needs dependable definitions and repeatable queries before it needs more charts. This project began with a 2023 job-postings dataset from Luke Barousse’s SQL course. I extended that foundation with correctness fixes, portable loading, reusable analytical models, and measured performance work.</p><p>The resulting analyses explore salary, demand, hiring trends, and skill relationships. The historical data describes that dataset; it is not a claim about today’s job market.</p></section>
@@ -51,7 +51,7 @@
           <section id="sources"><h2>Inspect the work</h2><p>These links point to the source revision reviewed for this case study on 6 October 2026. The reported benchmark results come from repository evidence; they were not rerun as part of this portfolio redesign.</p><div class="evidence-links"><a href="https://github.com/AaryaMody1301/SQL_Practice_Project/blob/b30114381d3e2a85e2de22bfa925de2e29d4c9c6/performance/BENCHMARK_RESULTS.md" target="_blank" rel="noopener noreferrer">Measured query plans and decisions <span aria-hidden="true"> ↗</span></a><a href="https://github.com/AaryaMody1301/SQL_Practice_Project/blob/b30114381d3e2a85e2de22bfa925de2e29d4c9c6/performance/README.md" target="_blank" rel="noopener noreferrer">Benchmark setup and reproduction <span aria-hidden="true"> ↗</span></a><a href="https://github.com/AaryaMody1301/SQL_Practice_Project/blob/b30114381d3e2a85e2de22bfa925de2e29d4c9c6/README.md" target="_blank" rel="noopener noreferrer">Project provenance and analytical scope <span aria-hidden="true"> ↗</span></a><a href="https://github.com/AaryaMody1301/SQL_Practice_Project" target="_blank" rel="noopener noreferrer">Open the current repository <span aria-hidden="true"> ↗</span></a></div></section>
         </article>
       </div>
-      <nav class="case-next" aria-label="More case studies"><a href="../index.html#projects">← Back to all work</a><a href="sales-forecasting.html">Next: Sales Forecasting →</a></nav>
+      <nav class="case-next" aria-label="More case studies"><a href="../index.html#projects">← Back to all work</a><a href="driftdoctor.html">Next: DriftDoctor →</a></nav>
     </div>
   </main>
   <footer class="site-footer"><p>© 2026 Aarya Mody</p><a href="mailto:aaryamody5@gmail.com">Get in touch ↗</a><a href="../index.html#credits">Credits</a></footer>
