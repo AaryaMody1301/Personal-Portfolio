@@ -1,7 +1,19 @@
 const fs = require("node:fs");
 const http = require("node:http");
 const path = require("node:path");
+const { parseArgs } = require("node:util");
 const { createGzip } = require("node:zlib");
+
+const { values } = parseArgs({
+  options: {
+    host: { type: "string", default: "127.0.0.1" },
+    port: { type: "string", default: "4173" },
+    strictPort: { type: "boolean", default: false },
+  },
+});
+const port = Number(values.port);
+if (!Number.isInteger(port) || port < 1 || port > 65535)
+  throw new Error("Port must be an integer between 1 and 65535.");
 
 const root = path.resolve(process.cwd());
 const parentPid = process.ppid;
@@ -68,8 +80,8 @@ const server = http.createServer((request, response) => {
   });
 });
 
-server.listen(4173, "127.0.0.1", () => {
-  console.log("Static server listening at http://127.0.0.1:4173");
+server.listen(port, values.host, () => {
+  console.log(`Static server listening at http://${values.host}:${port}`);
 });
 
 function shutdown() {

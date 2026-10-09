@@ -26,7 +26,10 @@ export async function checkLinks() {
   const metadata = await auditMetadata("links", baseURL, { checkLocal: true });
 
   const entries = new Map();
-  const portfolioOrigin = "https://aaryamody.app";
+  const portfolioOrigin = new URL(
+    (await readFile(resolve(root, "index.html"), "utf8"))
+      .match(/<link\s+rel=["']canonical["']\s+href=["']([^"']+)["']/i)[1],
+  ).origin;
   function add(value, source, base = baseURL, file = false) {
     if (!value || value.startsWith("data:")) return;
     let url = parseLink(value, base) || { href: value, protocol: "invalid:" };

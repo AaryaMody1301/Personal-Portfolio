@@ -5,7 +5,7 @@
   "description": "Aarya Mody's static data analytics and engineering portfolio, with an optional interactive world.",
   "license": "MIT",
   "author": "Aarya Mody",
-  "homepage": "https://aaryamody.app/",
+  "homepage": "https://aarya-mody-portfolio.lovelyseed.chatgpt.site/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AaryaMody1301/Personal-Portfolio.git"
@@ -17,6 +17,7 @@
     "node": ">=24 <25"
   },
   "scripts": {
+    "dev": "node scripts/static-server.cjs",
     "check": "node scripts/check-repository.mjs",
     "assets:prepare": "node scripts/prepare-assets.mjs",
     "assets:environment": "node scripts/prepare-environment.mjs",
@@ -26,7 +27,7 @@
     "pretest": "node scripts/prepare-assets.mjs --check",
     "test": "playwright test",
     "pretest:ci": "node scripts/prepare-assets.mjs --check",
-    "test:ci": "playwright test --grep-invert \"visual baseline|capture cobalt\"",
+    "test:ci": "playwright test --grep-invert \"visual baseline|capture reading portfolio\"",
     "test:release": "node --test scripts/tests/*.test.mjs",
     "pretest:update": "node scripts/prepare-assets.mjs --check",
     "test:update": "playwright test --update-snapshots",

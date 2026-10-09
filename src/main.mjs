@@ -249,8 +249,9 @@ function setMode(next, { navigate = false, restoreState } = {}) {
   mode = next;
   body.classList.toggle("world-mode", mode === "world");
   body.classList.toggle("reading-mode", mode === "read");
+  requestAnimationFrame(updateProfilePin);
   $("#reading-toggle").textContent =
-    mode === "world" ? "Read portfolio ↗" : "Explore world ↗";
+    mode === "world" ? "Read portfolio" : "Explore world";
   $("#reading-toggle").hidden = failed || reduced.matches;
   $(".world-copy").inert = mode === "world" && activeIsland !== "home";
   $("#world-map").hidden = true;
@@ -542,7 +543,8 @@ async function copyText(text, label, button) {
 document.addEventListener("click", (event) => {
   const button = event.target.closest("[data-copy-email],[data-copy-project]");
   if (!button) return;
-  const url = new URL("https://aaryamody.app/?view=read");
+  const url = new URL($('link[rel="canonical"]').href);
+  url.searchParams.set("view", "read");
   url.hash = button.dataset.copyProject || "";
   copyText(
     button.hasAttribute("data-copy-email") ? "aaryamody5@gmail.com" : url.href,
@@ -650,5 +652,20 @@ window.addEventListener("pageshow", () =>
   world?.setActive(mode === "world" && !document.hidden),
 );
 history.scrollRestoration = "manual";
+// Keep every profile link reachable when text grows or the window is short.
+function updateProfilePin() {
+  const headerHeight = $("#site-header").offsetHeight;
+  const profileHeight = $(".world-copy").offsetHeight;
+  body.classList.toggle(
+    "profile-pinned",
+    mode === "read" && innerWidth >= 1024 &&
+      profileHeight + headerHeight + 64 <= innerHeight,
+  );
+}
+const profileObserver = new ResizeObserver(updateProfilePin);
+profileObserver.observe($(".world-copy"));
+profileObserver.observe($("#site-header"));
+window.addEventListener("resize", updateProfilePin);
+document.fonts.ready.then(updateProfilePin);
 setMode(modeForURL());
 handledURL = location.href;

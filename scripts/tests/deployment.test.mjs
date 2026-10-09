@@ -52,6 +52,13 @@ test("deployment verification rejects mixed assets and HTML error pages served a
         bytes = Buffer.from(
           bytes.toString().replace(/app\.[a-f0-9]{12}\.js/, "app.js"),
         );
+      if (path === "index.html" && fault === "canonical")
+        bytes = Buffer.from(
+          bytes.toString().replace(
+            /(<link\s+rel="canonical"\s+href=")[^"]+/i,
+            "$1https://wrong.example/",
+          ),
+        );
       response.writeHead(200, { "Content-Type": type }).end(bytes);
     } catch {
       response.writeHead(404).end();
@@ -93,6 +100,8 @@ test("deployment verification rejects mixed assets and HTML error pages served a
     }
     fault = "references";
     await assert.rejects(verifyDeployment(url), /HTML references stale/);
+    fault = "canonical";
+    await assert.rejects(verifyDeployment(url), /Canonical URL does not match/);
   } finally {
     await new Promise((done) => server.close(done));
     await rm(rollback, { recursive: true, force: true });

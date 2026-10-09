@@ -69,15 +69,15 @@
     },
     {
       "source": "assets/css/style.css",
-      "path": "assets/css/style.fc157ee40050.css",
-      "hash": "fc157ee400503b913f34e0ee8145c261308990f7fbdc5782bfeaf5421920b3e6",
-      "bytes": 48541
+      "path": "assets/css/style.de72420d3cfd.css",
+      "hash": "de72420d3cfda75f3efc656d3228502c04a93d5795cc93e324c69535afc38725",
+      "bytes": 59734
     },
     {
       "source": "assets/js/app.js",
-      "path": "assets/js/app.de5213a4837e.js",
-      "hash": "de5213a4837e3d5114fbe57fefd1efe4bd456e2c9f74c52d5a4d6b1b65437893",
-      "bytes": 14146
+      "path": "assets/js/app.9e3e842ff4a0.js",
+      "hash": "9e3e842ff4a0d5af030799ebf6e6dae017b869d4efa800794c07d4ff226073b2",
+      "bytes": 14513
     },
     {
       "source": "assets/js/world.js",

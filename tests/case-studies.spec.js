@@ -4,6 +4,7 @@ const AxeBuilder = require("@axe-core/playwright").default;
 const cases = [
   ["driftdoctor", "DriftDoctor", "12 / 12", "synthetic"],
   ["sql-analytics", "SQL analysis & query tuning", "19.198 → 0.105 ms", "one controlled synthetic workload"],
+  ["stockpulse", "StockPulse", "Idempotent writes", "source-reviewed implementation"],
   ["sales-forecasting", "Vehicle-price forecasting", "6.73% lower", "two outer folds"],
 ];
 
@@ -15,7 +16,7 @@ test("three selected projects link to distinct case studies and preserve the arc
   const order = await page.locator("#experience, #skills, #about, #more-projects").evaluateAll((nodes) => nodes.map((node) => node.id));
   expect(order).toEqual(["experience", "skills", "about", "more-projects"]);
   await expect(page.locator(".archive-divider")).toContainText("11 more explorations");
-  for (const [slug, name] of cases) {
+  for (const [slug, name] of cases.filter(([slug]) => slug !== "sales-forecasting")) {
     const link = page.locator(`.selected-project .case-study-link[href='projects/${slug}.html']`);
     await expect(link).toHaveCount(1);
     await expect(link).toBeVisible();
@@ -65,7 +66,7 @@ for (const [slug, name, result, limit] of cases) {
         background: getComputedStyle(body).backgroundColor,
         scheme: getComputedStyle(body).colorScheme,
       }));
-      expect(styles).toEqual({ background: "rgb(248, 250, 252)", scheme: "light" });
+      expect(styles).toEqual({ background: "rgb(8, 17, 31)", scheme: "dark" });
     }
     await page.locator(".case-next a").last().click();
     await expect(page).toHaveURL(/\/projects\/.*\.html$/);
@@ -73,12 +74,12 @@ for (const [slug, name, result, limit] of cases) {
   });
 }
 
-test("capture cobalt reading portfolio and case-study previews", async ({ page }, info) => {
+test("capture reading portfolio and case-study previews", async ({ page }, info) => {
   test.skip(!["desktop", "mobile"].includes(info.project.name), "Chromium captures cover desktop and mobile; all engines run behavioral checks.");
-  for (const [path, label] of [["/?view=read", "homepage"], ["/projects/sales-forecasting.html", "forecast-case"]]) {
+  for (const [path, label] of [["/?view=read", "homepage"], ["/projects/driftdoctor.html", "drift-case"], ["/projects/stockpulse.html", "stockpulse-case"], ["/projects/sales-forecasting.html", "forecast-case"]]) {
     await page.goto(path);
     await page.evaluate(() => document.fonts.ready);
-    const screenshot = await page.screenshot({ path: info.outputPath(`cobalt-${label}.png`), fullPage: true, animations: "disabled" });
-    await info.attach(`cobalt-${label}`, { body: screenshot, contentType: "image/png" });
+    const screenshot = await page.screenshot({ path: info.outputPath(`portfolio-${label}.png`), fullPage: true, animations: "disabled" });
+    await info.attach(`portfolio-${label}`, { body: screenshot, contentType: "image/png" });
   }
 });

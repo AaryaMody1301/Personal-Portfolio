@@ -74,10 +74,9 @@ async function switchView(page) {
   if (await toggle.isVisible()) {
     await click(toggle);
   } else {
-    const menu = page.locator(".mobile-menu");
-    if ((await menu.getAttribute("open")) === null)
-      await click(menu.locator("summary"));
-    await click(menu.locator("a[data-world]"));
+    const entry = page.locator(".site-footer a[data-world]");
+    await entry.scrollIntoViewIfNeeded();
+    await click(entry);
   }
 }
 async function ready(page, url = "/?view=world") {
@@ -1123,6 +1122,8 @@ test("default reading visit requests no world resources and exposes selected wor
   if (["desktop", "mobile"].includes(info.project.name)) {
     const r = await page.locator(".card-title").first().boundingBox();
     expect(r.y + r.height).toBeLessThan(page.viewportSize().height);
+    const evidence = await page.locator(".card-qualification").first().boundingBox();
+    expect(evidence.y + evidence.height).toBeLessThan(page.viewportSize().height);
   }
 });
 
@@ -1197,7 +1198,7 @@ test("copy controls give accessible success and selectable fallback on clipboard
   await page.locator('[data-copy-project="driftdoctor"]').click();
   await expect(page.locator("#copy-fallback")).toBeFocused();
   await expect(page.locator("#copy-fallback")).toHaveValue(
-    "https://aaryamody.app/?view=read#driftdoctor",
+    new URL("?view=read#driftdoctor", require("../package.json").homepage).href,
   );
   expect(
     await page
@@ -1284,6 +1285,7 @@ test("history, hidden resize and returning from a project preserve view and read
   await page.goto("/#projects");
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(150);
+  await page.locator(".site-footer a[data-world]").scrollIntoViewIfNeeded();
   const actualPosition = await page.evaluate(() => scrollY);
   await switchView(page);
   await page.goBack();
@@ -1374,7 +1376,17 @@ test("matches the reviewed reading visual baseline", async ({ page }, info) => {
   await expect(page).toHaveScreenshot("reading-portfolio.png", {
     fullPage: false,
   });
-  const summary = page.locator("#work-sql-practice-project > summary");
+});
+
+test("matches the reviewed project focus visual baseline", async ({ page }, info) => {
+  test.skip(
+    process.platform !== "linux" || process.env.PLAYWRIGHT_CHROMIUM_CHANNEL !== "chromium-headless-shell" ||
+      !["desktop", "mobile"].includes(info.project.name),
+    "Reviewed Linux baselines in pinned Playwright Chromium headless shell",
+  );
+  await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
+  const summary = page.locator("#work-driftdoctor > summary");
   await summary.focus();
   await expect(summary).toHaveScreenshot("project-focus.png");
 });

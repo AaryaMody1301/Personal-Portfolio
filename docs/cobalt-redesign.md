@@ -1,5 +1,7 @@
 # Cobalt portfolio redesign
 
+Historical record of the earlier light design. See [the dark technical redesign](dark-technical-redesign.md) for the current layout and validation. The validation claims below apply to their original revision.
+
 The default portfolio uses a light reading layout: white/slate surfaces, `#111827` body text, `#475569` secondary text, and `#1d4ed8` actions. The optional World keeps its dark palette and interactions. PR #12 targets `master`; its `portfolio/cobalt-case-studies` branch includes the predecessor World changes from the closed PR #11.
 
 The homepage leads with Aarya's role and current employment, three featured projects, then professional experience and evidence-linked skills. SQL analysis leads the selected work, followed by DriftDoctor and vehicle-price forecasting. Case-study links are always visible outside disclosures. Professional experience, skills, and the authentic portrait precede the searchable eleven-project archive. Filters apply only to that archive, leaving the three selected projects visible. Mobile navigation promotes the resume, and the hero exposes availability and contact. All fourteen native project disclosures, project URLs, resume bytes, contacts, professional qualifications, and third-party notices are retained.

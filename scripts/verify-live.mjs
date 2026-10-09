@@ -79,11 +79,9 @@ export async function verifyDeployment(
     if (!html.includes(signal))
       problems.push("Missing current page content: " + signal);
   }
-  if (
-    !/<link\s+rel=["']canonical["']\s+href=["']https:\/\/aaryamody\.app\/?["']/.test(
-      html,
-    )
-  )
+  const canonicalPattern = /<link\s+rel=["']canonical["']\s+href=["']([^"']+)["']/i;
+  const expectedCanonical = localHtml.match(canonicalPattern)?.[1];
+  if (!expectedCanonical || html.match(canonicalPattern)?.[1] !== expectedCanonical)
     problems.push("Canonical URL does not match.");
   if (
     JSON.stringify(references(html)) !== JSON.stringify(references(localHtml))

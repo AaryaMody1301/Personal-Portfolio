@@ -1,6 +1,6 @@
 # Aarya Mody — Data Analyst · SQL, Python & Databricks
 
-A light reading portfolio for data analytics and engineering, with three evidence-backed case studies and an optional floating world loaded through Explore world. See [the redesign guide](docs/cobalt-redesign.md) for this branch's changes and verification scope. The [world guide](docs/aaryas-world.md), [previous verification](docs/aaryas-world-verification.md), and [published-release evidence](docs/release-evidence.json) describe the predecessor release, including its remaining hosting issue.
+A dark technical portfolio for data analytics and engineering, with a compact profile, three selected projects, four static case studies, and an optional floating world. See [the current redesign guide](docs/dark-technical-redesign.md) for the design and verification scope. The [World guide](docs/aaryas-world.md), [previous verification](docs/aaryas-world-verification.md), and [cobalt redesign](docs/cobalt-redesign.md) describe earlier revisions; their results do not certify the current build.
 
 [Website](https://aaryamody.app/) · [Resume](assets/docs/AaryaMody_Resume.pdf) · [Content sources](docs/content-sources.md) · [Deployment guide](docs/hostinger-deploy.md)
 
@@ -8,7 +8,7 @@ A light reading portfolio for data analytics and engineering, with three evidenc
 
 ## What is here
 
-- Three static case studies: [SQL analysis & query tuning](projects/sql-analytics.html), [DriftDoctor](projects/driftdoctor.html), and [Vehicle-price forecasting](projects/sales-forecasting.html), with source evidence, measured results, decisions, and limits.
+- Selected work: [DriftDoctor](projects/driftdoctor.html), [SQL analysis & query tuning](projects/sql-analytics.html), and [StockPulse](projects/stockpulse.html), with inspectable evidence, decisions, and limits. [Vehicle-price forecasting](projects/sales-forecasting.html) retains its case-study URL in the searchable archive.
 - Eleven more public projects in a searchable collection, professional experience, skills, credentials, and contact links. World retains DriftDoctor, CompatForge, and OriginKeep islands and their illustrative demonstrations.
 - Responsive layouts, persistent navigation and responsive native dialog panels, keyboard focus handling, reduced-motion support, and usable content/navigation without JavaScript.
 - Locally hosted images and resume, content-versioned assets, metadata, structured profile data, and a sitemap.
@@ -97,7 +97,7 @@ Upload the complete assets before replacing the HTML, clear the host's HTML cach
 index.html                      Content, navigation, metadata, JSON-LD
 src/                            Editable world and navigation modules
 assets/css/world.css            Editable World visual system
-assets/css/reading.css          Editable light portfolio and case studies
+assets/css/reading.css          Editable dark portfolio and case studies
 projects/                      Static case-study pages
 site-pages.json                Runtime page registry
 assets/css/style.css            Generated stylesheet
