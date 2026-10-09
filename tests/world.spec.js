@@ -2,13 +2,13 @@ const { test, expect } = require("@playwright/test");
 const AxeBuilder = require("@axe-core/playwright").default;
 const { createHash } = require("node:crypto");
 const titles = [
-  "SQL analysis & query tuning",
   "DriftDoctor",
+  "SQL analysis & query tuning",
+  "StockPulse",
   "Vehicle-price forecasting",
   "Video Game Sales Dashboard",
   "CompatForge",
   "OriginKeep",
-  "StockPulse",
   "DeepTrail",
   "ContextHalo",
   "JobPilot Local",

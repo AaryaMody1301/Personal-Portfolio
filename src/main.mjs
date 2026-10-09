@@ -253,6 +253,10 @@ function setMode(next, { navigate = false, restoreState } = {}) {
   $("#reading-toggle").textContent =
     mode === "world" ? "Read portfolio" : "Explore world";
   $("#reading-toggle").hidden = failed || reduced.matches;
+  // Set the current header height before the World measures its viewport.
+  // Waiting for ResizeObserver would allocate once with the reading height
+  // and again when the taller World header is delivered.
+  measureHeader();
   $(".world-copy").inert = mode === "world" && activeIsland !== "home";
   $("#world-map").hidden = true;
   $("#map-toggle").setAttribute("aria-expanded", "false");
