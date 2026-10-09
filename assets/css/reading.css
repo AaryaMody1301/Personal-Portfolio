@@ -171,6 +171,10 @@
 }
 .reading-mode .world-copy h1 span {
   color: var(--paper);
+  margin-left: 0;
+}
+.world-mode .world-copy h1 > span > span {
+  margin-left: 0;
 }
 .reading-mode .hero-discipline {
   font-size: clamp(1.875rem, 2.65vw, 2.375rem);
@@ -518,7 +522,7 @@
   grid-template-columns: 1fr auto;
   gap: 8px;
 }
-.query-row + div {
+.query-row + .query-row {
   margin-top: 16px;
 }
 .query-label {
@@ -584,7 +588,7 @@
 .reading-mode .index-item p,
 .reading-mode .project-story p {
   color: var(--muted);
-  font-size: .9375rem;
+  font-size: 1rem;
 }
 .reading-mode .case-label {
   color: var(--paper);
@@ -646,7 +650,7 @@
 }
 .reading-mode .project-details p {
   color: var(--muted);
-  font-size: .9375rem;
+  font-size: 1rem;
 }
 .reading-mode .detail-grid {
   grid-template-columns: minmax(0, 1fr);
@@ -843,7 +847,7 @@
 }
 .reading-mode .about-intro p {
   color: var(--muted);
-  font-size: .9375rem;
+  font-size: 1rem;
 }
 .reading-mode .about-intro .button {
   margin-top: 20px;
@@ -1036,7 +1040,7 @@
 }
 .reading-mode .contact-layout p {
   color: var(--muted);
-  font-size: .9375rem;
+  font-size: 1rem;
 }
 .reading-mode .contact-availability {
   margin-top: 12px;
