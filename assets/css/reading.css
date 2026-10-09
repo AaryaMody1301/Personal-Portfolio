@@ -96,6 +96,16 @@
   font-weight: 600;
   letter-spacing: 0;
 }
+.case-study-page .brand-word {
+  display: inline;
+}
+.reading-mode .section,
+.reading-mode .world-hero {
+  scroll-margin-top: 6.25rem;
+}
+html:not(.js) .reading-mode .site-footer [data-world] {
+  display: none;
+}
 .reading-mode .nav-menu {
   gap: 26px;
 }
@@ -1271,7 +1281,7 @@
   padding: 0 0 32px;
   margin-bottom: 32px;
   border-bottom: 1px solid var(--line);
-  scroll-margin-top: 100px;
+  scroll-margin-top: 6.25rem;
 }
 .case-body h2 {
   font-size: 1.5rem;
