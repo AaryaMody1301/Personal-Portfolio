@@ -38,7 +38,7 @@ jobs:
       - name: Build locally bundled runtime assets
         run: npm run build
       - name: Upload reproducible runtime build
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: portfolio-runtime-${{ matrix.os }}
           path: |
@@ -56,7 +56,7 @@ jobs:
       - name: Capture design review previews
         run: npx playwright test --grep "capture reading portfolio" --project desktop --project mobile
       - name: Upload design review previews
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: portfolio-design-${{ matrix.os }}
           path: reports/local/**/portfolio-*.png
@@ -80,7 +80,7 @@ jobs:
         run: npm run audit:preview
       - name: Retain Lighthouse feedback before the full browser suite
         if: ${{ !cancelled() && steps.lighthouse.outcome != 'skipped' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: portfolio-lighthouse-${{ matrix.os }}
           path: reports/local/**/lighthouse/
@@ -98,7 +98,7 @@ jobs:
         run: npm run package:hostinger
       - name: Upload verification reports
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: portfolio-reports-${{ matrix.os }}
           path: |
@@ -107,7 +107,7 @@ jobs:
           retention-days: 14
       - name: Upload Hostinger package
         if: success() && runner.os == 'Windows'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: portfolio-hostinger
           path: output/portfolio-hostinger.zip
