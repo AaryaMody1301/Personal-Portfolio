@@ -2,59 +2,104 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile, readdir, unlink } from "node:fs/promises";
 import { dirname, basename, extname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-
+import { readSitePages } from "./site-pages.mjs";
 export const root = fileURLToPath(new URL("../", import.meta.url));
-export const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
-const sources = [
-  "assets/css/style.css", "assets/js/main.js", "assets/js/analytics.js",
-  "assets/images/portrait.webp", "assets/images/portrait-small.webp",
-  "assets/images/og-image.jpg", "assets/images/favicon.svg"
+export const digest = (bytes) =>
+  createHash("sha256").update(bytes).digest("hex");
+const leaves = [
+  "assets/fonts/syne.ttf",
+  "assets/models/birch.glb",
+  "assets/models/bush.glb",
+  "assets/environment/venice-sunset-pmrem.hdr",
+  "assets/images/portrait.webp",
+  "assets/images/portrait-small.webp",
+  "assets/images/og-image.jpg",
+  "assets/images/favicon.svg",
+  "assets/images/world-poster.webp",
+  "assets/images/world-poster-mobile.webp",
+  "assets/licenses/THIRD-PARTY-NOTICES.txt",
 ];
-
-// Keep editable source files; index.html references immutable, content-named copies.
-// A fresh URL avoids the host's week-long cache of an older CSS or JS response.
+const parents = [
+  "assets/css/style.css",
+  "assets/js/app.js",
+  "assets/js/world.js",
+];
+const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const pattern = (source) => {
+  const ext = extname(source);
+  return new RegExp(
+    `${escape(source.slice(0, -ext.length))}(?:\\.[a-f0-9]{12})?${escape(ext)}`,
+    "g",
+  );
+};
+const named = (source, hash) =>
+  `${source.slice(0, -extname(source).length)}.${hash.slice(0, 12)}${extname(source)}`;
 export async function prepareAssets({ check = false } = {}) {
-  let html = await readFile(resolve(root, "index.html"), "utf8");
+  const pages = await readSitePages(root);
+  const documents = await Promise.all(pages.map(async (path) => ({
+    path, html: await readFile(resolve(root, path), "utf8"),
+  })));
   const manifest = [];
-  for (const source of sources) {
-    const bytes = await readFile(resolve(root, source));
-    const extension = extname(source);
-    const stem = basename(source, extension);
-    const folder = dirname(source).replaceAll("\\", "/");
-    const hash = digest(bytes);
-    const filename = `${stem}.${hash.slice(0, 12)}${extension}`;
-    const path = `${folder}/${filename}`;
-    const escape = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const pattern = new RegExp(`${escape(folder)}/${escape(stem)}(?:\\.[a-f0-9]{12})?${escape(extension)}`, "g");
-    const references = [...html.matchAll(pattern)].map((match) => match[0]);
-    if (!references.length) throw new Error(`Missing HTML reference for ${source}`);
-    if (check) {
-      if (references.some((reference) => reference !== path)) throw new Error(`Stale ${source}; run npm run assets:prepare.`);
-      if (digest(await readFile(resolve(root, path))) !== hash) throw new Error(`Corrupt generated asset: ${path}`);
-    } else {
-      await writeFile(resolve(root, path), bytes);
-      html = html.replace(pattern, path);
+  for (const source of [...leaves, ...parents]) {
+    let bytes = await readFile(resolve(root, source));
+    if (source.endsWith(".css")) {
+      let css = bytes.toString("utf8");
+      for (const item of manifest) {
+        const relative = "../" + item.source.slice(7);
+        css = css.replace(pattern(relative), "../" + item.path.slice(7));
+      }
+      bytes = Buffer.from(css);
     }
-    manifest.push({ source, path, hash });
+    const hash = digest(bytes),
+      path = named(source, hash);
+    if (check) {
+      if (digest(await readFile(resolve(root, path))) !== hash)
+        throw new Error(`Corrupt or stale asset: ${path}`);
+    } else await writeFile(resolve(root, path), bytes);
+    const refs = documents.flatMap(({ html }) =>
+      [...html.matchAll(pattern(source))].map((m) => m[0]),
+    );
+    if (source !== "assets/fonts/syne.ttf" && !refs.length)
+      throw new Error(`Missing HTML reference for ${source}`);
+    if (check && refs.some((ref) => ref !== path))
+      throw new Error(`Stale ${source}; run npm run assets:prepare.`);
+    for (const document of documents)
+      document.html = document.html.replace(pattern(source), path);
+    manifest.push({ source, path, hash, bytes: bytes.length });
   }
-  if (!check) {
-    await writeFile(resolve(root, "index.html"), html);
-    // Only remove obsolete generated siblings with the exact content-hash naming
-    // scheme, after publishing all replacements into the local HTML. No recursion.
+  const json = JSON.stringify({ version: 1, assets: manifest }, null, 2) + "\n";
+  if (check) {
+    if (
+      (await readFile(resolve(root, "assets/manifest.json"), "utf8")) !== json
+    )
+      throw new Error("Stale asset manifest.");
+  } else {
+    for (const { path, html } of documents)
+      await writeFile(resolve(root, path), html);
+    await writeFile(resolve(root, "assets/manifest.json"), json);
+    // Only remove obsolete generated siblings. Absolute parent paths are inside root.
     for (const { source, path } of manifest) {
       const folder = resolve(root, dirname(source));
-      const extension = extname(source);
-      const stem = basename(source, extension).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      const generated = new RegExp(`^${stem}\\.[a-f0-9]{12}${extension.replace(".", "\\.")}$`);
-      for (const file of await readdir(folder)) {
-        if (generated.test(file) && file !== basename(path)) await unlink(resolve(folder, file));
-      }
+      if (!folder.startsWith(root)) throw new Error("Asset outside workspace");
+      const ext = extname(source);
+      const rx = new RegExp(
+        `^${escape(basename(source, ext))}\\.[a-f0-9]{12}${escape(ext)}$`,
+      );
+      for (const file of await readdir(folder))
+        if (rx.test(file) && file !== basename(path))
+          await unlink(resolve(folder, file));
     }
   }
   return manifest;
 }
 
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const manifest = await prepareAssets({ check: process.argv.includes("--check") });
-  console.log(`Verified ${manifest.length} content-versioned assets.`);
-}
+if (
+  process.argv[1] &&
+  resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+)
+  console.log(
+    "Verified " +
+      (await prepareAssets({ check: process.argv.includes("--check") }))
+        .length +
+      " content-versioned assets and transitive resources.",
+  );

@@ -10,8 +10,20 @@
 
 # Copies generated from the corresponding unversioned sources.
 assets/css/style.*.css linguist-generated=true
-assets/js/main.*.js linguist-generated=true
-assets/js/analytics.*.js linguist-generated=true
 assets/images/*.*.webp linguist-generated=true
 assets/images/og-image.*.jpg linguist-generated=true
 assets/images/favicon.*.svg linguist-generated=true
+
+*.glb binary
+*.hdr binary
+*.ttf binary
+assets/js/app.*.js linguist-generated=true
+assets/js/world.*.js linguist-generated=true
+assets/models/*.*.glb linguist-generated=true
+assets/environment/*.*.hdr linguist-generated=true
+assets/fonts/*.*.ttf linguist-generated=true
+
+# Preserve upstream shader strings and verbatim license notices.
+assets/js/world.js -whitespace
+assets/js/world.*.js -whitespace
+assets/licenses/THIRD-PARTY-NOTICES*.txt -whitespace

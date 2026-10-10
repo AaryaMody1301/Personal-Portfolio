@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>DriftDoctor · Case study | Aarya Mody</title>
+  <meta name="description" content="A local dbt repair workflow that moves known changes into inspectable skills and reserves a bounded AI decision for genuine ambiguity." />
+  <meta name="theme-color" content="#08111f" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://aarya-mody-portfolio.lovelyseed.chatgpt.site/projects/driftdoctor.html" />
+  <meta property="og:title" content="DriftDoctor · Case study | Aarya Mody" />
+  <meta property="og:description" content="A local dbt repair workflow that moves known changes into inspectable skills and reserves a bounded AI decision for genuine ambiguity." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://aarya-mody-portfolio.lovelyseed.chatgpt.site/projects/driftdoctor.html" />
+  <meta property="og:image" content="https://aarya-mody-portfolio.lovelyseed.chatgpt.site/assets/images/og-image.21088983f5bb.jpg" />
+  <meta property="og:image:alt" content="Aarya Mody · Data Analyst · SQL, Python and Databricks" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="DriftDoctor · Case study | Aarya Mody" />
+  <meta name="twitter:description" content="A local dbt repair workflow that moves known changes into inspectable skills and reserves a bounded AI decision for genuine ambiguity." />
+  <meta name="twitter:image" content="https://aarya-mody-portfolio.lovelyseed.chatgpt.site/assets/images/og-image.21088983f5bb.jpg" />
+  <meta name="twitter:image:alt" content="Aarya Mody · Data Analyst · SQL, Python and Databricks" />
+  <link rel="icon" href="../assets/images/favicon.f14e9d9541be.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../assets/css/style.b9a7692c1901.css" />
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Repair the contract. Keep the reasoning visible.",
+  "description": "A local dbt repair workflow that moves known changes into inspectable skills and reserves a bounded AI decision for genuine ambiguity.",
+  "datePublished": "2026-10-06",
+  "dateModified": "2026-10-09",
+  "author": {
+    "@type": "Person",
+    "name": "Aarya Mody",
+    "url": "https://aarya-mody-portfolio.lovelyseed.chatgpt.site"
+  },
+  "mainEntityOfPage": "https://aarya-mody-portfolio.lovelyseed.chatgpt.site/projects/driftdoctor.html"
+}</script>
+</head>
+<body class="case-study-page">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header"><nav class="nav-shell" aria-label="Main navigation"><a class="brand" href="../index.html" aria-label="Aarya Mody, Home"><span class="brand-mark" aria-hidden="true">am</span><span class="brand-word">AARYA MODY</span></a><div class="case-nav"><a href="../index.html#projects">All work</a><a class="case-contact" href="../index.html#contact">Contact</a><a class="nav-resume" href="../assets/docs/AaryaMody_Resume.pdf" download>Resume </a></div></nav></header>
+  <main id="main-content" tabindex="-1">
+    <div class="case-shell">
+      <header class="case-hero"><p class="eyebrow">Case study 01 / DriftDoctor</p><h1>Repair the contract. Keep the reasoning visible.</h1><p class="case-lede">A local dbt repair workflow that moves known changes into inspectable skills and reserves a bounded AI decision for genuine ambiguity.</p><nav class="case-actions" aria-label="Case study shortcuts"><a href="#results">See the evidence </a><a href="https://github.com/AaryaMody1301/DriftDoctor" target="_blank" rel="noopener noreferrer">View repository </a></nav><aside class="case-brief" aria-label="Case study at a glance"><div><p class="brief-label">Outcome</p><p>12/12 frozen synthetic cases resolved through deterministic skills.</p></div><div><p class="brief-label">Decision</p><p>Sandbox and validate each repair before human review.</p></div><div><p class="brief-label">Limit</p><p>Known structures only; ambiguity is reported separately.</p></div></aside><dl class="case-meta"><div><dt>Focus</dt><dd>Data engineering / Applied AI</dd></div><div><dt>Stack</dt><dd>Python · dbt · DuckDB · Local AI</dd></div><div><dt>My role</dt><dd>Personal project · implementation &amp; evaluation</dd></div></dl></header>
+      <div class="case-layout">
+        <nav class="case-toc" aria-label="On this page"><a href="#problem">The problem</a><a href="#approach">The approach</a><a href="#results">The evidence</a><a href="#tradeoffs">Decisions &amp; limits</a><a href="#sources">Inspect the work</a></nav>
+        <article class="case-body" aria-label="DriftDoctor case study"><section id="problem"><h2>The problem</h2><p>A renamed field, changed model reference, or duplicate record can break a pipeline. A successful build alone does not prove the business contract still holds. I wanted repairs to carry their reasoning and verification with them.</p><p>The first simple-agent baseline resolved 0 of 12 frozen cases. Free-form generation could produce a confident explanation without a correct patch. That failure shaped the final architecture.</p></section>
+<section id="approach"><h2>The approach</h2><ol><li><strong>Copy into a disposable sandbox.</strong> Work on a local DuckDB-backed dbt project, preserving the original source.</li><li><strong>Apply deterministic skills.</strong> Route contract-defined changes to inspectable transformations for aliases, casts, grain, references, and documented formulas.</li><li><strong>Use AI only for supported ambiguity.</strong> Select an existing observed candidate or abstain. The model cannot invent a model or rewrite arbitrary SQL.</li><li><strong>Verify and return evidence.</strong> Run dbt and contract checks, then produce a reviewable diff and <code>driftdoctor-report.json</code>. A reviewer must approve the result.</li></ol>
+<figure class="case-figure"><span class="figure-scroll-hint">Scroll horizontally to inspect the full diagram.</span><div class="figure-scroll" tabindex="0" role="region" aria-label="Repair workflow diagram"><svg viewBox="0 0 700 350" role="img" aria-labelledby="repair-flow-title repair-flow-desc"><title id="repair-flow-title">The guarded repair workflow</title><desc id="repair-flow-desc">A disposable sandbox feeds deterministic repair skills and checks. Unresolved supported ambiguity goes to a bounded candidate selector. Both verified paths lead to a diff, report, and human review; unsupported cases escalate.</desc><g fill="#f4f6f8" stroke="#d9dfe5"><rect x="220" y="10" width="260" height="54" rx="8"/><rect x="220" y="92" width="260" height="54" rx="8"/><rect x="35" y="190" width="270" height="54" rx="8"/><rect x="395" y="190" width="270" height="54" rx="8"/><rect x="190" y="282" width="320" height="54" rx="8"/></g><g fill="none" stroke="#245ca7" stroke-width="2"><path d="M350 64v28m0 54v18H170v26m180-26h180v26M170 244v18h180v20m180-38v18H350"/></g><g fill="#111827" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16"><text x="350" y="43">Disposable dbt sandbox</text><text x="350" y="125">Deterministic skills + checks</text><text x="170" y="224">Verified repair</text><text x="530" y="224">Bounded choice or abstain</text><text x="350" y="315">Diff + report → human review</text></g></svg></div><figcaption>Architecture diagram. The runtime does not import the evaluator’s hidden oracle or reference repairs. Unsupported cases require human escalation.</figcaption></figure></section>
+<section id="results"><h2>The evidence</h2><div class="evidence-callout"><strong>12 / 12</strong><p>Verified resolutions in the final rerun of the frozen synthetic benchmark. All twelve used skills, with zero model calls.</p></div><div class="table-scroll" tabindex="0" role="region" aria-label="Benchmark results"><table class="result-table"><caption>Controlled primary comparison · same 12 fixtures and evaluator</caption><thead><tr><th scope="col">System</th><th scope="col">Verified resolutions</th></tr></thead><tbody><tr><th scope="row">Matched-context simple agent</th><td>0 / 12</td></tr><tr><th scope="row">Staged LLM workflow</th><td>1 / 12</td></tr><tr><th scope="row">Final selective-agency rerun</th><td>12 / 12</td></tr></tbody></table></div><p>Resolution means passing <strong>every external oracle check</strong>, including case-specific semantic checks. A green dbt build or plausible patch is insufficient.</p><h3>A separate ambiguity demonstration</h3><p>The held-out <code>stg_orders</code> case offered two existing model candidates. Skills alone escalated. The bounded agent selected <code>stg_orders_v2</code> in one model call and passed the held-out checks. This demonstration is reported separately from the twelve-case score.</p></section>
+<section id="tradeoffs"><h2>Decisions &amp; limits</h2><p><strong>The useful improvement was narrowing the model’s job.</strong> Explicit skills handle work determined by the contract; the agent makes only one supported ambiguity decision.</p><p>The benchmark is synthetic and small. The current scope is local DuckDB dbt projects, explicit repair skills, and one bounded ambiguity pattern. Novel SQL structures and undocumented rules should escalate. Broader independent holdout evaluation is needed before production use.</p></section>
+          <section id="sources"><h2>Inspect the work</h2><p>These links point to the source revision reviewed for this case study on 6 October 2026. The reported benchmark results come from repository evidence; they were not rerun as part of this portfolio redesign.</p><div class="evidence-links"><a href="https://github.com/AaryaMody1301/DriftDoctor/tree/0760ce3772678fdb7309b467f41f0371c1c10feb/evidence/phase9/" target="_blank" rel="noopener noreferrer">Frozen primary evidence </a><a href="https://github.com/AaryaMody1301/DriftDoctor/blob/0760ce3772678fdb7309b467f41f0371c1c10feb/evidence/phase9/agent-fallback-demo.json" target="_blank" rel="noopener noreferrer">Separate ambiguity trajectory </a><a href="https://github.com/AaryaMody1301/DriftDoctor/blob/0760ce3772678fdb7309b467f41f0371c1c10feb/REPRODUCE.md" target="_blank" rel="noopener noreferrer">Reproduction instructions </a><a href="https://github.com/AaryaMody1301/DriftDoctor/blob/0760ce3772678fdb7309b467f41f0371c1c10feb/IMPROVEMENT_CHANGELOG.md" target="_blank" rel="noopener noreferrer">Decisions and failed experiments </a><a href="https://github.com/AaryaMody1301/DriftDoctor" target="_blank" rel="noopener noreferrer">Open the current repository </a></div></section>
+        </article>
+      </div>
+      <nav class="case-next" aria-label="More case studies"><a href="../index.html#projects"> Back to all work</a><a href="sql-analytics.html">Next: SQL analysis &amp; query tuning </a></nav>
+    </div>
+  </main>
+  <footer class="site-footer"><p>© 2026 Aarya Mody</p><a href="mailto:aaryamody5@gmail.com">Get in touch </a><a href="../index.html#credits">Credits</a></footer>
+</body>
+</html>

@@ -12,6 +12,7 @@ __pycache__/
 /test-results/
 /playwright-report/
 /output/
+/dist/
 /archive/
 coverage/
 *.log

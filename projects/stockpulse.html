@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>StockPulse · Case study | Aarya Mody</title>
+    <meta name="description" content="A source-reviewed SEC ingestion pipeline with bounded requests, idempotent writes, partial-failure reporting, and financial data provenance." />
+    <meta name="theme-color" content="#08111f" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://aarya-mody-portfolio.lovelyseed.chatgpt.site/projects/stockpulse.html" />
+    <meta property="og:title" content="StockPulse · Case study | Aarya Mody" />
+    <meta property="og:description" content="SEC ingestion with bounded requests, idempotent writes, and traceable evidence. Implementation reviewed; live deployment checks remain." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://aarya-mody-portfolio.lovelyseed.chatgpt.site/projects/stockpulse.html" />
+    <meta property="og:image" content="https://aarya-mody-portfolio.lovelyseed.chatgpt.site/assets/images/og-image.21088983f5bb.jpg" />
+    <meta property="og:image:alt" content="Aarya Mody · Data Analyst · SQL, Python and Databricks" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="StockPulse · Case study | Aarya Mody" />
+    <meta name="twitter:description" content="A source-reviewed SEC ingestion pipeline with idempotent writes and financial data provenance." />
+    <meta name="twitter:image" content="https://aarya-mody-portfolio.lovelyseed.chatgpt.site/assets/images/og-image.21088983f5bb.jpg" />
+    <meta name="twitter:image:alt" content="Aarya Mody · Data Analyst · SQL, Python and Databricks" />
+    <link rel="icon" href="../assets/images/favicon.f14e9d9541be.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/css/style.b9a7692c1901.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "SEC ingestion with traceable evidence.",
+        "description": "A source-reviewed SEC ingestion pipeline with bounded requests, idempotent writes, partial-failure reporting, and financial data provenance.",
+        "datePublished": "2026-10-09",
+        "dateModified": "2026-10-09",
+        "author": { "@type": "Person", "name": "Aarya Mody", "url": "https://aarya-mody-portfolio.lovelyseed.chatgpt.site" },
+        "mainEntityOfPage": "https://aarya-mody-portfolio.lovelyseed.chatgpt.site/projects/stockpulse.html"
+      }
+    </script>
+  </head>
+  <body class="case-study-page">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+      <nav class="nav-shell" aria-label="Main navigation">
+        <a class="brand" href="../index.html" aria-label="Aarya Mody, Home"><span class="brand-mark" aria-hidden="true">am</span><span class="brand-word">AARYA MODY</span></a>
+        <div class="case-nav"><a href="../index.html#projects">All work</a><a class="case-contact" href="../index.html#contact">Contact</a><a class="nav-resume" href="../assets/docs/AaryaMody_Resume.pdf" download>Resume</a></div>
+      </nav>
+    </header>
+    <main id="main-content" tabindex="-1">
+      <div class="case-shell">
+        <header class="case-hero">
+          <p class="eyebrow">Case study 03 / StockPulse</p>
+          <h1>SEC ingestion with traceable evidence.</h1>
+          <p class="case-lede">A financial research application is only as useful as the data behind it. I built an ingestion path that preserves filing identity, makes reruns safe, and keeps partial failures visible.</p>
+          <nav class="case-actions" aria-label="Case study shortcuts"><a href="#results">See the evidence</a><a href="https://github.com/AaryaMody1301/StockPulse" target="_blank" rel="noopener noreferrer">View repository ↗</a></nav>
+          <aside class="case-brief" aria-label="Case study at a glance">
+            <div><p class="brief-label">Outcome</p><p>Idempotent writes with source provenance attached to normalized facts.</p></div>
+            <div><p class="brief-label">Decision</p><p>Keep available evidence and report incomplete ingestion as partial.</p></div>
+            <div><p class="brief-label">Limit</p><p>Implementation reviewed; live configuration and deployment checks remain.</p></div>
+          </aside>
+          <dl class="case-meta"><div><dt>Focus</dt><dd>Ingestion / Data provenance</dd></div><div><dt>Stack</dt><dd>TypeScript · PostgreSQL · Prisma · Next.js</dd></div><div><dt>My role</dt><dd>Personal project · implementation</dd></div></dl>
+        </header>
+        <div class="case-layout">
+          <nav class="case-toc" aria-label="On this page"><a href="#problem">The problem</a><a href="#approach">The approach</a><a href="#results">The evidence</a><a href="#tradeoffs">Decisions &amp; limits</a><a href="#sources">Inspect the work</a></nav>
+          <article class="case-body" aria-label="StockPulse case study">
+            <section id="problem">
+              <h2>The problem</h2>
+              <p>A financial value needs context: which company, which filing, which reporting period, and which unit. Flattening those differences into a single number makes later comparison difficult to audit.</p>
+              <p>The ingestion path also needs to tolerate reruns and upstream failures. Re-fetching a filing should not create a duplicate; a failed facts endpoint should not silently erase an otherwise usable filing response.</p>
+            </section>
+            <section id="approach">
+              <h2>The approach</h2>
+              <figure class="case-workflow">
+                <div class="pipeline-preview"><span class="pipeline-caption">CONCEPTUAL WORKFLOW · SEC EVIDENCE PIPELINE</span><div class="pipeline-stages" role="list"><div class="pipeline-stage" role="listitem"><span class="stage-number">01</span><strong>Fetch</strong><span>SEC endpoints</span></div><div class="pipeline-stage" role="listitem"><span class="stage-number">02</span><strong>Normalize</strong><span>Facts + periods</span></div><div class="pipeline-stage" role="listitem"><span class="stage-number">03</span><strong>Persist</strong><span>Stable keys</span></div><div class="pipeline-stage" role="listitem"><span class="stage-number">04</span><strong>Inspect</strong><span>Source + status</span></div></div></div>
+                <figcaption>System structure from the reviewed implementation. This diagram does not display live ingestion status.</figcaption>
+              </figure>
+              <ol>
+                <li><strong>Resolve company identity.</strong> Normalize ticker and CIK before requesting submissions and company facts. Reuse a stored SEC identity when available.</li>
+                <li><strong>Bound the transport.</strong> Serialize SEC requests within a process, apply a minimum request interval, and use a request timeout. Retry eligible failures up to three attempts, honoring <code>Retry-After</code> within a bounded delay.</li>
+                <li><strong>Normalize without losing provenance.</strong> Retain filing accession, form, concept, taxonomy, unit, and reporting dates. Stable fact and metric keys distinguish records by their source and period.</li>
+                <li><strong>Persist and report the actual outcome.</strong> Use <code>createMany</code> with <code>skipDuplicates</code>, record actual inserted counts, and finish each job as success, partial, or failed.</li>
+              </ol>
+              <p>The submissions and facts requests use <code>Promise.allSettled</code>. A usable response can be persisted even when its companion request fails; the error remains in job metadata. When recent submissions are limited, history backfill is capped at two files per ingestion.</p>
+            </section>
+            <section id="results">
+              <h2>The evidence</h2>
+              <div class="evidence-callout"><strong>Idempotent writes</strong><p>The reviewed repository couples stable record identities with duplicate-skipping inserts and explicit ingestion status. These are implementation findings, rather than production performance measurements.</p></div>
+              <div class="table-scroll" tabindex="0" role="region" aria-label="StockPulse implementation evidence">
+                <table class="result-table"><caption>Source review · pinned revision 06b892f8</caption><thead><tr><th scope="col">Behavior</th><th scope="col">Inspectable evidence</th></tr></thead><tbody><tr><th scope="row">Repeat ingestion</th><td>Stable keys and skipDuplicates writes</td></tr><tr><th scope="row">Trace a value</th><td>Accession, concept, unit, and period retained</td></tr><tr><th scope="row">Partial failure</th><td>Available responses persist; job records errors</td></tr><tr><th scope="row">Database test contract</th><td>First insert: 1; repeated insert: 0</td></tr></tbody></table>
+              </div>
+              <p>The database integration test asserts one inserted filing on the first write, zero on a repeated write, and one stored row. It requires <code>DATABASE_URL</code> and was <strong>not rerun here</strong>. It supports the intended duplicate-write contract; it does not establish full live ingestion acceptance.</p>
+              <p>The request client, normalization code, ingestion repository, and integration test are linked below so each design claim can be inspected directly.</p>
+            </section>
+            <section id="tradeoffs">
+              <h2>Decisions &amp; limits</h2>
+              <p><strong>Partial completion is useful only when it stays visible.</strong> Keeping available source data avoids discarding an entire run, but consumers must inspect job status and freshness before treating it as complete.</p>
+              <p>The request queue is process-local. Multiple workers would need shared rate coordination. Bounded backfill keeps a run small; it also means one ingestion does not promise a complete historical archive.</p>
+              <p>The metric normalizer chooses from defined concepts and preferred units. That makes mappings inspectable, while requiring care with coverage, restatements, fiscal periods, and cross-company comparisons.</p>
+              <p>This is a <strong>source-reviewed implementation</strong>. Production database configuration, provider credentials, deployment probes, and live browser smoke checks remain in the repository’s release checklist. No production reliability or investment-return claim is made by this case study.</p>
+            </section>
+            <section id="sources">
+              <h2>Inspect the work</h2>
+              <p>These links point to the revision reviewed on 9 October 2026. Project tests and live ingestion were not rerun as part of this portfolio redesign.</p>
+              <div class="evidence-links">
+                <a href="https://github.com/AaryaMody1301/StockPulse/blob/06b892f8ec5a22fa7da71de1b17c7728ab70bc9f/src/lib/sec/client.ts" target="_blank" rel="noopener noreferrer">SEC request client ↗</a>
+                <a href="https://github.com/AaryaMody1301/StockPulse/blob/06b892f8ec5a22fa7da71de1b17c7728ab70bc9f/src/lib/sec/normalization.ts" target="_blank" rel="noopener noreferrer">Normalization and stable keys ↗</a>
+                <a href="https://github.com/AaryaMody1301/StockPulse/blob/06b892f8ec5a22fa7da71de1b17c7728ab70bc9f/src/lib/sec/repository.ts" target="_blank" rel="noopener noreferrer">Ingestion and persistence ↗</a>
+                <a href="https://github.com/AaryaMody1301/StockPulse/blob/06b892f8ec5a22fa7da71de1b17c7728ab70bc9f/tests/db-integration.test.ts" target="_blank" rel="noopener noreferrer">Database integration test ↗</a>
+                <a href="https://github.com/AaryaMody1301/StockPulse/blob/06b892f8ec5a22fa7da71de1b17c7728ab70bc9f/docs/RELEASE_STATUS.md" target="_blank" rel="noopener noreferrer">Release status and remaining gates ↗</a>
+              </div>
+            </section>
+          </article>
+        </div>
+        <nav class="case-next" aria-label="More case studies"><a href="../index.html#projects">Back to all work</a><a href="sales-forecasting.html">Next: Vehicle-price forecasting</a></nav>
+      </div>
+    </main>
+    <footer class="site-footer"><p>© 2026 Aarya Mody</p><a href="mailto:aaryamody5@gmail.com">Get in touch</a><a href="../index.html#credits">Credits</a></footer>
+  </body>
+</html>

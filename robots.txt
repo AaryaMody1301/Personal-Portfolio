@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://aaryamody.app/sitemap.xml
+Sitemap: https://aarya-mody-portfolio.lovelyseed.chatgpt.site/sitemap.xml

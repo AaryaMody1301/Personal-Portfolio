@@ -2,10 +2,10 @@
   "name": "aarya-mody-portfolio",
   "private": true,
   "version": "1.0.0",
-  "description": "Aarya Mody's static portfolio for data engineering and applied AI, with browser, accessibility, and deployment checks.",
+  "description": "Aarya Mody's static data analytics and engineering portfolio, with an optional interactive world.",
   "license": "MIT",
   "author": "Aarya Mody",
-  "homepage": "https://aaryamody.app/",
+  "homepage": "https://aarya-mody-portfolio.lovelyseed.chatgpt.site/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AaryaMody1301/Personal-Portfolio.git"
@@ -17,15 +17,17 @@
     "node": ">=24 <25"
   },
   "scripts": {
+    "dev": "node scripts/static-server.cjs",
     "check": "node scripts/check-repository.mjs",
     "assets:prepare": "node scripts/prepare-assets.mjs",
+    "assets:environment": "node scripts/prepare-environment.mjs",
     "assets:check": "node scripts/prepare-assets.mjs --check",
-    "preserve": "node scripts/prepare-assets.mjs",
+    "preserve": "npm run build",
     "serve": "node scripts/static-server.cjs",
     "pretest": "node scripts/prepare-assets.mjs --check",
     "test": "playwright test",
     "pretest:ci": "node scripts/prepare-assets.mjs --check",
-    "test:ci": "playwright test --grep-invert \"visual baseline\"",
+    "test:ci": "playwright test --grep-invert \"visual baseline|capture reading portfolio\"",
     "test:release": "node --test scripts/tests/*.test.mjs",
     "pretest:update": "node scripts/prepare-assets.mjs --check",
     "test:update": "playwright test --update-snapshots",
@@ -33,13 +35,25 @@
     "audit": "node scripts/audit.mjs",
     "audit:preview": "node scripts/prepare-assets.mjs --check && node scripts/audit-preview.mjs",
     "package:hostinger": "pwsh -NoProfile -File scripts/package-hostinger.ps1",
-    "preview:capture": "node scripts/capture-preview.mjs",
-    "compatibility:capture": "node scripts/capture-compatibility.mjs",
-    "verify:live": "node scripts/verify-live.mjs"
+    "preview:capture": "node scripts/capture-world.mjs",
+    "compatibility:capture": "node scripts/capture-world-compatibility.mjs",
+    "verify:live": "node scripts/verify-live.mjs",
+    "build": "node scripts/build.mjs && node scripts/prepare-assets.mjs",
+    "profile:world": "node scripts/profile-world.mjs",
+    "profile:startup": "node scripts/profile-startup.mjs",
+    "links:check": "node scripts/check-links.mjs",
+    "navigation:check": "node scripts/check-navigation.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.12.1",
     "@playwright/test": "1.61.1",
-    "lighthouse": "13.5.0"
+    "esbuild": "0.28.2",
+    "lighthouse": "13.5.0",
+    "sharp": "0.35.4"
+  },
+  "dependencies": {
+    "gsap": "3.15.0",
+    "lucide": "1.48.0",
+    "three": "0.186.1"
   }
 }

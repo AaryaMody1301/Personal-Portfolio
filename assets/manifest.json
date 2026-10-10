@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "assets": [
+    {
+      "source": "assets/fonts/syne.ttf",
+      "path": "assets/fonts/syne.ce5ac77142a6.ttf",
+      "hash": "ce5ac77142a65cab2248a1a2ebb740b1d4d9c20b52488877d3ff664d1356104a",
+      "bytes": 146980
+    },
+    {
+      "source": "assets/models/birch.glb",
+      "path": "assets/models/birch.776ee6e2ff05.glb",
+      "hash": "776ee6e2ff051478fb1afcb513223cdfde80e709a2dc5ba3b2a4606b81cc770a",
+      "bytes": 193720
+    },
+    {
+      "source": "assets/models/bush.glb",
+      "path": "assets/models/bush.0227d8b878cf.glb",
+      "hash": "0227d8b878cf89b493e9e10485ba914ebc52a958bc6dfca97f92518a619a09c1",
+      "bytes": 17528
+    },
+    {
+      "source": "assets/environment/venice-sunset-pmrem.hdr",
+      "path": "assets/environment/venice-sunset-pmrem.67c43c4b17c8.hdr",
+      "hash": "67c43c4b17c8d61f5c702adc376eaf5ff2d2f5fdf454364f748362d63a4b79cf",
+      "bytes": 1614034
+    },
+    {
+      "source": "assets/images/portrait.webp",
+      "path": "assets/images/portrait.8e396c14b2fd.webp",
+      "hash": "8e396c14b2fd305ef32eadc0220f070e483d5e20c613c0151e077a4e44f6c3bc",
+      "bytes": 107636
+    },
+    {
+      "source": "assets/images/portrait-small.webp",
+      "path": "assets/images/portrait-small.3700c1ab2820.webp",
+      "hash": "3700c1ab2820bd22b750445be42128a3f5a5d12c116a2b4adf1300180f8f4418",
+      "bytes": 44760
+    },
+    {
+      "source": "assets/images/og-image.jpg",
+      "path": "assets/images/og-image.21088983f5bb.jpg",
+      "hash": "21088983f5bb708bcb6a5c0118f2d8461258d535a4a880359026da5039480e1c",
+      "bytes": 51245
+    },
+    {
+      "source": "assets/images/favicon.svg",
+      "path": "assets/images/favicon.f14e9d9541be.svg",
+      "hash": "f14e9d9541beb9d125ceaf5423c6eddfc048abd8457231f605fdd388f81dc25f",
+      "bytes": 286
+    },
+    {
+      "source": "assets/images/world-poster.webp",
+      "path": "assets/images/world-poster.8eed167b4186.webp",
+      "hash": "8eed167b41862d2ddbb5aa5147d40025f99616a49a6657f55b8236ab84a9725b",
+      "bytes": 41484
+    },
+    {
+      "source": "assets/images/world-poster-mobile.webp",
+      "path": "assets/images/world-poster-mobile.77cabc2413a3.webp",
+      "hash": "77cabc2413a341531e43e4cc330ec8e5865e2e139cfc8d8b016caadfa5a0f321",
+      "bytes": 12108
+    },
+    {
+      "source": "assets/licenses/THIRD-PARTY-NOTICES.txt",
+      "path": "assets/licenses/THIRD-PARTY-NOTICES.a88f6505f8af.txt",
+      "hash": "a88f6505f8afc083da334557b19a6111b4caa1d86afb3bce17db011f9d437580",
+      "bytes": 14584
+    },
+    {
+      "source": "assets/css/style.css",
+      "path": "assets/css/style.b9a7692c1901.css",
+      "hash": "b9a7692c1901cbf04143583af119ea57fdae37603abfaa4f8aac13d126631b1e",
+      "bytes": 59978
+    },
+    {
+      "source": "assets/js/app.js",
+      "path": "assets/js/app.0bc72198808a.js",
+      "hash": "0bc72198808a374c60c490c62f906bf909f24b090f273892cd52249b93538af6",
+      "bytes": 14517
+    },
+    {
+      "source": "assets/js/world.js",
+      "path": "assets/js/world.91e1e2be5880.js",
+      "hash": "91e1e2be58809c538e66b49ae6f6837887a389e4ae295dde10d5febfbb6008ef",
+      "bytes": 740828
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>SQL analysis &amp; query tuning · Case study | Aarya Mody</title>
+  <meta name="description" content="Analytics engineering on historical job-posting data, with reusable models, correctness contracts, and a controlled PostgreSQL performance benchmark." />
+  <meta name="theme-color" content="#08111f" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://aarya-mody-portfolio.lovelyseed.chatgpt.site/projects/sql-analytics.html" />
+  <meta property="og:title" content="SQL analysis &amp; query tuning · Case study | Aarya Mody" />
+  <meta property="og:description" content="Analytics engineering on historical job-posting data, with reusable models, correctness contracts, and a controlled PostgreSQL performance benchmark." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://aarya-mody-portfolio.lovelyseed.chatgpt.site/projects/sql-analytics.html" />
+  <meta property="og:image" content="https://aarya-mody-portfolio.lovelyseed.chatgpt.site/assets/images/og-image.21088983f5bb.jpg" />
+  <meta property="og:image:alt" content="Aarya Mody · Data Analyst · SQL, Python and Databricks" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SQL analysis &amp; query tuning · Case study | Aarya Mody" />
+  <meta name="twitter:description" content="Analytics engineering on historical job-posting data, with reusable models, correctness contracts, and a controlled PostgreSQL performance benchmark." />
+  <meta name="twitter:image" content="https://aarya-mody-portfolio.lovelyseed.chatgpt.site/assets/images/og-image.21088983f5bb.jpg" />
+  <meta name="twitter:image:alt" content="Aarya Mody · Data Analyst · SQL, Python and Databricks" />
+  <link rel="icon" href="../assets/images/favicon.f14e9d9541be.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../assets/css/style.b9a7692c1901.css" />
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Tune the query. Measure the tradeoff.",
+  "description": "Analytics engineering on historical job-posting data, with reusable models, correctness contracts, and a controlled PostgreSQL performance benchmark.",
+  "datePublished": "2026-10-06",
+  "dateModified": "2026-10-09",
+  "author": {
+    "@type": "Person",
+    "name": "Aarya Mody",
+    "url": "https://aarya-mody-portfolio.lovelyseed.chatgpt.site"
+  },
+  "mainEntityOfPage": "https://aarya-mody-portfolio.lovelyseed.chatgpt.site/projects/sql-analytics.html"
+}</script>
+</head>
+<body class="case-study-page">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header"><nav class="nav-shell" aria-label="Main navigation"><a class="brand" href="../index.html" aria-label="Aarya Mody, Home"><span class="brand-mark" aria-hidden="true">am</span><span class="brand-word">AARYA MODY</span></a><div class="case-nav"><a href="../index.html#projects">All work</a><a class="case-contact" href="../index.html#contact">Contact</a><a class="nav-resume" href="../assets/docs/AaryaMody_Resume.pdf" download>Resume </a></div></nav></header>
+  <main id="main-content" tabindex="-1">
+    <div class="case-shell">
+      <header class="case-hero"><p class="eyebrow">Case study 02 / SQL analysis &amp; query tuning</p><h1>Tune the query. Measure the tradeoff.</h1><p class="case-lede">Analytics engineering on historical job-posting data, with reusable models, correctness contracts, and a controlled PostgreSQL performance benchmark.</p><nav class="case-actions" aria-label="Case study shortcuts"><a href="#results">See the evidence </a><a href="https://github.com/AaryaMody1301/SQL_Practice_Project" target="_blank" rel="noopener noreferrer">View repository </a></nav><aside class="case-brief" aria-label="Case study at a glance"><div><p class="brief-label">Outcome</p><p>19.198 → 0.105 ms for one targeted query.</p></div><div><p class="brief-label">Decision</p><p>Verify correctness and reject the index that did not help.</p></div><div><p class="brief-label">Limit</p><p>One controlled synthetic PostgreSQL workload.</p></div></aside><dl class="case-meta"><div><dt>Focus</dt><dd>Analytics engineering</dd></div><div><dt>Stack</dt><dd>PostgreSQL · SQL · Python · GitHub Actions</dd></div><div><dt>My role</dt><dd>Personal project · implementation &amp; evaluation</dd></div></dl></header>
+      <div class="case-layout">
+        <nav class="case-toc" aria-label="On this page"><a href="#problem">The problem</a><a href="#approach">The approach</a><a href="#results">The evidence</a><a href="#tradeoffs">Decisions &amp; limits</a><a href="#sources">Inspect the work</a></nav>
+        <article class="case-body" aria-label="SQL Practice Project case study"><section id="problem"><h2>The problem</h2><p>Job-market analysis needs dependable definitions and repeatable queries before it needs more charts. This project began with a 2023 job-postings dataset from Luke Barousse’s SQL course. I extended that foundation with correctness fixes, portable loading, reusable analytical models, and measured performance work.</p><p>The resulting analyses explore salary, demand, hiring trends, and skill relationships. The historical data describes that dataset; it is not a claim about today’s job market.</p></section>
+<section id="approach"><h2>The approach</h2><ol><li><strong>Make the data path repeatable.</strong> Use portable psql loading and explicit relationships between postings, companies, skills, and job-skill records.</li><li><strong>Keep analytical definitions reusable.</strong> Build models and correctness contracts instead of copying slightly different filters into each question.</li><li><strong>Measure before accepting indexes.</strong> Compare plans with <code>EXPLAIN (ANALYZE, BUFFERS, TIMING OFF, FORMAT JSON)</code>.</li><li><strong>Record the decision.</strong> Keep raw evidence and benchmark instructions in the repository, with CI supporting repeatable verification.</li></ol></section>
+<section id="results"><h2>The evidence</h2><div class="evidence-callout"><strong>19.198 → 0.105 ms</strong><p>Median execution time for the top-paying remote-jobs query, before and after a targeted partial covering index. Shared-buffer activity fell from 4,203 to 38 blocks.</p></div><p>The controlled workload contains 200,000 synthetic job postings, including 40,000 Data Analyst postings and 10,000 remote Data Analyst postings, plus 600,000 job-skill relationships. The acceptance run used PostgreSQL 18.6 on Ubuntu 24.04 and the median of three warm-cache runs per query and state.</p><div class="table-scroll" tabindex="0" role="region" aria-label="Benchmark results"><table class="result-table"><caption>Controlled query benchmark · median execution time in milliseconds</caption><thead><tr><th scope="col">Query</th><th scope="col">Before</th><th scope="col">Indexed</th><th scope="col">Change</th></tr></thead><tbody><tr><th scope="row">Top-paying remote jobs</th><td>19.198</td><td>0.105</td><td>99.5% lower</td></tr><tr><th scope="row">Company concentration</th><td>28.241</td><td>20.656</td><td>26.9% lower</td></tr><tr><th scope="row">Monthly hiring trend</th><td>44.259</td><td>34.606</td><td>21.8% lower</td></tr><tr><th scope="row">Remote salary distribution</th><td>23.816</td><td>17.726</td><td>25.6% lower</td></tr><tr><th scope="row">Top-demanded remote skills</th><td>49.395</td><td>45.865</td><td>7.1% lower</td></tr><tr><th scope="row">Skill-pair co-occurrence</th><td>92.232</td><td>91.361</td><td>0.9% lower</td></tr></tbody></table></div></section>
+<section id="tradeoffs"><h2>Decisions &amp; limits</h2><h3>Accept the targeted indexes</h3><p>The salary index focuses on salaried remote Data Analyst rows and occupied 736 kB in the benchmark. A second partial covering index occupied 1,944 kB and improved four analytical queries by approximately 7%–27%. Those plans used slightly more shared blocks, so the decision rests on measured execution time and useful coverage.</p><h3>Reject a speculative skill-pair index</h3><p>The skill-pair query used neither candidate index and changed by only 0.9%, a difference where runner noise can matter. I retained the existing relationship key rather than adding an index without useful evidence.</p><p><strong>The 99.5% reduction applies to one query in one controlled synthetic workload.</strong> It is not an overall project speedup or a production latency guarantee. Planner choices depend on data distribution, cache, statistics, hardware, and configuration.</p><p>The original course and dataset remain credited in the repository. My contribution is the subsequent correctness, modeling, verification, and performance work.</p></section>
+          <section id="sources"><h2>Inspect the work</h2><p>These links point to the source revision reviewed for this case study on 6 October 2026. The reported benchmark results come from repository evidence; they were not rerun as part of this portfolio redesign.</p><div class="evidence-links"><a href="https://github.com/AaryaMody1301/SQL_Practice_Project/blob/b30114381d3e2a85e2de22bfa925de2e29d4c9c6/performance/BENCHMARK_RESULTS.md" target="_blank" rel="noopener noreferrer">Measured query plans and decisions </a><a href="https://github.com/AaryaMody1301/SQL_Practice_Project/blob/b30114381d3e2a85e2de22bfa925de2e29d4c9c6/performance/README.md" target="_blank" rel="noopener noreferrer">Benchmark setup and reproduction </a><a href="https://github.com/AaryaMody1301/SQL_Practice_Project/blob/b30114381d3e2a85e2de22bfa925de2e29d4c9c6/README.md" target="_blank" rel="noopener noreferrer">Project provenance and analytical scope </a><a href="https://github.com/AaryaMody1301/SQL_Practice_Project" target="_blank" rel="noopener noreferrer">Open the current repository </a></div></section>
+        </article>
+      </div>
+      <nav class="case-next" aria-label="More case studies"><a href="../index.html#projects"> Back to all work</a><a href="stockpulse.html">Next: StockPulse </a></nav>
+    </div>
+  </main>
+  <footer class="site-footer"><p>© 2026 Aarya Mody</p><a href="mailto:aaryamody5@gmail.com">Get in touch </a><a href="../index.html#credits">Credits</a></footer>
+</body>
+</html>
