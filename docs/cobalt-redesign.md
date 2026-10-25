@@ -1,6 +1,6 @@
 # Cobalt portfolio redesign
 
-Historical record of the earlier light design. See [the dark technical redesign](dark-technical-redesign.md) for the current layout and validation. The validation claims below apply to their original revision.
+Historical record of the earlier light design. See [the interactive redesign verification](redesign-verification.md) for the current release. The validation claims below apply to their original revision.
 
 The default portfolio uses a light reading layout: white/slate surfaces, `#111827` body text, `#475569` secondary text, and `#1d4ed8` actions. The optional World keeps its dark palette and interactions. PR #12 targets `master`; its `portfolio/cobalt-case-studies` branch includes the predecessor World changes from the closed PR #11.
 
@@ -8,9 +8,9 @@ The homepage leads with Aarya's role and current employment, three featured proj
 
 Three static case studies explain the problem, approach, measured evidence, decisions, and limits:
 
-- [DriftDoctor](../projects/driftdoctor.html): guarded repair, twelve frozen synthetic fixtures, and a separately reported ambiguity demonstration.
-- [SQL analysis & query tuning](../projects/sql-analytics.html): targeted query tuning, median timings, workload definition, index cost, and a rejected index.
-- [Vehicle-price forecasting](../projects/sales-forecasting.html): chronological evaluation, naive baseline, exact mean-fold RMSE results, and the unsuccessful ensemble comparison.
+- [DriftDoctor](https://github.com/AaryaMody1301/Personal-Portfolio/blob/47a4eb1e38187c4c732cb54e66b944cf890337e2/projects/driftdoctor.html): guarded repair, twelve frozen synthetic fixtures, and a separately reported ambiguity demonstration.
+- [SQL analysis & query tuning](https://github.com/AaryaMody1301/Personal-Portfolio/blob/47a4eb1e38187c4c732cb54e66b944cf890337e2/projects/sql-analytics.html): targeted query tuning, median timings, workload definition, index cost, and a rejected index.
+- [Vehicle-price forecasting](https://github.com/AaryaMody1301/Personal-Portfolio/blob/47a4eb1e38187c4c732cb54e66b944cf890337e2/projects/sales-forecasting.html): chronological evaluation, naive baseline, exact mean-fold RMSE results, and the unsuccessful ensemble comparison.
 
 These pages need no client-side JavaScript. Their source links are pinned to the reviewed project commits. See [content provenance](content-sources.md) for the underlying evidence and professional facts.
 

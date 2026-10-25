@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">StockPulse — source-derived conceptual evidence architecture</title>
+  <desc id="desc">A conceptual diagram showing SEC submissions and companyfacts flowing into normalized PostgreSQL evidence with accession, concept, and reporting-period provenance, then deterministic change detection and a human research review. Grounded AI is optional. This is not a screenshot or a presentation of real market data.</desc>
+  <metadata>Source: https://github.com/AaryaMody1301/StockPulse/blob/main/README.md ; reviewed 2026-10-24. Original portfolio illustration.</metadata>
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="m1 1 4 3-4 3" stroke="#244B3B" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+  <rect width="960" height="640" rx="20" fill="#E8EEE6"/>
+  <path d="M48 80h864" stroke="#244B3B" stroke-opacity=".16"/>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#244B3B">
+    <text x="48" y="50" font-size="16" letter-spacing="2">STOCKPULSE / SOURCE-DERIVED CONCEPTUAL WORKFLOW</text>
+    <text x="48" y="143" font-family="Georgia, serif" font-size="46" letter-spacing="-1.5">Every change has a source.</text>
+    <text x="48" y="181" fill="#5C655E" font-size="21">From public filings to evidence you can trace and review.</text>
+    <g fill="#F7F5EF" stroke="#244B3B" stroke-opacity=".19">
+      <rect x="48" y="238" width="236" height="176" rx="12"/>
+      <rect x="336" y="238" width="288" height="176" rx="12"/>
+      <rect x="676" y="238" width="236" height="176" rx="12"/>
+      <rect x="336" y="458" width="576" height="76" rx="12" fill="#244B3B"/>
+      <rect x="48" y="458" width="236" height="76" rx="12" fill="none" stroke-dasharray="5 5"/>
+    </g>
+    <g fill="none" stroke="#244B3B" stroke-width="1.5" marker-end="url(#arrow)">
+      <path d="M284 326h44"/><path d="M624 326h44"/><path d="M794 414v36"/><path d="M284 496h44" stroke-dasharray="4 5"/>
+    </g>
+    <g font-size="15" letter-spacing="1.6" fill="#5C655E"><text x="72" y="271">01 / INGEST</text><text x="360" y="271">02 / NORMALIZE</text><text x="700" y="271">03 / COMPARE</text></g>
+    <g font-size="25" fill="#202A24"><text x="72" y="309">SEC EDGAR</text><text x="360" y="309">PostgreSQL evidence</text><text x="700" y="309">What changed?</text></g>
+    <g font-size="19" fill="#5C655E">
+      <text x="72" y="349">Submissions</text><text x="72" y="379">Companyfacts / XBRL</text>
+      <text x="360" y="349">Accession + source concept</text><text x="360" y="379">Compatible reporting periods</text>
+      <text x="700" y="349">Deterministic changes</text><text x="700" y="379">Stable evidence IDs</text>
+    </g>
+    <text x="72" y="488" fill="#202A24" font-size="21">Optional grounded AI</text><text x="72" y="515" fill="#5C655E" font-size="17">Evidence-cited output only</text>
+    <text x="360" y="490" fill="#F7F5EF" font-size="24">Research review</text><text x="360" y="519" fill="#E8EEE6" font-size="18">Thesis relationships · saved checkpoints · new evidence</text>
+    <path d="M48 564h864" stroke="#244B3B" stroke-opacity=".16"/>
+    <circle cx="56" cy="599" r="5" fill="#244B3B"/>
+    <text x="74" y="605" font-size="18" fill="#5C655E">Architecture illustration. Not a product capture or investment recommendation.</text>
+  </g>
+</svg>

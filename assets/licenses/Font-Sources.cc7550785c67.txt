@@ -1,0 +1,22 @@
+Self-hosted portfolio fonts
+Downloaded 2026-10-24 from the official Google Fonts service.
+
+Inter, normal variable, Latin subset, weight 100-900
+File: assets/fonts/inter-latin-variable.woff2
+Source: https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2
+Project: https://github.com/rsms/inter
+Complete license: assets/licenses/Inter-OFL.txt
+License source: https://raw.githubusercontent.com/google/fonts/main/ofl/inter/OFL.txt
+
+Newsreader, normal variable, Latin subset, weight 200-800, optical size 6-72
+File: assets/fonts/newsreader-latin-variable.woff2
+Source: https://fonts.gstatic.com/s/newsreader/v26/cY9AfjOCX1hbuyalUrK4397yjA.woff2
+Project: https://github.com/productiontype/Newsreader
+Complete license: assets/licenses/Newsreader-OFL.txt
+License source: https://raw.githubusercontent.com/google/fonts/main/ofl/newsreader/OFL.txt
+
+Official CSS request used to select the normal variable Latin font files:
+https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Newsreader:opsz,wght@6..72,200..800&display=swap
+
+The original downloaded font files are redistributed without modification.
+Neither font requires a third-party request when the portfolio is visited.

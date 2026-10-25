@@ -8,8 +8,7 @@ if (-not $portfolioEvidence.StartsWith((Join-Path $portfolioRoot 'reports') + [I
 node (Join-Path $PSScriptRoot 'prepare-assets.mjs') --check
 if ($LASTEXITCODE -ne 0) { throw 'Build current assets before packaging: npm run build' }
 $portfolioManifest = Get-Content -LiteralPath (Join-Path $portfolioRoot 'assets/manifest.json') -Raw | ConvertFrom-Json
-$portfolioPages = @(Get-Content -LiteralPath (Join-Path $portfolioRoot 'site-pages.json') -Raw | ConvertFrom-Json)
-$portfolioFiles = $portfolioPages + @('site-pages.json', '.htaccess', 'robots.txt', 'sitemap.xml', 'assets/manifest.json', 'assets/docs/AaryaMody_Resume.pdf', 'assets/js/app.js.LEGAL.txt', 'assets/js/world.js.LEGAL.txt') + @($portfolioManifest.assets.path)
+$portfolioFiles = @($portfolioManifest.pages.path) + @('.htaccess', 'robots.txt', 'sitemap.xml', 'assets/manifest.json', 'assets/docs/AaryaMody_Resume.pdf', 'assets/js/app.js.LEGAL.txt') + @($portfolioManifest.assets.path)
 if (@($portfolioFiles | Select-Object -Unique).Count -ne $portfolioFiles.Count) { throw 'Duplicate package paths' }
 foreach ($portfolioPath in $portfolioFiles) {
     $portfolioResolved = [IO.Path]::GetFullPath((Join-Path $portfolioRoot $portfolioPath))
@@ -18,7 +17,7 @@ foreach ($portfolioPath in $portfolioFiles) {
 }
 $portfolioOutput = Join-Path $portfolioRoot 'output'
 $portfolioZip = Join-Path $portfolioOutput 'portfolio-hostinger.zip'
-$portfolioTemporary = Join-Path $portfolioOutput 'portfolio-hostinger.zip.tmp'
+$portfolioTemporary = Join-Path $portfolioOutput ('portfolio-hostinger-' + [Guid]::NewGuid().ToString('N') + '.zip.tmp')
 New-Item -ItemType Directory -Path $portfolioOutput -Force | Out-Null
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 $portfolioStream = [IO.File]::Open($portfolioTemporary, [IO.FileMode]::Create)

@@ -24,10 +24,10 @@ process.env.PORTFOLIO_REPORTS_DIR = reportsRoot;
 
 module.exports = defineConfig({
   testDir: "./tests",
-  testMatch: ["world.spec.js", "case-studies.spec.js"],
+  testMatch: ["portfolio.spec.js", "interactive.spec.js"],
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  // WebKit shares GPU resources on Windows; isolate renderer/context-loss tests.
+  // Keep capture and release reports deterministic across the device matrix.
   workers: 1,
   timeout: 30_000,
   expect: {
@@ -48,9 +48,7 @@ module.exports = defineConfig({
   use: {
     baseURL,
     screenshot: "only-on-failure",
-    // Avoid continuous GPU readbacks during World tests. Failure screenshots
-    // and trace DOM snapshots, sources, console and network evidence remain.
-    trace: { mode: "retain-on-failure", screenshots: false, snapshots: true, sources: true },
+    trace: "retain-on-failure",
   },
   webServer: live
     ? undefined

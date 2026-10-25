@@ -1,0 +1,206 @@
+{
+  "sources": [
+    {
+      "url": "https://github.com/AaryaMody1301/Sales-Forcasting-Using-Time-Series-Analysis/blob/8e8f89947dee09edb3d5d0ef3345ab23320ee714/data/benchmarks/car_prices_weekly_median.csv",
+      "revision": "8e8f89947dee09edb3d5d0ef3345ab23320ee714",
+      "gitBlob": "eb5e95184c4d43b0b4500be4e6fd5e8040d96019",
+      "sha256": "2c4cb959b198f5ce43a8fd3bae10d9c5c566153b5b68cea26b324b4b4f428717"
+    },
+    {
+      "url": "https://github.com/AaryaMody1301/Sales-Forcasting-Using-Time-Series-Analysis/blob/8e8f89947dee09edb3d5d0ef3345ab23320ee714/docs/RELEASE_BENCHMARK.md",
+      "revision": "8e8f89947dee09edb3d5d0ef3345ab23320ee714",
+      "gitBlob": "78a046dc7e92cdd5cda69b7ffbf6e149858d7574",
+      "sha256": "15e068ae4ba14db851c841407e59b5235fa0d5ee4208c0ab58ad5590c406649b"
+    }
+  ],
+  "target": "Weekly median vehicle price (USD)",
+  "models": [
+    {
+      "name": "ARIMA(1,1,1)",
+      "mae": 1426.29,
+      "rmse": 1764.63
+    },
+    {
+      "name": "ETS",
+      "mae": 1400.45,
+      "rmse": 1783.29
+    },
+    {
+      "name": "Last-value naive",
+      "mae": 1550.0,
+      "rmse": 1891.95
+    }
+  ],
+  "observations": [
+    {
+      "date": "2014-12-21",
+      "sourceTimestamp": "2014-12-21 00:00:00-08:00",
+      "value": 9000.0
+    },
+    {
+      "date": "2014-12-28",
+      "sourceTimestamp": "2014-12-28 00:00:00-08:00",
+      "value": 9750.0
+    },
+    {
+      "date": "2015-01-04",
+      "sourceTimestamp": "2015-01-04 00:00:00-08:00",
+      "value": 10900.0
+    },
+    {
+      "date": "2015-01-11",
+      "sourceTimestamp": "2015-01-11 00:00:00-08:00",
+      "value": 11600.0
+    },
+    {
+      "date": "2015-01-18",
+      "sourceTimestamp": "2015-01-18 00:00:00-08:00",
+      "value": 11900.0
+    },
+    {
+      "date": "2015-01-25",
+      "sourceTimestamp": "2015-01-25 00:00:00-08:00",
+      "value": 12000.0
+    },
+    {
+      "date": "2015-02-01",
+      "sourceTimestamp": "2015-02-01 00:00:00-08:00",
+      "value": 12200.0
+    },
+    {
+      "date": "2015-02-08",
+      "sourceTimestamp": "2015-02-08 00:00:00-08:00",
+      "value": 12000.0
+    },
+    {
+      "date": "2015-02-15",
+      "sourceTimestamp": "2015-02-15 00:00:00-08:00",
+      "value": 12200.0
+    },
+    {
+      "date": "2015-02-22",
+      "sourceTimestamp": "2015-02-22 00:00:00-08:00",
+      "value": 12100.0
+    },
+    {
+      "date": "2015-03-01",
+      "sourceTimestamp": "2015-03-01 00:00:00-08:00",
+      "value": 12600.0
+    },
+    {
+      "date": "2015-03-08",
+      "sourceTimestamp": "2015-03-08 00:00:00-08:00",
+      "value": 12400.0
+    },
+    {
+      "date": "2015-03-15",
+      "sourceTimestamp": "2015-03-15 00:00:00-07:00",
+      "value": 12400.0
+    },
+    {
+      "date": "2015-03-22",
+      "sourceTimestamp": "2015-03-22 00:00:00-07:00",
+      "value": 12200.0
+    },
+    {
+      "date": "2015-03-29",
+      "sourceTimestamp": "2015-03-29 00:00:00-07:00",
+      "value": 10800.0
+    },
+    {
+      "date": "2015-04-05",
+      "sourceTimestamp": "2015-04-05 00:00:00-07:00",
+      "value": 11000.0
+    },
+    {
+      "date": "2015-04-12",
+      "sourceTimestamp": "2015-04-12 00:00:00-07:00",
+      "value": 9850.0
+    },
+    {
+      "date": "2015-04-19",
+      "sourceTimestamp": "2015-04-19 00:00:00-07:00",
+      "value": 8400.0
+    },
+    {
+      "date": "2015-04-26",
+      "sourceTimestamp": "2015-04-26 00:00:00-07:00",
+      "value": 8750.0
+    },
+    {
+      "date": "2015-05-03",
+      "sourceTimestamp": "2015-05-03 00:00:00-07:00",
+      "value": 5600.0
+    },
+    {
+      "date": "2015-05-10",
+      "sourceTimestamp": "2015-05-10 00:00:00-07:00",
+      "value": 6000.0
+    },
+    {
+      "date": "2015-05-17",
+      "sourceTimestamp": "2015-05-17 00:00:00-07:00",
+      "value": 5950.0
+    },
+    {
+      "date": "2015-05-24",
+      "sourceTimestamp": "2015-05-24 00:00:00-07:00",
+      "value": 12700.0
+    },
+    {
+      "date": "2015-05-31",
+      "sourceTimestamp": "2015-05-31 00:00:00-07:00",
+      "value": 12800.0
+    },
+    {
+      "date": "2015-06-07",
+      "sourceTimestamp": "2015-06-07 00:00:00-07:00",
+      "value": 13000.0
+    },
+    {
+      "date": "2015-06-14",
+      "sourceTimestamp": "2015-06-14 00:00:00-07:00",
+      "value": 13100.0
+    },
+    {
+      "date": "2015-06-21",
+      "sourceTimestamp": "2015-06-21 00:00:00-07:00",
+      "value": 13000.0
+    },
+    {
+      "date": "2015-06-28",
+      "sourceTimestamp": "2015-06-28 00:00:00-07:00",
+      "value": 13800.0
+    },
+    {
+      "date": "2015-07-05",
+      "sourceTimestamp": "2015-07-05 00:00:00-07:00",
+      "value": 14500.0
+    },
+    {
+      "date": "2015-07-12",
+      "sourceTimestamp": "2015-07-12 00:00:00-07:00",
+      "value": 14800.0
+    },
+    {
+      "date": "2015-07-19",
+      "sourceTimestamp": "2015-07-19 00:00:00-07:00",
+      "value": 18100.0
+    },
+    {
+      "date": "2015-07-26",
+      "sourceTimestamp": "2015-07-26 00:00:00-07:00",
+      "value": 9100.0
+    }
+  ],
+  "folds": [
+    {
+      "trainSize": 24,
+      "horizon": 4
+    },
+    {
+      "trainSize": 28,
+      "horizon": 4
+    }
+  ]
+}

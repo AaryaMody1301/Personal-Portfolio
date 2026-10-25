@@ -1,3 +1,5 @@
+> Historical documentation: the October 2026 editorial redesign replaces this World-based release. See README.md and docs/redesign-verification.md for the new site.
+
 # Aarya's World - issue ledger
 
 Updated October 3, 2026 for the reading-first UI release. [Current verification](aaryas-world-verification.md) is the sole authority for counts, checksums and acceptance. Prior World-only evidence remains historical. The user-published reading-first release now matches the current build; the seven completed live browser profiles pass their UI checks; cold navigation/Lighthouse acceptance remains open.

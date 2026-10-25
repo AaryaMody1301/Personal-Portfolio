@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Sales Forecasting — source-derived reviewed benchmark chart</title>
+  <desc id="desc">A chart derived from the repository's reviewed release benchmark for weekly median vehicle selling price. Mean fold RMSE: ARIMA one one one, 1764.63; ETS, 1783.29; last-value naive, 1891.95. Lower is better. There are only 32 observed weeks with two four-week holdout folds. This limited benchmark does not establish a universally best model. This is a source-derived chart, not a product screenshot.</desc>
+  <metadata>Source: https://github.com/AaryaMody1301/Sales-Forcasting-Using-Time-Series-Analysis/blob/main/README.md ; reviewed 2026-10-24. Arithmetic mean of two per-fold RMSE values; 24 initial training observations; 32 observed weekly values from 2014-12-21 to 2015-07-26. Original portfolio chart.</metadata>
+  <rect width="960" height="640" rx="20" fill="#E8EEE6"/>
+  <path d="M48 80h864" stroke="#244B3B" stroke-opacity=".16"/>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#244B3B">
+    <text x="48" y="50" font-size="16" letter-spacing="2">FORECASTING / SOURCE-DERIVED BENCHMARK CHART</text>
+    <text x="48" y="143" font-family="Georgia, serif" font-size="46" letter-spacing="-1.5">Let the baseline set the bar.</text>
+    <text x="48" y="181" fill="#5C655E" font-size="21">Weekly median vehicle selling price · lower error is better</text>
+    <rect x="48" y="210" width="864" height="44" rx="8" fill="#F7F5EF"/>
+    <text x="66" y="239" fill="#5C655E" font-size="18">32 observed weeks</text><text x="289" y="239" fill="#5C655E" font-size="18">2 × 4-week holdout folds</text><text x="588" y="239" fill="#5C655E" font-size="18">Mean fold RMSE · price units</text>
+    <g stroke="#244B3B" stroke-opacity=".12"><path d="M272 286v232M405.5 286v232M539 286v232M672.5 286v232M806 286v232"/></g>
+    <g font-size="21" fill="#202A24"><text x="48" y="324">ARIMA(1,1,1)</text><text x="48" y="404">ETS</text><text x="48" y="484">Last-value naive</text></g>
+    <rect x="272" y="295" width="471.15621" height="44" rx="5" fill="#244B3B"/>
+    <rect x="272" y="375" width="476.13843" height="44" rx="5" fill="#244B3B" fill-opacity=".72"/>
+    <rect x="272" y="455" width="505.15165" height="44" rx="5" fill="#5C655E" fill-opacity=".48"/>
+    <g font-size="21" fill="#202A24"><text x="757" y="324">1,764.63</text><text x="762" y="404">1,783.29</text><text x="791" y="484">1,891.95</text></g>
+    <g font-size="16" fill="#5C655E" text-anchor="middle"><text x="272" y="542">0</text><text x="405.5" y="542">500</text><text x="539" y="542">1,000</text><text x="672.5" y="542">1,500</text><text x="806" y="542">2,000</text></g>
+    <path d="M48 564h864" stroke="#244B3B" stroke-opacity=".16"/>
+    <circle cx="56" cy="599" r="5" fill="#244B3B"/>
+    <text x="74" y="605" font-size="18" fill="#5C655E">A limited reproducibility benchmark; not a universally best-model claim.</text>
+  </g>
+</svg>

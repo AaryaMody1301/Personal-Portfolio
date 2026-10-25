@@ -3,9 +3,9 @@ export function navigationRecord(
   requestedURL,
   settledURL,
   status,
-  { sameDocument = false } = {},
+  { sameDocument = false, expectedURL = requestedURL } = {},
 ) {
-  const requested = new URL(requestedURL),
+  const requested = new URL(expectedURL),
     settled = new URL(settledURL);
   const problems = [];
   if (
@@ -14,6 +14,7 @@ export function navigationRecord(
   )
     problems.push(`Initial HTTP status: ${status}`);
   if (
+    requested.origin !== settled.origin ||
     requested.pathname !== settled.pathname ||
     requested.search !== settled.search ||
     requested.hash !== settled.hash
@@ -21,6 +22,7 @@ export function navigationRecord(
     problems.push("Requested route was not preserved");
   return {
     requestedURL,
+    expectedURL,
     settledURL,
     initialHTTPStatus: status,
     navigationType: sameDocument ? "same-document" : "document",

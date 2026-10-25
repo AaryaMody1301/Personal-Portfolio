@@ -1,3 +1,5 @@
+> Historical documentation: the October 2026 editorial redesign replaces this World-based release. See README.md and docs/redesign-verification.md for the new site.
+
 # Aarya’s World
 
 The portfolio is a static HTML document enhanced with a locally bundled Three.js scene and GSAP transitions. `index.html` owns all project stories, job facts, qualifications and contact destinations. Panels move those existing elements into a native dialog and restore them on dismissal; they do not maintain a second content collection.

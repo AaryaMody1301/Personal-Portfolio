@@ -1,0 +1,140 @@
+{
+  "source": {
+    "url": "https://github.com/AaryaMody1301/StockPulse/blob/16f7dedd66af4d74d1f2fd3f68de255deaae1d5e/scripts/seed-demo.ts",
+    "revision": "16f7dedd66af4d74d1f2fd3f68de255deaae1d5e",
+    "gitBlob": "cf2b2a85d8f629ff1ee1e01bce1413c9efdcf9bd",
+    "sha256": "164769e9a6acc9fa569b3abcd7a84d473ef135e0c5ee7dacab1a81029b8b2451"
+  },
+  "symbol": "DEMO",
+  "company": "StockPulse Demo Corp.",
+  "synthetic": true,
+  "metrics": [
+    {
+      "key": "revenue",
+      "label": "Revenue",
+      "concept": "DemoRevenue"
+    },
+    {
+      "key": "net_income",
+      "label": "Net income",
+      "concept": "DemoNetIncome"
+    },
+    {
+      "key": "operating_cash_flow",
+      "label": "Operating cash flow",
+      "concept": "DemoOperatingCashFlow"
+    },
+    {
+      "key": "capex",
+      "label": "Capital expenditure",
+      "concept": "DemoCapitalExpenditure"
+    }
+  ],
+  "periods": [
+    {
+      "accessionNumber": "DEMO-2025-Q4",
+      "form": "10-Q",
+      "filedAt": "2026-01-28",
+      "reportDate": "2025-12-31",
+      "startDate": "2025-10-01",
+      "endDate": "2025-12-31",
+      "fiscalYear": 2025,
+      "fiscalPeriod": "Q4",
+      "values": {
+        "revenue": 24000000000,
+        "net_income": 3400000000,
+        "operating_cash_flow": 4100000000,
+        "capex": 1050000000
+      },
+      "label": "Q4 2025",
+      "evidence": {
+        "revenue": {
+          "metricKey": "a0cfb9a6688d0b92a501ff7458cc6511e9e77087b4db20a56741b5b8cbebd215",
+          "factKey": "9fb5a9ac550cca9ec3302fe363f062a5dfcc0d58cb24934ae1b870218f829bfa"
+        },
+        "net_income": {
+          "metricKey": "8b1c3cfe1492087b4bfe1fa6672206893dac22551e5231776a290bd43159a263",
+          "factKey": "4f3ddfdbf1e98e0adf18f2fdbbb5a78f0d24e4f4aae69dd092640a044d6a50b7"
+        },
+        "operating_cash_flow": {
+          "metricKey": "1b75349117039341a2c42f2a695969870d2bcfea51be39da1cce42a28dab7ef4",
+          "factKey": "662b94777e5dbb406386198e34b5177ea1d35c7352fe2c9dc6538502e55eb64a"
+        },
+        "capex": {
+          "metricKey": "3a6abfffcb12f30a878920a2491fd7f2915d4bfbf24728b2eb9e848d00af89c6",
+          "factKey": "c7ec43f92fbbf6269e2a23335fa9a8e25cb15bcefd342a4a668621008d5f31e8"
+        }
+      }
+    },
+    {
+      "accessionNumber": "DEMO-2026-Q1",
+      "form": "10-Q",
+      "filedAt": "2026-04-29",
+      "reportDate": "2026-03-31",
+      "startDate": "2026-01-01",
+      "endDate": "2026-03-31",
+      "fiscalYear": 2026,
+      "fiscalPeriod": "Q1",
+      "values": {
+        "revenue": 25600000000,
+        "net_income": 3150000000,
+        "operating_cash_flow": 4550000000,
+        "capex": 1240000000
+      },
+      "label": "Q1 2026",
+      "evidence": {
+        "revenue": {
+          "metricKey": "fd7ca514641b41df32203be8b1fd1bdd0ca1f09fbb76e29634bd9fda8ef6f577",
+          "factKey": "ced870dc2890dbabce7dd8a769856ac2cf9e16ad0e6cc204112833f2e38f578b"
+        },
+        "net_income": {
+          "metricKey": "7c138034a1114f224eec6b9a09e2b9d40911423c83e93e956c3eb7eed76a3cc3",
+          "factKey": "05dba67e7ac9677ea6b41a28bcae8efd995dcbb74faa7f0b6142c6309e869128"
+        },
+        "operating_cash_flow": {
+          "metricKey": "b4af38817a735d3e8faef0102bdc5b515e0657225fdf1ed1f734c81062827f8f",
+          "factKey": "05f217cb84e49a5ddf22baeeae7af637780fcbb3a796c81ea70bffc488edb9e7"
+        },
+        "capex": {
+          "metricKey": "fba1af09e64e7e4385b90ccaa35b9898b1c16aeb740c3d027951bc756fd6eff7",
+          "factKey": "efee9953a5d867687139223093cc62ebbc0a61cde1029e4e0717404618f9369e"
+        }
+      }
+    },
+    {
+      "accessionNumber": "DEMO-2026-Q2",
+      "form": "10-Q",
+      "filedAt": "2026-07-29",
+      "reportDate": "2026-06-30",
+      "startDate": "2026-04-01",
+      "endDate": "2026-06-30",
+      "fiscalYear": 2026,
+      "fiscalPeriod": "Q2",
+      "values": {
+        "revenue": 28900000000,
+        "net_income": 3780000000,
+        "operating_cash_flow": 5020000000,
+        "capex": 1480000000
+      },
+      "label": "Q2 2026",
+      "evidence": {
+        "revenue": {
+          "metricKey": "ad7f79759d4a1bd5f66d3b2f28caa81060acab0bb1b17cd59437c92c9d0ef123",
+          "factKey": "68317057dd0d5d43060f2fe7ffe2e399369bb21ff02b184bdb1b66f32421c9c2"
+        },
+        "net_income": {
+          "metricKey": "3c300caed045dcfa357c6116ceafb6869371f0399437a8f1d56775dc3fe2c31c",
+          "factKey": "e07cb138d4752d066a9ca23e3d0d4b58f4f45e7e8df07428569bbff0240875e5"
+        },
+        "operating_cash_flow": {
+          "metricKey": "9b485f094d2e6604ee7e9da0bc00f0268e63c642fd8333e86395a13e1fbdeac1",
+          "factKey": "1057c0affd7b79e694be19cf66da6463bfcde4fa02749380043ba9409ed12ac4"
+        },
+        "capex": {
+          "metricKey": "563c164f5e2b67dcd848a0b99243db32692771cac55ae7794e64b935caa1ca71",
+          "factKey": "31174d5a033fce1e8b633a9780ae97d77d8d4ea30f48076bda339a730725bd94"
+        }
+      }
+    }
+  ]
+}

@@ -1,129 +1,60 @@
-# Aarya Mody — Data Analyst · SQL, Python & Databricks
+# Aarya Mody — Data Analytics & Engineering
 
-A dark technical portfolio for data analytics and engineering, with a compact profile, three selected projects, four static case studies, and an optional floating world. See [the current redesign guide](docs/dark-technical-redesign.md) for the design and verification scope. The [World guide](docs/aaryas-world.md), [previous verification](docs/aaryas-world-verification.md), and [cobalt redesign](docs/cobalt-redesign.md) describe earlier revisions; their results do not certify the current build.
+An ivory-and-forest interactive portfolio for data engineering and analytics hiring managers. Five static pages combine an original AM identity, a transforming data-pipeline hero, four working project demonstrations, professional experience and a ten-project archive.
 
-[Website](https://aaryamody.app/) · [Resume](assets/docs/AaryaMody_Resume.pdf) · [Content sources](docs/content-sources.md) · [Deployment guide](docs/hostinger-deploy.md)
+[Website](https://aaryamody.app/) · [Resume](assets/docs/AaryaMody_Resume.pdf) · [Redesign plan](docs/portfolio-improvement-plan.md) · [Sources](docs/content-sources.md) · [Verification](docs/redesign-verification.md) · [Deployment](docs/hostinger-deploy.md)
 
-![Preview of Aarya Mody's portfolio](assets/images/og-image.jpg)
+## Develop
 
-## What is here
+Use Node.js 24 and npm. Run `npm ci`, then `npm run serve`, and open http://127.0.0.1:4173/. The serve command builds before starting the local server. Rebuild and refresh after source edits.
 
-- Selected work: [DriftDoctor](projects/driftdoctor.html), [SQL analysis & query tuning](projects/sql-analytics.html), and [StockPulse](projects/stockpulse.html), with inspectable evidence, decisions, and limits. [Vehicle-price forecasting](projects/sales-forecasting.html) retains its case-study URL in the searchable archive.
-- Eleven more public projects in a searchable collection, professional experience, skills, credentials, and contact links. World retains DriftDoctor, CompatForge, and OriginKeep islands and their illustrative demonstrations.
-- Responsive layouts, persistent navigation and responsive native dialog panels, keyboard focus handling, reduced-motion support, and usable content/navigation without JavaScript.
-- Locally hosted images and resume, content-versioned assets, metadata, structured profile data, and a sitemap.
-- Browser, accessibility, asset-integrity, and deployment checks, plus a Hostinger upload packager.
+The canonical profile/projects live in `src/content.mjs`; shared markup in `src/render.mjs`; styles in `src/styles.css`; controls and motion in `src/main.mjs`, `src/demos.mjs` and `src/motion.mjs`. `src/demo-state.mjs` contains calculations shared by initial HTML and browser updates. `src/routes.mjs` preserves legacy destinations.
 
-No production framework, backend, database, authentication, or external API is required. Three.js, GSAP and Lucide are bundled locally with esbuild. Sound and analytics are off.
+The build generates the homepage, four real case-study directory indexes, the sitemap, versioned assets and manifest version 2. It also generates logo exports, favicon formats, five social previews and third-party notices from canonical vectors and bundled font outlines. Include generated pages/assets with source changes; do not edit hashed files directly.
 
-## Run locally
+Four source-based demonstrations work on both the homepage and their case studies:
 
-Use **Node.js 24 LTS**, npm, and Git. `.nvmrc` selects the Node major version.
+- DriftDoctor: dependency choice, repair reasoning, recorded validation and human review.
+- StockPulse: three fictional seeded quarters, four metrics, deterministic changes and provenance.
+- Sales Forecasting: published RMSE/MAE comparisons, two chronological folds and observed weekly median vehicle prices.
+- Video Game Sales Dashboard: deterministic sample filters, regional totals, platform comparisons and filtered CSV export.
 
-```sh
-git clone --branch portfolio/cobalt-case-studies https://github.com/AaryaMody1301/Personal-Portfolio.git
-cd Personal-Portfolio
-npm ci
-npm run serve
-```
+The deployed portfolio uses browser-local state and frozen fixtures. There is no framework, production server, database, analytics, market request or live AI call. SQL Practice stays in the archive. Navigation, evidence tables, native disclosures, resume and contact remain usable without JavaScript. Motion defaults to the operating system and supports an explicit System/Full/Reduced preference.
 
-Open **http://127.0.0.1:4173/** for reading, or **http://127.0.0.1:4173/?view=world** for World. The server is a local development utility. `npm run serve` prepares the asset filenames before starting it.
+## Verify
 
-The clone command selects the redesign draft. PR #12 targets `master` and already includes the predecessor changes from closed PR #11. After PR #12 is merged, use the production branch for future checkouts. Publishing still requires the complete Hostinger upload described below.
+Install browsers once with `npx playwright install --with-deps chrome firefox webkit`. CI uses bundled Chromium through `PLAYWRIGHT_CHROMIUM_CHANNEL=chromium`.
 
-After changing a stylesheet, script, or image while the preview is running, run `npm run build` and refresh. Commit the editable source, generated copy, and all updated registered HTML pages together. Text files use LF line endings so the hashes stay identical across operating systems.
+| Command | Purpose |
+| --- | --- |
+| `npm run build` | Generate identity/social assets, five pages, bundles and final resource/page hashes |
+| `npm run check` | Syntax, LF text, dependency pins, repository hygiene and generated integrity |
+| `npm run build:check` | Compare every release file across two successive builds |
+| `npm run test:release` | Fixture calculations/checksums, favicon decoding, corruption/MIME/route/rollback regressions |
+| `npm run test:ci` | Seven browser/device configurations, interactions, accessibility and fallbacks |
+| `npm test` | Browser checks plus reviewed Windows Chrome visual baselines |
+| `npm run preview:capture` | All five pages at 320, 390, 768 and 1440 CSS pixels, plus demo states |
+| `npm run audit:preview` | Dedicated preview; three Lighthouse samples per page and form factor |
+| `npm run links:check` | Resources, fragments, contacts, documentation and external destinations |
+| `npm run navigation:check` | Fresh contexts, initial HTTP status and expected destinations |
+| `npm run verify:live` | Served pages/resource bytes, MIME types and expected routes |
+| `npm run package:hostinger` | Complete byte-verified static upload |
+| `npm run social:prepare` | Regenerate canonical brand assets and notices; rebuild afterward |
 
-## Check the site
+Reports use ignored `reports/local/` or `reports/live/` folders. Set `PORTFOLIO_REPORTS_DIR` to a unique directory under `reports/`. Targeted checks remain separate from final full-suite evidence. Review visual changes before updating Windows Chrome baselines; CI never approves new screenshots automatically.
 
-Install browsers once for local verification. Tests use installed Google Chrome by default:
+Target-aware tools accept `PORTFOLIO_BASE_URL` (default http://127.0.0.1:4173/) and `PORTFOLIO_REFERENCE_DIR` for an extracted rollback. Verification reads both version-1 historical manifests and version-2 multi-page manifests.
 
-```sh
-npx playwright install --with-deps chrome firefox webkit
-npm run check
-npm run test:release
-npm test
-```
+## Sources and identity
 
-| Command                         | Purpose                                                                                          |
-| ------------------------------- | ------------------------------------------------------------------------------------------------ |
-| `npm run build`                 | Bundle sources, copy the visual system and regenerate asset hashes                               |
-| `npm run profile:world`         | Profile active scene rendering separately from page-load Lighthouse                              |
-| `npm run navigation:check`      | Record cold HTTP status and requested/settled routes; hosting challenges fail the check           |
-| `npm run links:check`           | Check portfolio links, resources, metadata, CSS URLs and documentation links                     |
-| `npm run check`                 | Repository hygiene, syntax, pinned dependencies, and asset integrity                             |
-| `npm run assets:prepare`        | Regenerate content-versioned assets and their HTML references                                    |
-| `npm run assets:check`          | Verify the generated files without changing them                                                 |
-| `npm run assets:environment`    | Optionally rebake desktop sunset reflections locally after changing their source                 |
-| `npm test`                      | Seven browser/device configurations, accessibility, interactions, and supported visual baselines |
-| `npm run test:ci`               | Browser checks without environment-specific screenshot comparisons                               |
-| `npm run test:release`          | Ensure stale or incorrect deployment assets are rejected                                         |
-| `npm run audit`                 | Three samples per device and view: default reading and explicit World                           |
-| `npm run audit:preview`         | Start a dedicated preview, audit it, and stop it; port 4173 must be free                         |
-| `npm run preview:capture`       | Capture four layouts and panels without changing source images                                   |
-| `npm run compatibility:capture` | Capture phone/tablet panel states and desktop browser layouts                                    |
-| `npm run package:hostinger`     | Build and verify the upload ZIP; requires PowerShell 7 (`pwsh`)                                  |
-| `npm run verify:live`           | Compare target deployment bytes, MIME types and metadata with the reference release              |
+Newsreader and Inter are self-hosted WOFF2 files. The original uppercase AM geometry, outlined Aarya Mody wordmark, horizontal/reversed lockups, SVG/PNG/ICO favicons and Apple touch icon share a canonical identity source. Lucide is imported narrowly; GSAP/ScrollTrigger coordinates motion. Runtime assets require no CDN.
 
-The suite uses one worker to isolate shared GPU resources in renderer/context-loss checks. The test profiles cover Chrome desktop/Android emulation, WebKit desktop/iPhone/iPad emulation, and Firefox. The six reviewed image baselines use **Linux + the Chromium headless shell pinned by Playwright**. CI compares them in that same browser, with the original pixel tolerances; Windows and all seven browser/device profiles keep behavioral and accessibility coverage. They do not certify physical iOS or Android hardware. See the [current verification](docs/aaryas-world-verification.md) for current results and limits; [the earlier compatibility audit](docs/history/compatibility-verification.md) records the previous design.
+The demonstrations use pinned public project evidence and clearly labelled fixtures. They are portfolio implementations of selected flows. Source-derived diagrams and recorded execution outcomes are identified separately from actual browser captures. Frozen fixture checksums, source revisions, optional one-time exporters and data limitations are documented in [content sources](docs/content-sources.md). Normal builds require Node only.
 
-To use Playwright's bundled Chromium instead, install `chromium firefox webkit` and set `PLAYWRIGHT_CHROMIUM_CHANNEL=chromium` in your shell. CI uses these engines for behavioral checks and Linux Chromium headless shell for the six reviewed image comparisons. Browser installation on Linux may require permission to install system packages; see [Playwright's CI guide](https://playwright.dev/docs/ci-intro).
+The resume and both portrait files retain their supplied bytes. Professional responsibilities, personal projects, courses, self-assessed languages and release qualifications retain their distinctions. Original code is [MIT](LICENSE); redistributed font/icon/animation notices accompany the release.
 
-All browser, link, capture, Lighthouse and interaction-profile tools accept `PORTFOLIO_BASE_URL`, which defaults to `http://127.0.0.1:4173/`. Reports are separated under `reports/local/` and `reports/live/`. A remote target does not start the preview server. Deployment verification compares against the current checkout by default. For a rollback comparison, extract the saved rollback ZIP into a temporary reference directory and set `PORTFOLIO_REFERENCE_DIR` to that directory; remove the export after byte verification.
+## Delivery
 
-The committed social card is rasterized from `assets/images/og-source.svg`. After editing it, regenerate the JPG with `node --input-type=module -e "import sharp from 'sharp'; await sharp('assets/images/og-source.svg').jpeg({quality:88}).toFile('assets/images/og-image.jpg')"` and run `npm run build`. Use `npm run preview:capture -- --refresh-social` for a homepage screenshot instead, or `-- --refresh-assets` to intentionally regenerate the World posters as well. Normal captures never modify source images.
+Prepare the verified Hostinger package using the [runbook](docs/hostinger-deploy.md). Production publication is separate. Recheck the recorded hosting HTTP 403 before live acceptance; local performance and browser emulation do not certify the public deployment or physical devices.
 
-Desktop uses `assets/environment/venice-sunset-pmrem.hdr`, filtered ahead of time from the original CC0 `venice-sunset.hdr`. Normal builds use the checked-in result and require no browser for lighting preparation. After changing the source or Three.js version, run `npm run assets:environment`, rebuild, and review the visual/performance checks. The optional bake uses the installed Chrome or `PLAYWRIGHT_CHROMIUM_CHANNEL` and fulfills its requests locally without a server or downloads.
-
-## GitHub Actions
-
-[Portfolio CI](.github/workflows/portfolio-ci.yml) checks pull requests and pushes to `master` or `main` on **Windows and Linux**. It installs locked dependencies and browser engines, checks repository/asset integrity, runs the release and browser tests, and enforces Lighthouse targets of 90 Performance and 95 Accessibility, Best Practices, and SEO.
-
-The Windows job also builds `portfolio-hostinger.zip`. Reports and the ZIP are downloadable workflow artifacts. CI does **not** publish the site, change DNS, or require deployment credentials. The workflow follows the standard [GitHub Node.js setup](https://docs.github.com/en/actions/tutorials/build-and-test-code/nodejs). Dependabot checks development dependencies and Actions monthly.
-
-## Deploy to Hostinger
-
-```sh
-npm run assets:prepare
-npm run package:hostinger
-```
-
-Upload the contents of `output/portfolio-hostinger.zip` to Hostinger's `public_html`. The package contains every page in `site-pages.json`, the registry, `.htaccess`, `robots.txt`, `sitemap.xml`, and only required runtime assets. It excludes development tools, repository metadata, reports, and local backups. Every packaged file is checked against its source bytes.
-
-Upload the complete assets before replacing the HTML, clear the host's HTML cache, then set `PORTFOLIO_BASE_URL=https://aaryamody.app/` and run `npm run verify:live`. The public site can differ from a checkout until a package is uploaded. See the [Hostinger runbook](docs/hostinger-deploy.md) for the exact sequence.
-
-## Repository layout
-
-```text
-index.html                      Content, navigation, metadata, JSON-LD
-src/                            Editable world and navigation modules
-assets/css/world.css            Editable World visual system
-assets/css/reading.css          Editable dark portfolio and case studies
-projects/                      Static case-study pages
-site-pages.json                Runtime page registry
-assets/css/style.css            Generated stylesheet
-assets/js/                      Bundles, legal notices and generated copies
-assets/images/                  Portrait, scene posters, social image and copies
-assets/models/                  Optimized, self-contained CC0 GLB scenery
-assets/environment/             Locally hosted HDR environment
-assets/fonts/                   Locally hosted Syne font
-assets/licenses/                Complete third-party notices
-assets/manifest.json            Transitive runtime asset hashes
-assets/docs/AaryaMody_Resume.pdf Authoritative, unchanged resume
-scripts/                        Preview, asset, verification and packaging tools
-scripts/tests/                  Deployment-verification regression test
-tests/                          Playwright/axe tests and reviewed image baselines
-docs/                           Content sources, deployment and dated audits
-.github/                        CI, dependency updates, issue and PR templates
-```
-
-Evidence links under `reports/`, `output/` and `archive/` refer to local files or CI artifacts and are excluded from GitHub. The committed [audit summary](docs/release-evidence.json) can be read without those folders. Historical audit reports refer to the artifacts produced on their stated dates. The verified local recovery archive and its checksum/removal inventory are under `archive/`. They are ignored and are not fresh-clone prerequisites. Runtime builds need no ignored files.
-
-Audit tools create dated run folders under `reports/local/` or `reports/live/`. Set `PORTFOLIO_REPORTS_DIR` to a unique folder inside `reports/` to group a release's evidence. Reports identify the served HTML and manifest hashes; targeted browser runs belong in a different folder from the full suite. `npm run audit:preview` owns its preview server and rejects a different release. Use `npm run profile:startup` for three fresh Chrome-process startup samples and `npm run profile:world` for separate active rendering measurements.
-
-## Content and contributions
-
-The supplied resume is the authority for professional details. Repository documentation supports personal-project descriptions; preview and release-candidate qualifications must remain visible. Keep metadata and source notes consistent with any content update. See [CONTRIBUTING.md](CONTRIBUTING.md).
-
-## License
-
-Original portfolio code is [MIT](LICENSE). Imported design, font, scenery and library licenses are preserved in [third-party notices](assets/licenses/THIRD-PARTY-NOTICES.txt). If adapting this portfolio, replace Aarya's personal content, resume, and portrait with your own.
+GitHub Actions checks Windows/Linux, browser engines, deterministic generation, retained Lighthouse thresholds and Hostinger packaging. It does not publish. Brag is available for an optional separate launch video; it is not a website dependency.

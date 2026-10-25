@@ -1,6 +1,6 @@
 # Portfolio design review
 
-Historical review of the graphite and orange design. The [dark technical redesign](dark-technical-redesign.md) replaces this layout; its verification scope applies to the current implementation.
+Historical review of the graphite and orange design. See [the interactive redesign verification](redesign-verification.md) for the current release. The review and validation claims below apply to their original revision.
 
 Reviewed 9 October 2026. Audience: hiring managers assessing Aarya Mody for data analytics and analytics engineering work.
 

@@ -3,6 +3,7 @@
 
 *.pdf binary
 *.png binary
+*.ico binary
 *.jpg binary
 *.jpeg binary
 *.webp binary
@@ -27,3 +28,4 @@ assets/fonts/*.*.ttf linguist-generated=true
 assets/js/world.js -whitespace
 assets/js/world.*.js -whitespace
 assets/licenses/THIRD-PARTY-NOTICES*.txt -whitespace
+assets/licenses/*-OFL*.txt -whitespace

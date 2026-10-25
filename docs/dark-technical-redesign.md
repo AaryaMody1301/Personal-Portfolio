@@ -1,5 +1,7 @@
 # Dark technical portfolio
 
+Historical record of the earlier dark design. See [the interactive redesign verification](redesign-verification.md) for the current release. The implementation and validation claims below apply to their original revision.
+
 The default reading view now puts a compact identity column beside the work. It uses navy surfaces (`#08111f`, `#101e31`), cool white text (`#eff5ff`), muted blue-gray copy (`#b3c3d9`), cyan actions (`#63d9e8`), and blue source links (`#91b6ff`). System sans-serif text and monospace evidence labels keep the hierarchy restrained. The original portrait appears at a smaller size in About.
 
 The current employment title remains **Data Analyst I at Brentwood Industries, Inc.** “Building toward data engineering” is positioning, rather than a replacement title. Professional responsibilities, credentials, contacts, and the original resume bytes are retained.

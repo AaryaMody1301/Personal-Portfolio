@@ -1,3 +1,5 @@
+> Historical documentation: the October 2026 editorial redesign replaces this World-based release. See README.md and docs/redesign-verification.md for the new site.
+
 # Aarya’s World — current release verification
 
 Updated October 3, 2026. The user has published the reading-first release. Fresh live HTML, all 18 assets, metadata and resume match the frozen local build. Seven completed live browser profiles contain 233 passes and 33 documented skips, after a DNS-interrupted run and rerun. Some engine-default cold requests still receive HTTP 403, so live Lighthouse acceptance remains open. The local results below remain the pre-publication evidence; current live results appear in the final section.

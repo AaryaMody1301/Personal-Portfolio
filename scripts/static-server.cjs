@@ -1,19 +1,7 @@
 const fs = require("node:fs");
 const http = require("node:http");
 const path = require("node:path");
-const { parseArgs } = require("node:util");
 const { createGzip } = require("node:zlib");
-
-const { values } = parseArgs({
-  options: {
-    host: { type: "string", default: "127.0.0.1" },
-    port: { type: "string", default: "4173" },
-    strictPort: { type: "boolean", default: false },
-  },
-});
-const port = Number(values.port);
-if (!Number.isInteger(port) || port < 1 || port > 65535)
-  throw new Error("Port must be an integer between 1 and 65535.");
 
 const root = path.resolve(process.cwd());
 const parentPid = process.ppid;
@@ -22,10 +10,13 @@ const contentTypes = {
   ".glb": "model/gltf-binary",
   ".hdr": "application/octet-stream",
   ".ttf": "font/ttf",
+  ".woff2": "font/woff2",
   ".json": "application/json",
   ".html": "text/html; charset=utf-8",
   ".js": "text/javascript; charset=utf-8",
   ".jpg": "image/jpeg",
+  ".png": "image/png",
+  ".ico": "image/vnd.microsoft.icon",
   ".pdf": "application/pdf",
   ".svg": "image/svg+xml",
   ".txt": "text/plain; charset=utf-8",
@@ -43,9 +34,22 @@ const server = http.createServer((request, response) => {
     response.writeHead(400).end();
     return;
   }
+  const legacyPaths = {
+    "/projects/driftdoctor.html": "/projects/driftdoctor/",
+    "/projects/stockpulse.html": "/projects/stockpulse/",
+    "/projects/sales-forecasting.html": "/projects/sales-forecasting/",
+    "/projects/sql-analytics.html": "/#work-sql-practice-project",
+    "/projects/sql-practice/": "/#work-sql-practice-project",
+  };
+  if (Object.hasOwn(legacyPaths, pathname)) {
+    const destination = new URL(legacyPaths[pathname], "http://127.0.0.1");
+    destination.search = new URL(request.url, "http://127.0.0.1").search;
+    response.writeHead(301, { Location: destination.pathname + destination.search + destination.hash }).end();
+    return;
+  }
   const relativePath =
     pathname === "/" ? "index.html" : pathname.replace(/^\/+/, "");
-  const filePath = path.resolve(root, relativePath);
+  let filePath = path.resolve(root, relativePath);
 
   if (filePath !== root && !filePath.startsWith(`${root}${path.sep}`)) {
     response.writeHead(403).end();
@@ -53,6 +57,11 @@ const server = http.createServer((request, response) => {
   }
 
   fs.stat(filePath, (error, stats) => {
+    if (!error && stats.isDirectory()) {
+      if (!pathname.endsWith("/")) { response.writeHead(301, { Location: pathname + "/" + new URL(request.url, "http://127.0.0.1").search }).end(); return; }
+      filePath = path.join(filePath, "index.html");
+      try { stats = fs.statSync(filePath); } catch { response.writeHead(404).end(); return; }
+    }
     if (error || !stats.isFile()) {
       response.writeHead(404).end();
       return;
@@ -80,8 +89,8 @@ const server = http.createServer((request, response) => {
   });
 });
 
-server.listen(port, values.host, () => {
-  console.log(`Static server listening at http://${values.host}:${port}`);
+server.listen(4173, "127.0.0.1", () => {
+  console.log("Static server listening at http://127.0.0.1:4173");
 });
 
 function shutdown() {

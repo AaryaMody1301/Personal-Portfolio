@@ -2,10 +2,11 @@ Bundled license information:
 
 lucide/dist/esm/defaultAttributes.mjs:
 lucide/dist/esm/createElement.mjs:
+lucide/dist/esm/icons/arrow-down.mjs:
+lucide/dist/esm/icons/arrow-right.mjs:
+lucide/dist/esm/icons/arrow-up-right.mjs:
+lucide/dist/esm/icons/copy.mjs:
 lucide/dist/esm/icons/download.mjs:
-lucide/dist/esm/icons/map.mjs:
-lucide/dist/esm/icons/rotate-ccw.mjs:
-lucide/dist/esm/icons/x.mjs:
 lucide/dist/esm/lucide.mjs:
   /**
    * @license lucide v1.48.0 - ISC
@@ -13,3 +14,43 @@ lucide/dist/esm/lucide.mjs:
    * This source code is licensed under the ISC license.
    * See the LICENSE file in the root directory of this source tree.
    */
+
+gsap/gsap-core.js:
+  /*!
+   * GSAP 3.15.0
+   * https://gsap.com
+   *
+   * @license Copyright 2008-2026, GreenSock. All rights reserved.
+   * Subject to the terms at https://gsap.com/standard-license
+   * @author: Jack Doyle, jack@greensock.com
+  */
+
+gsap/CSSPlugin.js:
+  /*!
+   * CSSPlugin 3.15.0
+   * https://gsap.com
+   *
+   * Copyright 2008-2026, GreenSock. All rights reserved.
+   * Subject to the terms at https://gsap.com/standard-license
+   * @author: Jack Doyle, jack@greensock.com
+  */
+
+gsap/Observer.js:
+  /*!
+   * Observer 3.15.0
+   * https://gsap.com
+   *
+   * @license Copyright 2008-2026, GreenSock. All rights reserved.
+   * Subject to the terms at https://gsap.com/standard-license
+   * @author: Jack Doyle, jack@greensock.com
+  */
+
+gsap/ScrollTrigger.js:
+  /*!
+   * ScrollTrigger 3.15.0
+   * https://gsap.com
+   *
+   * @license Copyright 2008-2026, GreenSock. All rights reserved.
+   * Subject to the terms at https://gsap.com/standard-license
+   * @author: Jack Doyle, jack@greensock.com
+  */

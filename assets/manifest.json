@@ -1,29 +1,44 @@
 {
-  "version": 1,
+  "version": 2,
+  "pages": [
+    {
+      "path": "index.html",
+      "hash": "bebeb930f38d31075bd30ac3cee8b4f9aaedac2774c9bb7cef078810d69f7cb6",
+      "bytes": 68076
+    },
+    {
+      "path": "projects/driftdoctor/index.html",
+      "hash": "8cd40229ba8369f0a0f07d4a41e09a17ee0d6be0b3271ecb4a693e70ba70646c",
+      "bytes": 20691
+    },
+    {
+      "path": "projects/stockpulse/index.html",
+      "hash": "44079999b5bfadc5c8fa6eee2fc8e039058dea697f87f6b6dd21ab8ec55c0148",
+      "bytes": 23907
+    },
+    {
+      "path": "projects/sales-forecasting/index.html",
+      "hash": "1dfbc674d2f175b0c0777d85b72a6cdd168a58e8a4b1ae727852a86b8b87c088",
+      "bytes": 28429
+    },
+    {
+      "path": "projects/video-game-sales-dashboard/index.html",
+      "hash": "8fe42ca97d21eed5203eb469eaffd67ce3a0cc17cb25faca464d16e48ac71223",
+      "bytes": 36683
+    }
+  ],
   "assets": [
     {
-      "source": "assets/fonts/syne.ttf",
-      "path": "assets/fonts/syne.ce5ac77142a6.ttf",
-      "hash": "ce5ac77142a65cab2248a1a2ebb740b1d4d9c20b52488877d3ff664d1356104a",
-      "bytes": 146980
+      "source": "assets/fonts/inter-latin-variable.woff2",
+      "path": "assets/fonts/inter-latin-variable.3100e775e861.woff2",
+      "hash": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
+      "bytes": 48256
     },
     {
-      "source": "assets/models/birch.glb",
-      "path": "assets/models/birch.776ee6e2ff05.glb",
-      "hash": "776ee6e2ff051478fb1afcb513223cdfde80e709a2dc5ba3b2a4606b81cc770a",
-      "bytes": 193720
-    },
-    {
-      "source": "assets/models/bush.glb",
-      "path": "assets/models/bush.0227d8b878cf.glb",
-      "hash": "0227d8b878cf89b493e9e10485ba914ebc52a958bc6dfca97f92518a619a09c1",
-      "bytes": 17528
-    },
-    {
-      "source": "assets/environment/venice-sunset-pmrem.hdr",
-      "path": "assets/environment/venice-sunset-pmrem.67c43c4b17c8.hdr",
-      "hash": "67c43c4b17c8d61f5c702adc376eaf5ff2d2f5fdf454364f748362d63a4b79cf",
-      "bytes": 1614034
+      "source": "assets/fonts/newsreader-latin-variable.woff2",
+      "path": "assets/fonts/newsreader-latin-variable.6e4f2958c3a7.woff2",
+      "hash": "6e4f2958c3a7c4a80acde4e5a679abe7e01bc1e30b92be3c7a8b696ef401d101",
+      "bytes": 132000
     },
     {
       "source": "assets/images/portrait.webp",
@@ -38,52 +53,160 @@
       "bytes": 44760
     },
     {
-      "source": "assets/images/og-image.jpg",
-      "path": "assets/images/og-image.21088983f5bb.jpg",
-      "hash": "21088983f5bb708bcb6a5c0118f2d8461258d535a4a880359026da5039480e1c",
-      "bytes": 51245
-    },
-    {
       "source": "assets/images/favicon.svg",
-      "path": "assets/images/favicon.f14e9d9541be.svg",
-      "hash": "f14e9d9541beb9d125ceaf5423c6eddfc048abd8457231f605fdd388f81dc25f",
-      "bytes": 286
+      "path": "assets/images/favicon.e477f1413ecc.svg",
+      "hash": "e477f1413ecc757fce62cb007b21ee5328773e4ead5185d5c9706dfab1bd908a",
+      "bytes": 338
     },
     {
-      "source": "assets/images/world-poster.webp",
-      "path": "assets/images/world-poster.8eed167b4186.webp",
-      "hash": "8eed167b41862d2ddbb5aa5147d40025f99616a49a6657f55b8236ab84a9725b",
-      "bytes": 41484
+      "source": "assets/images/og-image.jpg",
+      "path": "assets/images/og-image.2669e0560d61.jpg",
+      "hash": "2669e0560d6192f2ceee3189b0dabd2240944f6c603a50238ed5c0eb65a0a5ec",
+      "bytes": 43835
     },
     {
-      "source": "assets/images/world-poster-mobile.webp",
-      "path": "assets/images/world-poster-mobile.77cabc2413a3.webp",
-      "hash": "77cabc2413a341531e43e4cc330ec8e5865e2e139cfc8d8b016caadfa5a0f321",
-      "bytes": 12108
+      "source": "assets/images/projects/driftdoctor.svg",
+      "path": "assets/images/projects/driftdoctor.8433b8130444.svg",
+      "hash": "8433b8130444de0b96e38b4012d259369593e3c4395aaed4173d5ec3c87bbb19",
+      "bytes": 3498
+    },
+    {
+      "source": "assets/images/og-driftdoctor.jpg",
+      "path": "assets/images/og-driftdoctor.cc141f2477c2.jpg",
+      "hash": "cc141f2477c244024bad0bd3da5d724857cc34ef8f394fadd5e80cad2db6b356",
+      "bytes": 28617
+    },
+    {
+      "source": "assets/images/projects/stockpulse.svg",
+      "path": "assets/images/projects/stockpulse.da09742851be.svg",
+      "hash": "da09742851be4006d25aaf3d4d778aa20101c0c56604e77e073f0c7059fe30d4",
+      "bytes": 3456
+    },
+    {
+      "source": "assets/images/og-stockpulse.jpg",
+      "path": "assets/images/og-stockpulse.1e4198a0c535.jpg",
+      "hash": "1e4198a0c535016eeaecba419ad5d106cc241974d2dc1dfefe75f8e1f304da87",
+      "bytes": 28413
+    },
+    {
+      "source": "assets/images/projects/sales-forecasting.svg",
+      "path": "assets/images/projects/sales-forecasting.37fa27ca4f39.svg",
+      "hash": "37fa27ca4f39194c7e324e08189dafe55fe4573921198ca32a68fba340613ef3",
+      "bytes": 3027
+    },
+    {
+      "source": "assets/images/og-sales-forecasting.jpg",
+      "path": "assets/images/og-sales-forecasting.7dc8aebc33a5.jpg",
+      "hash": "7dc8aebc33a5aa68b86b2e6caf57032dce3b81a52be1335940ac01fd75c506f9",
+      "bytes": 33688
+    },
+    {
+      "source": "assets/images/projects/video-game-sales-dashboard.svg",
+      "path": "assets/images/projects/video-game-sales-dashboard.b4f90fda0fee.svg",
+      "hash": "b4f90fda0feee5f9fd35644fd171847cf37056ad300e8653165fc748e39f251e",
+      "bytes": 3399
+    },
+    {
+      "source": "assets/images/og-video-game-sales-dashboard.jpg",
+      "path": "assets/images/og-video-game-sales-dashboard.17a243f89e1b.jpg",
+      "hash": "17a243f89e1b8b097a69b71ae8a8e23d416a24c6535e59c8c0f1c1254dbb6bb0",
+      "bytes": 47043
+    },
+    {
+      "source": "assets/brand/monogram.svg",
+      "path": "assets/brand/monogram.74c2dd209005.svg",
+      "hash": "74c2dd209005984de35e41f3630e02fc5ee18598b0bc3f4be8a9d0be2eb0c9cd",
+      "bytes": 274
+    },
+    {
+      "source": "assets/brand/monogram-reversed.svg",
+      "path": "assets/brand/monogram-reversed.2c6d653e2193.svg",
+      "hash": "2c6d653e2193d0dea3612b753c712452815e3f1d49b0c43890f4fc149e9c850b",
+      "bytes": 274
+    },
+    {
+      "source": "assets/brand/wordmark.svg",
+      "path": "assets/brand/wordmark.9f1c465e7c52.svg",
+      "hash": "9f1c465e7c520eade59874a304c5b3ebd924aae0c7e4c7dcb57ebfd1b1b9d877",
+      "bytes": 8399
+    },
+    {
+      "source": "assets/brand/logo.svg",
+      "path": "assets/brand/logo.623152fd9198.svg",
+      "hash": "623152fd9198a62de4e4d7191382a6356ab4194918122c93e503a1ee765f70e9",
+      "bytes": 8688
+    },
+    {
+      "source": "assets/brand/logo-reversed.svg",
+      "path": "assets/brand/logo-reversed.cb870d430724.svg",
+      "hash": "cb870d4307242292bc1cd2b4cdc9cbbfca5824bcc009848af83706dabf598fe8",
+      "bytes": 8688
+    },
+    {
+      "source": "assets/brand/favicon-16.png",
+      "path": "assets/brand/favicon-16.380e0b9de0db.png",
+      "hash": "380e0b9de0dbb48474a34679a48d4b1e79ef071fd3b7b8648e8c89daa60c0be9",
+      "bytes": 524
+    },
+    {
+      "source": "assets/brand/favicon-32.png",
+      "path": "assets/brand/favicon-32.d6eb75167461.png",
+      "hash": "d6eb7516746147ecc5ff2fadae84752d9d35cd6b2bafa0d4771213edfe9fca62",
+      "bytes": 899
+    },
+    {
+      "source": "assets/brand/favicon-48.png",
+      "path": "assets/brand/favicon-48.92fa5238a718.png",
+      "hash": "92fa5238a718d8a31cd02e75ef213a7089ca769d94db51f933d24a304fb79e33",
+      "bytes": 1322
+    },
+    {
+      "source": "assets/brand/favicon.ico",
+      "path": "assets/brand/favicon.fb930092e89c.ico",
+      "hash": "fb930092e89c0734c3b1d8d0e7b0e53e374a87e0231c88bfa7f70364daede2ff",
+      "bytes": 2799
+    },
+    {
+      "source": "assets/brand/apple-touch-icon.png",
+      "path": "assets/brand/apple-touch-icon.285d9a1d2f8e.png",
+      "hash": "285d9a1d2f8e47e29eee3d4d2fe0bea0999854219f46586a15f8982c850a63b1",
+      "bytes": 4456
     },
     {
       "source": "assets/licenses/THIRD-PARTY-NOTICES.txt",
-      "path": "assets/licenses/THIRD-PARTY-NOTICES.a88f6505f8af.txt",
-      "hash": "a88f6505f8afc083da334557b19a6111b4caa1d86afb3bce17db011f9d437580",
-      "bytes": 14584
+      "path": "assets/licenses/THIRD-PARTY-NOTICES.5ceb7362e85e.txt",
+      "hash": "5ceb7362e85e76ac9c8e6e564cc8da0b118d52eb1b7fe3cfc04f22a25b07321c",
+      "bytes": 13325
+    },
+    {
+      "source": "assets/licenses/Inter-OFL.txt",
+      "path": "assets/licenses/Inter-OFL.5b9321a4298c.txt",
+      "hash": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57",
+      "bytes": 4377
+    },
+    {
+      "source": "assets/licenses/Newsreader-OFL.txt",
+      "path": "assets/licenses/Newsreader-OFL.fdfad38143ec.txt",
+      "hash": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8",
+      "bytes": 4394
+    },
+    {
+      "source": "assets/licenses/Font-Sources.txt",
+      "path": "assets/licenses/Font-Sources.cc7550785c67.txt",
+      "hash": "cc7550785c678d145fc361445a9aaf8b0e18aa996268207ed8ae19a530ff8cdf",
+      "bytes": 1206
     },
     {
       "source": "assets/css/style.css",
-      "path": "assets/css/style.b9a7692c1901.css",
-      "hash": "b9a7692c1901cbf04143583af119ea57fdae37603abfaa4f8aac13d126631b1e",
-      "bytes": 59978
+      "path": "assets/css/style.5020235ffe10.css",
+      "hash": "5020235ffe10990960f3584164ee03bab5aaee1fda196f27ca7c8159422af9fc",
+      "bytes": 51725
     },
     {
       "source": "assets/js/app.js",
-      "path": "assets/js/app.0bc72198808a.js",
-      "hash": "0bc72198808a374c60c490c62f906bf909f24b090f273892cd52249b93538af6",
-      "bytes": 14517
-    },
-    {
-      "source": "assets/js/world.js",
-      "path": "assets/js/world.91e1e2be5880.js",
-      "hash": "91e1e2be58809c538e66b49ae6f6837887a389e4ae295dde10d5febfbb6008ef",
-      "bytes": 740828
+      "path": "assets/js/app.0502439420d8.js",
+      "hash": "0502439420d8f9ae2c0f966c96d4a326106051dfcddf464e7272dbf2f08b66a8",
+      "bytes": 139435
     }
   ]
 }
