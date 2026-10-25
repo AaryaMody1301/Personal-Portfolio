@@ -18,14 +18,14 @@ Manifest version 2 lists every generated HTML page plus the hashed runtime asset
 
 The ZIP contains the homepage, four case-study directory indexes, `.htaccess`, robots.txt, sitemap.xml, the manifest, resume, bundled icon notice and the referenced font/image/CSS/JS/license files. No World resources are included.
 
-The previous `/projects/driftdoctor.html`, `/projects/stockpulse.html` and `/projects/sales-forecasting.html` paths redirect to their directory routes. `/projects/sql-analytics.html` and `/projects/sql-practice/` redirect to the SQL archive entry. Verify these HTTP 301 responses, including retained query parameters, when accepting the Apache deployment.
+The previous `/projects/driftdoctor.html`, `/projects/stockpulse.html` and `/projects/sales-forecasting.html` paths redirect to their directory routes. `/projects/sql-analytics.html` and `/projects/sql-practice/` redirect to the SQL archive entry. Run `npm run redirects:check` against Apache or the public host to verify the HTTP 301 responses with empty, single, multiple and encoded query values. Campaign parameters must precede `#work-sql-practice-project`; parameters appended after `#` corrupt the archive destination. CI exercises the real `.htaccess` in an ephemeral Apache container.
 
 ## Production upload, when explicitly requested
 
 1. Back up the complete current `public_html` release. Keep the previous HTML, manifest and all its matching assets together.
 2. Upload/extract the new package so `index.html`, `projects/`, `assets/`, `.htaccess`, robots.txt and sitemap.xml sit directly in `public_html`. Preserve hidden files.
 3. Upload assets before switching HTML. Upload all five HTML pages and then the manifest; avoid a partial mixed release. Merge `.htaccess` with existing host rules where necessary.
-4. Clear the host/CDN HTML cache. Confirm WOFF2 is `font/woff2`, PNG is `image/png`, ICO is `image/vnd.microsoft.icon` (or the accepted `image/x-icon` equivalent), every case-study directory serves its index, and unknown paths remain 404s.
+4. Clear the host/CDN HTML cache and cached legacy redirects. Confirm WOFF2 is `font/woff2`, PNG is `image/png`, ICO is `image/vnd.microsoft.icon` (or the accepted `image/x-icon` equivalent), every case-study directory serves its index, and unknown paths remain 404s.
 5. Set `PORTFOLIO_BASE_URL=https://aaryamody.app/` and run `npm run verify:live`, `npm run navigation:check`, the browser suite, link check and Lighthouse with fresh report directories.
 6. Keep rollback until all public acceptance passes. If cold browser navigation returns 403, retain timestamps and request IDs and investigate the matching hosting/CDN logs. A later redirect to a working homepage must not turn an initial failure into a pass. Do not broadly disable protections.
 

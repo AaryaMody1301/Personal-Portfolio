@@ -37,6 +37,7 @@ Install browsers once with `npx playwright install --with-deps chrome firefox we
 | `npm run audit:preview` | Dedicated preview; three Lighthouse samples per page and form factor |
 | `npm run links:check` | Resources, fragments, contacts, documentation and external destinations |
 | `npm run navigation:check` | Fresh contexts, initial HTTP status and expected destinations |
+| `npm run redirects:check` | SQL archive redirect status, preserved queries and intact fragments; run against Apache or the public host |
 | `npm run verify:live` | Served pages/resource bytes, MIME types and expected routes |
 | `npm run package:hostinger` | Complete byte-verified static upload |
 | `npm run social:prepare` | Regenerate canonical brand assets and notices; rebuild afterward |

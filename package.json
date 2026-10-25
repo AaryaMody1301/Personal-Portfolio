@@ -38,6 +38,7 @@
     "build": "node scripts/build.mjs && node scripts/prepare-assets.mjs",
     "links:check": "node scripts/check-links.mjs",
     "navigation:check": "node scripts/check-navigation.mjs",
+    "redirects:check": "node scripts/check-redirects.mjs",
     "social:prepare": "node scripts/prepare-social.mjs",
     "build:check": "node scripts/check-determinism.mjs"
   },
