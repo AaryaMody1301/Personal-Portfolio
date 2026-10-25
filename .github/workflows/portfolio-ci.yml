@@ -14,6 +14,30 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  apache-redirects:
+    name: Apache redirect compatibility
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+      - name: Serve the production htaccess with Apache
+        run: |
+          docker run --rm -d --name portfolio-apache -p 127.0.0.1:4174:80 \
+            -v "$PWD:/usr/local/apache2/htdocs:ro" httpd:2.4 \
+            sh -c 'printf "\nLoadModule rewrite_module modules/mod_rewrite.so\n<Directory /usr/local/apache2/htdocs>\nAllowOverride All\n</Directory>\n" >> /usr/local/apache2/conf/httpd.conf; exec httpd-foreground'
+          curl --fail --retry 10 --retry-connrefused --retry-delay 1 http://127.0.0.1:4174/ -o /dev/null
+      - name: Check queries and archive fragments in actual HTTP redirects
+        run: node scripts/check-redirects.mjs
+        env:
+          PORTFOLIO_BASE_URL: http://127.0.0.1:4174/
+      - name: Stop the test server
+        if: always()
+        run: docker rm -f portfolio-apache || true
   verify:
     name: Verify (${{ matrix.os }})
     runs-on: ${{ matrix.os }}

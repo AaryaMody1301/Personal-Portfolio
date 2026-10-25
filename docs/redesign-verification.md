@@ -1,6 +1,6 @@
 # Interactive portfolio release verification
 
-Verified locally on 25 October 2026 against the [approved implementation plan](portfolio-improvement-plan.md). The redesign and Hostinger upload package are complete. Production has not been changed.
+Verified locally on 25 October 2026 against the [approved implementation plan](portfolio-improvement-plan.md). The content release is now published and matches the verified pages and resources. A focused hosting-redirect follow-up is prepared; see the publication check below.
 
 ## Release identity
 
@@ -46,7 +46,7 @@ Complete content, readable tables/figures, the expanded archive, navigation, res
 | Cold navigation | Nine fresh Chromium contexts passed initial HTTP status and explicit destination checks | [Navigation report](../reports/local/interactive-20261024-release-final/cold-navigation.json) |
 | Links | No broken links; automated access was blocked for three external destinations | [Link report](../reports/local/interactive-20261025-pr-final/links.json) |
 | Served release | Five pages and 40 requested release files passed status, MIME and exact-byte comparisons | [Deployment report](../reports/local/interactive-20261025-pr-final/deployment.json) |
-| Hostinger package | All 41 entries byte-compared to source, including the original resume, compatibility redirects and required notices | [Package report](../reports/local/interactive-20261025-pr-compatibility/package.json) |
+| Hostinger package | All 41 entries byte-compared to source, including the original resume, compatibility redirects and required notices | [Package report](../reports/local/sql-redirect-fix-20261025/package.json) |
 | Original World rollback | Real version-1 archive: one page and 21 HTTP resources verified | [Version-1 rollback](../reports/local/interactive-20261024-release-final/rollback-v1-verification.json) |
 | Intermediate editorial rollback | Real version-2 archive: five pages and 30 HTTP resources verified | [Version-2 rollback](../reports/local/interactive-20261024-release-final/rollback-v2-verification.json) |
 
@@ -70,7 +70,7 @@ Thirty audits completed: three samples for each page and form factor. All median
 
 These are local medians, not public Hostinger measurements. One cold homepage mobile sample scored 88; the other two scored 94. The [summary and individual audits](../reports/local/interactive-20261024-release-final/lighthouse/summary.json) preserve variation and layout-shift measurements. Application JavaScript is 139,435 bytes, 54,609 bytes gzip, below the 100KB compressed target. The production dependency audit reports zero vulnerabilities; no unrelated development-toolchain upgrade was attempted.
 
-The verified upload is [portfolio-hostinger.zip](../output/portfolio-hostinger.zip), 794,846 bytes, SHA-256 `bb8e558017b6e84736146f2eb45e703b8755b4c03e83023f641c03272a2733de`. Follow the [deployment runbook](hostinger-deploy.md) for a separately authorized publication.
+The verified upload is [portfolio-hostinger.zip](../output/portfolio-hostinger.zip), 794,927 bytes, SHA-256 `6f8addb288190e5c4f2e6ac16115bd90c7cc33aa1fa0f8a945e57292679ba3f1`. This package includes the pending hosting-redirect fix. Follow the [deployment runbook](hostinger-deploy.md) for a separately authorized publication.
 
 PR preparation uses current `master` (`47a4eb1e38187c4c732cb54e66b944cf890337e2`) as its base. Existing Sites project metadata, ignore rules and historical design records are retained. The previous flat case-study URLs redirect to the new directory pages; SQL analysis and `/projects/sql-practice/` redirect to the visible SQL archive entry. Query parameters survive these HTTP 301 redirects, unknown paths remain 404s, and the same rules are configured in the local server and Hostinger `.htaccess`. Seven targeted [page, accessibility and compatibility checks](../reports/local/interactive-20261025-pr-final/browser-release.json) pass. This packaging/server integration does not alter any page, JavaScript, CSS or fixture bytes used by the recorded visual and Lighthouse checks. Apache execution remains a live-hosting acceptance check.
 
@@ -97,3 +97,13 @@ Karpathy Guidelines and Ponytail informed the implementation. Brag 0.5.0 was rev
 The [hosting-access recheck](../reports/local/interactive-20261024-release-final/hosting-access.json) returned HTTP 200 for the apex and an intentional www-to-apex 301 followed by 200. The historical browser-specific HTTP 403 is not certified resolved: manual Windows browser control stopped because the tool could not confidently identify the active URL. No further UI input or challenge bypass was attempted. The isolated repository browser tests, captures and audits validate localhost; they do not certify remote Apache/CDN behavior. Production acceptance remains a deployment step.
 
 Reports, recordings and ZIP packages are ignored local artifacts. CI is configured for the five-page generation, browser matrix, release tests, deterministic output, Lighthouse gates and packaging; hosted CI was not run from this workspace.
+
+## Publication check and SQL redirect follow-up
+
+After PR #13 was merged, HTTP checks on 25 October 2026 confirmed that `https://aaryamody.app/` serves all five pages and 40 release files with the exact verified bytes and expected MIME types, including the original resume. The [published release report](../reports/live/interactive-20261025-published/deployment.json) preserves those results. The apex/www redirect, three featured-project legacy redirects and a genuine unknown-page 404 also passed.
+
+The published SQL redirects work without query parameters. With campaign parameters, the host appends the query after `#work-sql-practice-project`, corrupting the fragment and losing the actual URL query. The follow-up explicitly puts the original query before the fragment and preserves the empty-query destination. This uses Apache's documented [query-string substitution and NE behavior](https://httpd.apache.org/docs/2.4/rewrite/flags.html).
+
+`npm run redirects:check` reproduces six failures against the published rules and passes all eight cases against the Node preview. The new CI job runs the actual `.htaccess` in Apache and checks empty, single, multiple and encoded query values for both SQL routes. Apache CI and the follow-up's live deployment remain pending; a Node pass does not certify the hosting rule. Repository checks and all 13 release tests pass. Page, script, style, fixture and manifest bytes are unchanged, so the existing visual and Lighthouse evidence still describes the content release.
+
+The originally published [package backup](../archive/portfolio-published-20261025.zip) is 794,846 bytes, SHA-256 `bb8e558017b6e84736146f2eb45e703b8755b4c03e83023f641c03272a2733de`. Only `.htaccess` differs in the refreshed runtime ZIP. After publishing the follow-up, purge cached legacy redirects and rerun `redirects:check` against the public domain. These HTTP checks do not close the historical browser-specific 403 or native zoom limitations.
