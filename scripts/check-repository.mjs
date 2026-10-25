@@ -49,7 +49,7 @@ for (const path of files) {
   checked += 1;
   if (localOnly.test(path))
     problems.push("Local-only or credential file is tracked: " + path);
-  if (/\.(?:pdf|png|jpe?g|webp|woff2|ttf|glb|hdr)$/i.test(path)) continue;
+  if (/\.(?:pdf|png|ico|jpe?g|webp|woff2|ttf|glb|hdr)$/i.test(path)) continue;
   const content = bytes.toString("utf8");
   if (content.includes("\r"))
     problems.push(

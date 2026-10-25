@@ -23,6 +23,7 @@ test("cold navigation preserves initial errors even after a challenge redirects 
       "http://www.aaryamody.app/#about",
       "https://aaryamody.app/#about",
       200,
+      { expectedURL: "https://aaryamody.app/#about" },
     ).problems.length,
     0,
   );
@@ -34,6 +35,12 @@ test("cold navigation preserves initial errors even after a challenge redirects 
     ).problems.length,
     1,
   );
+});
+
+test("a host change must be an explicit expected redirect", () => {
+  assert.equal(navigationRecord("https://aaryamody.app/#about", "https://unexpected.example/#about", 200).problems.length, 1);
+  assert.equal(navigationRecord("http://www.aaryamody.app/#about", "https://aaryamody.app/#about", 200).problems.length, 1);
+  assert.equal(navigationRecord("https://aaryamody.app/#island-driftdoctor", "https://aaryamody.app/projects/driftdoctor/", 200, {expectedURL:"https://aaryamody.app/projects/driftdoctor/"}).problems.length, 0);
 });
 
 test("same-document fragment changes have no HTTP response while a cold response remains required", () => {

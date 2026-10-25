@@ -61,25 +61,8 @@ export async function auditMetadata(
 }
 
 export async function captureState(page) {
-  await page.waitForFunction(
-    () =>
-      ["ready", "fallback"].includes(document.body.dataset.worldState) ||
-      (document.body.dataset.worldState === "idle" &&
-        document.body.classList.contains("reading-mode")),
-    undefined,
-    { timeout: 20000 },
-  );
-  const state = await page.locator("body").getAttribute("data-world-state");
-  if (state === "fallback") {
-    const capable = await page.evaluate(() => {
-      const gl = document.createElement("canvas").getContext("webgl2");
-      gl?.getExtension("WEBGL_lose_context")?.loseContext();
-      return !!gl;
-    });
-    if (capable)
-      throw new Error(
-        "Unexpected application fallback on a WebGL2-capable capture profile",
-      );
-  }
-  return state;
+  await page.locator("h1").waitFor({state:"visible"});
+  await page.locator('html[data-motion-ready="true"]').waitFor();
+  await page.evaluate(async()=>{await document.fonts.ready; await Promise.all([...document.images].filter(img=>img.loading!=="lazy").map(img=>img.decode().catch(()=>{})));});
+  return "interactive-ready";
 }
